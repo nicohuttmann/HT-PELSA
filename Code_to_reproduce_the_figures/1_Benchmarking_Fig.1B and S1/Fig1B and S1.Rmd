@@ -1,0 +1,607 @@
+---
+title: "Benchmarking experiments"
+author: "Kejia Li"
+date: "2025-03-24"
+output:
+  html_document:
+    keep_md: true
+    toc: true
+    theme: united
+    toc_float: true
+    code_folding: hide
+  pdf_document:
+    toc: true
+editor_options:
+  
+  chunk_output_type: console
+---
+
+
+# 1.General settings 
+
+## 1.1 Chunk settings
+
+```{r setup}
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  include = TRUE,
+  cache = TRUE,
+  cache.lazy = FALSE,
+  eval = TRUE,
+  fig.width = 4 * (1 + sqrt(5)) / 2, 
+  fig.height = 4,
+  dpi = 700)
+
+```
+
+
+## 1.2 Packages
+
+```{r, warning=F}
+
+library(tidyverse)
+library(ggplot2)
+library(purrr)
+library(ggrepel)
+library(knitr)
+library(ggpubr)
+library(ggforce)
+library(UniprotR)
+library(Peptides)
+library(biomaRt)
+library(Biostrings)
+library(limma)
+library(vroom)
+library(stringr)
+library(corrplot)
+library(ggh4x)
+library(openxlsx)
+library(htmltools)
+library(pheatmap)
+library(ggh4x)
+library(ggpubr)
+
+mutate <- dplyr::mutate
+select <- dplyr::select
+group_by <- dplyr::group_by
+filter <- dplyr::filter
+rename <- dplyr::rename
+
+```
+
+
+## 1.3 Graphics
+
+```{r}
+
+mytheme <- theme( 
+  panel.background = element_rect(color = "black", linewidth = 0.5),
+  axis.title.x = element_text(colour = "black", size = 7),
+  axis.title.y = element_text(colour = "black", size = 7),
+  axis.text  = element_text(size = 7, color = "black"),
+  legend.position = "top", legend.key.size = unit(0.35, "cm"),
+  legend.title = element_blank(),
+  legend.text = element_text(colour = "black", size = 7)
+)
+
+```
+
+
+
+# 2. Import and annotate data
+
+```{r, include=FALSE,eval=FALSE}
+
+# Read datasets 
+datasets <- list(
+  NM_data = vroom::vroom("NM_Published_PELSA_report.pr_matrix.tsv"),
+  RT3min_Astral = vroom::vroom("HT-PELSA_RT_3min_report.pr_matrix.tsv"),
+  RT4min_Astral = vroom::vroom("HT-PELSA_RT_4min_report.pr_matrix.tsv"),
+  T37_1min_Astral = vroom::vroom("HT-PELSA_37C_1min_report.pr_matrix.tsv"),
+  RT4min_Exploris = vroom::vroom("HT-PELSA_RT_4min_Exploris_report.pr_matrix.tsv"))
+
+
+# Add peptide position to DIA-NN reports from fasta file 
+diann_prec_add_peptide_pos2 <- function(data_precursor, fasta, silent = T) {
+  
+  if (!hasArg(data_precursor)) 
+    stop("Please specify a data frame or a tibble of the DIA-NN precursors.")
+  
+  if (!hasArg(fasta)) fasta <- choose.files(multi = F, )
+  fasta <- Biostrings::readAAStringSet(fasta)
+  fasta <- as.character(fasta)
+  names(fasta) <- unlist(lapply(strsplit(x = names(fasta), "\\|"), \(x) x[2]))
+  
+  if (!silent) {
+    message(paste0(nrow(data_precursor), 
+                   " precursors identified. This should take around ", 
+                   round(nrow(data_precursor) * 0.0000884 + 0.1463016, 2), 
+                   " s."))
+    t0 <- Sys.time()
+  }
+  
+  # Add peptide positions
+  data_pos <- data_precursor %>% 
+    dplyr::rowwise() %>% 
+    dplyr::mutate(
+      peptide.length = nchar(Stripped.Sequence), 
+      from = regexpr(Stripped.Sequence, 
+                     as.character(fasta[unlist(strsplit(Protein.Group, 
+                                                        ";"))[1]]))[1], 
+      to = from + peptide.length - 1, 
+      .after = Modified.Sequence) %>% 
+    dplyr::ungroup()
+  
+  if (!silent) {
+    t1 <- Sys.time()
+    
+    duration <- t1 - t0
+    
+    if (duration > nrow(data_precursor) * 0.0000884 + 0.1463016) {
+      message(paste0("Sorry for the delay! It took ", 
+                     round(duration, 2), 
+                     " s."))
+    } else {
+      message(paste0("Wow, even faster! It only took ", 
+                     round(duration, 2), 
+                     " s."))
+    }
+  }
+  
+  return(data_pos)
+}
+
+
+# fasta file for diann_prec_add_peptide_pos2()
+fasta_path <- "UP000005640_HomoSapiens_ID9606_20594entries_26102022_dl11012023.fasta"
+
+# Add peptide positions to each dataset 
+datasets <- purrr::map(datasets, 
+                       diann_prec_add_peptide_pos2, 
+                       fasta_path, 
+                       F)
+
+```
+
+
+
+# 3. Divide into two groups
+
+```{r}
+
+# Function to rename data frames 
+process_data <- function(data) {
+  data %>%
+    select(1:21) %>%
+    rename(
+      control_1 = 14, control_2 = 15, control_3 = 16, control_4 = 17, 
+      drug_1 = 18, drug_2 = 19, drug_3 = 20, drug_4 = 21)
+}
+
+# Apply the function to all datasets
+datasets <- purrr::map(datasets, process_data)
+
+```
+
+
+
+# 4. Statistic test analysis
+
+```{r, include=FALSE, eval=FALSE}
+
+analyse_dataset <- function(data, dataset_name) {
+  
+  # step-1：data-processing
+  peptide_intensity <- data %>%
+    group_by(Stripped.Sequence) %>%
+    mutate(across(c(drug_1, drug_2, drug_3, drug_4, 
+                    control_1, control_2, control_3, control_4), 
+                  ~sum(.x, na.rm = TRUE), .names = "sum_{col}")) %>%
+    select(Protein.Ids, Genes, 
+           First.Protein.Description, 
+           Stripped.Sequence, 
+           peptide.length, 
+           from, 
+           to, 
+           starts_with("sum_")) %>%
+    distinct(Stripped.Sequence, .keep_all = TRUE) %>%
+    ungroup() %>%
+    filter(rowSums(.[8:15] == 0) == 0)
+  
+  
+  # step-2：Bayes t-test
+  data <- peptide_intensity %>% select(c(1:7, 12:15, 8:11))
+  columnnames <- c("Protein.Ids", "Genes", "name", "sequence", 
+                   "length", "start", "end", 
+                   "control_1", "control_2", "control_3", "control_4", 
+                   "D1_1", "D1_2", "D1_3", "D1_4", "UID")
+  design <- model.matrix(~ 0 + factor(c(0, 0, 0, 0, 
+                                        1, 1, 1, 1))) # 0=Vehicle; 1=Drug
+  colnames(design) <- c("V", "D") # 0=Vehicle; 1=Drug
+  
+  data.DIA <- grep("_", colnames(data))
+  data[, data.DIA] <- log((data[, data.DIA]), base = 2)
+  data.metanms <- grep("Stripped.Sequence", colnames(data))
+  data$last <- (regexpr(';', as.character(data$Protein.Ids)) - 1) # if no ";" then = -1
+  data$UID <- ifelse(data$last > 0, 
+                     (substr(as.character(data$Protein.Ids), 1, data$last)),
+                     (as.character(data$Protein.Ids)))
+  data$last <- NULL
+  intensity <- grep("_", colnames(data))
+  data <- setNames(data, columnnames)
+  data$ID <- 1:nrow(data)
+  
+  fit <- lmFit(data[, intensity], design)
+  fit <- eBayes(fit) ## Apply empirical Bayes smoothing to the standard errors.
+  contrast <- makeContrasts("D-V", levels = design)
+  fit2 <- contrasts.fit(fit, contrast)
+  fit2 <- eBayes(fit2, trend = TRUE)
+  
+  ptopf <- topTableF(fit2, adjust = "BH", 
+                     genelist = data[, c("ID")], 
+                     number = Inf)
+  ptopf$rank <- 1:length(ptopf$F)
+  ptopf$numfp <- ptopf$rank * ptopf$adj.P.Val
+  
+  t.stat <- topTable(fit2, adjust = "BH", genelist = data[, "ID"], 
+                     coef = 1, p.value = 1, number = Inf)
+  nms <- grep("logFC", colnames(t.stat)) 
+  colnames(t.stat)[nms] <- "Log2FC"
+  t.stat$Log10P.Value <- -log(t.stat$P.Value, base = 10)
+  t.stat$Log10adj.P.Val <- -log(t.stat$adj.P.Val, base = 10)
+  t.statNMS <- t.stat[c("ID", "Log2FC", "Log10P.Value", "Log10adj.P.Val", 
+                        "P.Value", "adj.P.Val", "AveExpr", "t", "B")]
+  t.stat <- t.statNMS
+  
+  data.analysis <- merge(t.stat, data, by = "ID", all = TRUE, sort = FALSE)
+  
+  
+  # step-3：annotation known binding
+  kinase <- read.csv("kinase_hub.csv", header = TRUE)
+  contam <- read.csv("contamination_protein.csv", header = TRUE)
+  
+  data.analysis <- data.analysis %>%
+    mutate(is.kinase = ifelse(UID %in% kinase$UniprotID,"yes","no")) %>%
+    mutate(is.contam = ifelse(UID %in% contam$UID,"yes","no")) %>%
+    filter(is.contam=="no")
+  
+  # write csv or xlsx
+  write.csv(data.analysis, file = paste0("bayes_test_", 
+                                         dataset_name, 
+                                         ".csv"))
+  
+}
+
+# Do limma analysis with all datasets and save as .csv
+purrr::iwalk(datasets, analyse_dataset)
+
+```
+
+
+
+# 5.Figure S1A: True positive curve comparing RT-4min, RT-3min, and 37C-1min
+
+## 5.1 Data preparation
+
+```{r, echo=TRUE}
+
+extract_data <- function(file_path, type_name) {
+  read_csv(file_path) %>%  # 比 read.csv 更快
+    distinct(UID, .keep_all = TRUE) %>%
+    filter(Log2FC < 0) %>%
+    mutate(
+      rank = row_number(),
+      kinase_count = cumsum(is.kinase == "yes"),
+      TRP = kinase_count / rank,
+      type = type_name
+    ) %>%
+    filter(rank < 201) %>%
+    select(rank, kinase_count, TRP, type)
+}
+
+# 定义文件路径和对应的 type 标签
+file_info <- list(
+  list(path = "bayes_test_RT3min_Astral.csv", type = "RT_3min"),
+  list(path = "bayes_test_RT4min_Astral.csv", type = "RT_4min"),
+  list(path = "bayes_test_T37_1min_Astral.csv", type = "T37_1min")
+)
+
+# 批量处理并合并结果
+list_results <- map_dfr(file_info, ~ extract_data(.x$path, .x$type))
+
+colnames(list_results)
+
+```
+
+
+## 5.2 plot
+
+```{r, echo=TRUE}
+
+p <- ggplot() + 
+  geom_line(data = list_results, 
+            aes(x = rank, y = kinase_count, color = type), 
+            linewidth = 0.7) +
+  geom_abline(intercept = 0, 
+              slope = c(0.8, 1), 
+              color = c("black", "grey"), 
+              linetype = c("dashed", "solid"), 
+              linewidth = 0.5) + 
+  scale_x_continuous("All candidate targets", limits = c(0, 200)) +
+  scale_y_continuous("kinase count", limits = c(0, 200)) +
+  scale_color_manual(values = c("#f37f81", "#6baed6", "#e19500"), 
+                     breaks = c("RT_3min", "RT_4min", "T37_1min"), 
+                     labels = c("RT_3min", "RT_4min", "37C_1min")) +
+  mytheme + 
+  force_panelsizes(rows = unit(3, "in"), cols = unit(3, "in")) + 
+  theme_bw()
+
+p
+
+ggsave(paste0("Figure_S1A", ".pdf"), width = 4, height = 4, useDingbats = FALSE) 
+
+```
+
+
+
+# 6. Figure 1B: Barplot comparing HT-PELSA and orginal PELSA (Nature Methods)
+
+## 6.1 Data preparation
+
+```{r, echo=TRUE}
+
+extract_data <- function(file_path, type_name) {
+  read_csv(file_path) %>%  # 比 read.csv 更快
+    distinct(UID, .keep_all = TRUE) %>%
+    filter(Log2FC < 0) %>%
+    mutate(
+      rank = row_number(),
+      kinase_count = cumsum(is.kinase == "yes"),
+      TRP = kinase_count / rank,
+      type = type_name
+    ) %>%
+    filter(rank < 201) %>%
+    select(rank, kinase_count, TRP, type)
+}
+
+# 定义文件路径和对应的 type 标签
+file_info <- list(
+  list(path = "bayes_test_RT4min_Exploris.csv", type = "HT-PELSA_Exploris"),
+  list(path = "bayes_test_RT4min_Astral.csv", type = "HT-PELSA_Astral"),
+  list(path = "bayes_test_NM_data.csv", type = "NMethods_Exploris")
+)
+
+
+
+## process the data 
+combine <- map_dfr(file_info, ~ extract_data(.x$path, .x$type)) %>% 
+  group_by(type) %>% 
+  filter(TRP > 0.8) %>%  
+  filter(kinase_count == max(kinase_count)) %>%
+  filter(TRP == max(TRP)) %>%
+  ungroup() %>% 
+  mutate(non.kinase = rank-kinase_count) %>% 
+  rename(kinase = kinase_count, specifity = TRP) %>% 
+  select(type, kinase,non.kinase,specifity)
+
+data_plot <- combine %>%
+  pivot_longer(cols = c(kinase,non.kinase), names_to = "Group", values_to = "Identification") %>%
+  mutate(type = factor(type, 
+                       levels = c("NMethods_Exploris", "HT-PELSA_Exploris", "HT-PELSA_Astral"),
+                       ordered = TRUE))
+
+```
+
+
+## 6.2 plot
+
+```{r, echo=TRUE}
+
+p <- ggplot(data = data_plot) +
+  geom_bar(aes(x = type, y = Identification, fill = Group), 
+           stat = "identity", 
+           width = 0.65)+
+  scale_y_continuous("Identifications", 
+                     breaks = c(0, 30, 60, 90, 120, 150), 
+                     limits = c(0, 153)) +
+  scale_x_discrete(expand=c(0.1, 0.1))+
+  scale_fill_manual(name = "", 
+                    breaks = c("kinase", "non.kinase"), 
+                    labels = c("Kinase", "non-Kinase"), 
+                    values = c("#a995c4", "gray75")) +
+  theme_classic() +
+  annotate(x = rep(c("NMethods_Exploris", 
+                     "HT-PELSA_Exploris", 
+                     "HT-PELSA_Astral"), times = 2), 
+           y = c(6, 6, 8, 69, 74, 90), 
+           label= c("24", "22", "29", "97", "102", "121"), 
+           geom = "text", 
+           size = 2) +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(size = 5, 
+                                   color = "black", 
+                                   margin = margin(2, 0, -4.5, 0)),
+        axis.title.y = element_text(size = 6, 
+                                    margin = margin(0, 0, 0, -3)),
+        axis.text.y = element_text(size = 5, 
+                                   colour = "black", 
+                                   margin = margin(0, 0.8, 0, 0)),
+        legend.position = "top", 
+        legend.key.size = unit(5, "points"), 
+        legend.spacing.x = unit(0.05, "cm"), 
+        legend.text = element_text(size = 5), 
+        legend.background = element_blank(),
+        axis.ticks = element_line(size = 0.2, color = "black"),
+        axis.ticks.length = unit(0.05, "cm"),
+        axis.line = element_line(size = 0.2))+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+p
+
+ggsave("Figure_1B.pdf", p, width = 4, height = 6, units = "cm")
+
+```
+
+
+
+# 7. Figure S1B: p value distribution of peptides that are from and outside of the kinase domain
+
+## 7.1 Data preparation
+
+```{r, echo=TRUE}
+
+kinase_domain <- read.csv("kinase_domain_hub.csv", header = T) 
+htPELSA_peptides <- read.csv("bayes_test_RT4min_Astral.csv", header = T)
+colnames(kinase_domain)[1] <- "UID"
+
+htPELSA_peptides_domain <- left_join(htPELSA_peptides,kinase_domain,by="UID") %>% separate(location,c("D_start","D_end","D_start2","D_end2"), remove = F)
+
+
+## convert certain colums to num
+htPELSA_peptides_domain[c("start", 
+                          "end", 
+                          "D_start", 
+                          "D_end", 
+                          "D_start2", 
+                          "D_end2")] <-
+  apply(htPELSA_peptides_domain[, c("start", 
+                                    "end", 
+                                    "D_start", 
+                                    "D_end", 
+                                    "D_start2", 
+                                    "D_end2")],2,as.numeric)
+
+colnames(htPELSA_peptides_domain)
+
+Indomain_row_1 <- which(htPELSA_peptides_domain$start >= htPELSA_peptides_domain$D_start
+                        & htPELSA_peptides_domain$D_end >= htPELSA_peptides_domain$start)
+
+Indomain_row_1_1 <- which(htPELSA_peptides_domain$end >= htPELSA_peptides_domain$D_start
+                          & htPELSA_peptides_domain$D_end >= htPELSA_peptides_domain$end)
+
+Indomain_row_2 <- which(htPELSA_peptides_domain$start >= htPELSA_peptides_domain$D_start2
+                        & htPELSA_peptides_domain$D_end2 >= htPELSA_peptides_domain$start)
+Indomain_row_2_2 <- which(htPELSA_peptides_domain$end >= htPELSA_peptides_domain$D_start2
+                          & htPELSA_peptides_domain$D_end2 >= htPELSA_peptides_domain$end)
+
+
+nebdomain_row_1 <- which(htPELSA_peptides_domain$end >= (htPELSA_peptides_domain$D_start - 10)
+                         & htPELSA_peptides_domain$D_start > htPELSA_peptides_domain$end)
+nebdomain_row_2 <- which((htPELSA_peptides_domain$start > (htPELSA_peptides_domain$D_end)
+                        & htPELSA_peptides_domain$D_end +10 >= htPELSA_peptides_domain$start))
+nebdomain_row_3 <- which(htPELSA_peptides_domain$end >= (htPELSA_peptides_domain$D_start2 - 10)
+                         & htPELSA_peptides_domain$D_start2 > htPELSA_peptides_domain$end )
+nebdomain_row_4 <- which((htPELSA_peptides_domain$start > (htPELSA_peptides_domain$D_end2)
+                        & htPELSA_peptides_domain$D_end2 + 10 >= htPELSA_peptides_domain$start))
+
+
+htPELSA_peptides_domain$in.domain <- "no"
+
+htPELSA_peptides_domain[c(Indomain_row_1,
+                          Indomain_row_1_1,
+                          Indomain_row_2_2,
+                          Indomain_row_2),]$in.domain <- "yes"
+
+htPELSA_peptides_domain[c(nebdomain_row_1,
+                          nebdomain_row_2,
+                          nebdomain_row_3,
+                          nebdomain_row_4),]$in.domain <- "near"
+
+```
+
+
+## 7.2 Plotting
+
+```{r, echo=TRUE}
+
+colnames(htPELSA_peptides_domain)
+
+data_plot <- htPELSA_peptides_domain %>% arrange(in.domain)
+data_plot$in.domain[data_plot$in.domain == "near"] <- "no"
+data_kinase_plot <- filter(data_plot,is.kinase == "yes") 
+
+
+table(data_kinase_plot$in.domain)
+
+
+p <- ggplot(data = data_kinase_plot, 
+            mapping = aes(x = Log10P.Value, fill = in.domain), color = "black")
+
+p <- p + geom_line(stat = "density") 
+
+p <- p + 
+  geom_density(alpha = 0.6, size = 0.4) + 
+  theme_classic() +
+  geom_vline(xintercept = 3.52, col="grey", linetype = "dashed", size = 0.4) +
+  scale_x_continuous(name = expression(-log["10"] * Pvalue), 
+                     limits = c(0, 14), 
+                     breaks = c(0, 2, 4, 6, 8, 10, 12)) +
+  scale_y_continuous("Density", limits = c(0, 1.5), 
+                     breaks = c(0, 0.3, 0.6, 0.9, 1.2, 1.5), 
+                     labels = c("0", "0.3", "0.6", "0.9", "1.2", "1.5")) +
+  scale_fill_manual(name = "In kinase domain (HeLa)", 
+                    values = c("#6baed6", "#7fc97f"),
+                    breaks = c("yes", "no"), labels = c("In", "Outside")) + 
+  mytheme +
+  geom_text(aes(x = 3.52, y = 1.4, label = "3.52"), 
+            color = "black", 
+            size = 2, 
+            vjust = -0.5, 
+            hjust = -0.1)+
+  force_panelsizes(rows = unit(1.85, "in"),
+                   cols = unit(1.85, "in"))
+
+p
+
+ggsave(paste0("Figure_S1B",".pdf"),p,width = 8,height=8,dpi=300)
+
+```
+
+
+
+# 8. Figure S1C: Pie charts showing the location of the significantly stabilized peptides
+
+## 8.1 Data preparation
+
+```{r, echo=TRUE}
+
+colnames(data_kinase_plot)
+
+significantly_stabilized_peptides <- htPELSA_peptides_domain %>% 
+  filter(Log10P.Value > 3.52 & Log2FC < 0 & is.kinase == "yes")
+
+table(significantly_stabilized_peptides$in.domain)
+
+```
+
+
+
+## 8.2 Plotting
+
+```{r, echo=TRUE}
+
+df <- data.frame(group = c("In", "near", "outside"),
+                 value = c(518, 38, 40))
+
+df <- df %>% mutate(type = factor(group,levels = group))
+
+df$count_label <- paste0(df$group, "\n(n=", df$value, ")")
+
+
+ggdonutchart(df, 
+             "value", 
+             label = "count_label",  # 使用带计数的标签
+             fill = "type", 
+             color = "white",
+             palette = c("#00AFBB", "#9edae5", "#FC4E07")) +
+  theme(legend.position = "right")
+
+
+ggsave(paste0("Figure_S1C",".pdf"), width = 2.5, height = 2.5) 
+
+```
+
+

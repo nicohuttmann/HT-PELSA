@@ -1,0 +1,1232 @@
+---
+title: "ATP_dose_response"
+author: "kejia"
+date: "2025-04-13"
+output:
+  html_document:
+    keep_md: true
+    toc: true
+    theme: united
+    toc_float: true
+    code_folding: hide
+  pdf_document:
+    toc: true
+editor_options:
+  
+  chunk_output_type: console
+---
+
+
+# 1.General settings 
+
+## 1.1 Chunk settings
+
+```{r setup}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  include = TRUE,
+  cache = TRUE,
+  cache.lazy = FALSE,
+  eval = TRUE,
+  fig.width = 4 * (1 + sqrt(5)) / 2, 
+  fig.height = 4,
+  dpi = 700
+)
+```
+
+## 1.2 Packages
+
+```{r, message=F, warning =F}
+
+library(progress)
+library(tidyverse)
+library(ggplot2)
+library(ggrepel)
+library(knitr)
+library(ggpubr)
+library(ggforce)
+library(UniprotR)
+library(Peptides)
+library(biomaRt)
+library(Biostrings)
+library(limma)
+library(vroom)
+library(stringr)
+library(corrplot)
+library(drc)
+library(openxlsx)
+library(pheatmap)
+library(ggh4x)
+
+mutate <- dplyr::mutate
+select <- dplyr::select
+group_by <- dplyr::group_by
+filter <- dplyr::filter
+rename <- dplyr::rename
+
+```
+
+## 1.3 Graphics
+
+```{r}
+
+mytheme <- theme( 
+  panel.background = element_rect(color = "black",size=0.5),
+  axis.title = element_text(colour="black",size=7),
+  axis.text  = element_text(size=7,color="black"),
+  plot.title = element_text(size=8,color="black"),
+  text = element_text(size = 7),
+  axis.line = element_line(linewidth = 0.4),
+  axis.ticks  = element_line(linewidth = 0.4),
+  legend.position = "top",legend.key.size = unit(0.35,"cm"),
+  legend.text =element_text(colour = "black",size=7),panel.border = element_blank()
+)
+
+```
+
+
+# 2. Import raw data
+
+```{r}
+
+data_dd <- 
+  vroom::vroom("ATP_DD_report.pr_matrix.tsv") 
+
+colnames(data_dd)
+
+
+# simplify the colnames
+colnames_subset <- colnames(data_dd)[11:42]
+common_prefix <- "\\\\msdata1.embl.de\\msdata1\\11_Astral_Stitch\\20250320_Stitch_S4542_LKJ_Ecoli_PELSA_ATP_lysates_of_12mM_Mg_dd_"
+common_prefix <- gsub("\\\\", "\\\\\\\\", common_prefix)
+common_suffix <- "_R1.raw"
+simplified_colnames <- sub(common_prefix, "", colnames_subset)
+simplified_colnames <- sub(paste0(common_suffix, "$"), "", simplified_colnames)  # 
+
+
+colnames(data_dd)[11:42] <- simplified_colnames
+
+names(data_dd)[35] <- "500uM_rep1"
+
+```
+
+
+# 3 From precursor to peptide
+
+## 3.1 Calculate peptide-level intensity
+
+```{r}
+
+peptide_dd <- data_dd %>%
+  group_by(Stripped.Sequence) %>%
+  mutate(across(c("1mM_rep1":"control_rep4"), ~sum(.x, na.rm = TRUE), .names = "sum_{col}")) %>% distinct(Stripped.Sequence, .keep_all = TRUE) %>%
+  ungroup() 
+
+colnames(peptide_dd)
+
+```
+
+
+## 3.2 Annotate peptide with location
+
+```{r}
+
+diann_prec_add_peptide_pos2 <- function(data_precursor, fasta, silent = T) {
+  
+  if (!hasArg(data_precursor)) stop("Please specify a data frame or a tibble of the DIA-NN precursors.")
+  
+  if (!hasArg(fasta)) fasta <- choose.files(multi = F, )
+  fasta <- Biostrings::readAAStringSet(fasta)
+  fasta <- as.character(fasta)
+  names(fasta) <- unlist(lapply(strsplit(x = names(fasta), "\\|"), \(x) x[2]))
+  
+  if (!silent) {
+    message(paste0(nrow(data_precursor), " precursors identified. This should take around ", 
+                   round(nrow(data_precursor) * 0.0000884 + 0.1463016, 2), " s."))
+    t0 <- Sys.time()
+  }
+  
+  # Add peptide positions
+  data_pos <- data_precursor %>% 
+    dplyr::rowwise() %>% 
+    dplyr::mutate(peptide.length = nchar(Stripped.Sequence), 
+                  from = regexpr(Stripped.Sequence, as.character(fasta[unlist(strsplit(Protein.Group, ";"))[1]]))[1], 
+                  to = from + peptide.length - 1, 
+                  .after = Modified.Sequence) %>% 
+    dplyr::ungroup()
+  
+  if (!silent) {
+    t1 <- Sys.time()
+    
+    duration <- t1 - t0
+    
+    if (duration > nrow(data_precursor) * 0.0000884 + 0.1463016) {
+      message(paste0("Sorry for the delay! It took ", round(duration, 2), " s."))
+    } else {
+      message(paste0("Wow, even faster! It only took ", round(duration, 2), " s."))
+    }
+  }
+  
+  return(data_pos)
+  
+}
+
+
+# Input the imported precursor data frame and specify the fasta file
+peptide_dd_with_position <- diann_prec_add_peptide_pos2(data_precursor = peptide_dd, fasta = "uniprotkb_ecoli_AND_model_organism_8333_2024_06_06.fasta", silent = F)
+
+save(peptide_dd_with_position,file = "peptide_dd_with_position.Rdata")
+
+```
+
+
+
+## 3.2 Extract different replicates
+
+```{r}
+
+colnames(peptide_dd_with_position)
+
+peptide_dd_rep1 <- peptide_dd_with_position %>% 
+  select(1:13, contains("sum") & contains("rep1")) %>%
+  filter(rowSums(.[14:21]==0) == 0) 
+
+
+peptide_dd_rep2 <- peptide_dd_with_position %>% 
+  select(1:13, contains("sum") & contains("rep2")) %>%
+  filter(rowSums(.[14:21]==0) == 0) 
+
+peptide_dd_rep3 <- peptide_dd_with_position %>% 
+  select(1:13, contains("sum") & contains("rep3")) %>%
+  filter(rowSums(.[14:21]==0) == 0) 
+
+peptide_dd_rep4 <- peptide_dd_with_position %>% 
+  select(1:13, contains("sum") & contains("rep4")) %>%
+  filter(rowSums(.[14:21]==0) == 0) 
+
+```
+
+
+## 3.3 visualize data completeness
+
+```{r}
+
+peptide_dd_final <- peptide_dd_with_position %>%
+  mutate(
+    rep1 = ifelse(Stripped.Sequence %in% peptide_dd_rep1$Stripped.Sequence, 1, 0),  
+    rep2 = ifelse(Stripped.Sequence %in% peptide_dd_rep2$Stripped.Sequence, 1, 0),  
+    rep3 = ifelse(Stripped.Sequence %in% peptide_dd_rep3$Stripped.Sequence, 1, 0),  
+    rep4 = ifelse(Stripped.Sequence %in% peptide_dd_rep4$Stripped.Sequence, 1, 0), 
+    total_count = rep1 + rep2 + rep3 + rep4
+  ) %>% select(1:13,46:82)
+
+colnames(peptide_dd_final)
+
+
+peptide_dd_final$total_count <- as.factor(peptide_dd_final$total_count)
+reps_count <- as.data.frame(table(peptide_dd_final$total_count))
+colnames(reps_count) <- c("number_of_reps", "count")
+colnames(peptide_dd_final)
+
+
+ggplot(data=reps_count ,mapping=aes(x= number_of_reps, y=count))+geom_bar(stat = "identity",position = "dodge",color="black")+
+  theme_classic()+
+  geom_text(aes(label = count), vjust = -0.5, color = "black", size = 4) 
+
+```
+
+
+## 3.4 calculate peptide affinity 
+
+```{r}
+
+# Only run this code if fitting data is not present (takes ~2 h per replicate)
+
+if (!file.exists("export_dd_atp_peptide_stabilized_R1.csv")) {
+
+# Calculate log2FC和Ratio
+calculate_ratios <- function(data, rep) {
+  for (i in c("control","10uM","100uM","200uM","500uM","1mM","5mM",
+              "10mM")) {
+    data[, paste0("log2FC_", i, "_0uM_", rep)] <- log2(data[, paste0("sum_", i, "_", rep)] / data[, paste0("sum_control_", rep)])
+    data[, paste0("Ratio_", i, "_control_", rep)] <- data[, paste0("sum_", i, "_", rep)] / data[, paste0("sum_control_", rep)]
+  }
+  return(data)
+}
+
+
+colnames(peptide_dd_rep1)
+peptide_dd_rep1 <- calculate_ratios(peptide_dd_rep1, "rep1")
+peptide_dd_rep2 <- calculate_ratios(peptide_dd_rep2, "rep2")
+peptide_dd_rep3 <- calculate_ratios(peptide_dd_rep3, "rep3")
+peptide_dd_rep4 <- calculate_ratios(peptide_dd_rep4, "rep4")
+
+
+save(peptide_dd_rep1,file = "peptide_dd_rep1.Rdata")
+save(peptide_dd_rep2,file = "peptide_dd_rep2.Rdata")
+save(peptide_dd_rep3,file = "peptide_dd_rep3.Rdata")
+save(peptide_dd_rep4,file = "peptide_dd_rep4.Rdata")
+
+
+
+# From here until the end of this chunk, change the imported data for different replicates
+
+## pre-filter peptides (stabilized) 
+subset_target <- peptide_dd_rep1 %>%
+  filter(Ratio_10mM_control_rep1 < 0.7 & Ratio_5mM_control_rep1 < 1)%>%
+  select(Stripped.Sequence,Genes,First.Protein.Description,Protein.Ids,contains("Ratio"))%>% gather(concentration,Ratio,paste0("Ratio_","control","_control_rep1"):paste0("Ratio_","10mM","_control_rep1")) 
+
+## pre-filter peptides (destabilized) 
+subset_target <- peptide_dd_rep1 %>%
+  filter(Ratio_10mM_control_rep1 > 1.3 & Ratio_5mM_control_rep1 > 1)%>%
+  select(Stripped.Sequence,Genes,First.Protein.Description,Protein.Ids,contains("Ratio"))%>% gather(concentration,Ratio,paste0("Ratio_","control","_control_rep1"):paste0("Ratio_","10mM","_control_rep1")) 
+
+
+# fit the curve
+subset_target$EC50<-0
+subset_target$R2<-0
+subset_target$lower <- 0
+subset_target$upper <- 0
+EC50.col <- grep("EC50",colnames(subset_target))
+R2.col <- grep("R2",colnames(subset_target))
+lower.col <- grep("lower",colnames(subset_target))
+upper.col <- grep("upper",colnames(subset_target))
+
+data_peptide <- data.frame(conc=c(log10(1e-12),log10(1e-5),log10(1e-4),log10(2e-4),log10(5e-4),log10(1e-3),log10(5e-3),log10(1e-2)),ratio=subset_target$Ratio)
+
+
+pb <- progress_bar$new(
+  format = "[:bar] :percent :elapsed", 
+  total = length(subset_target$Stripped.Sequence), 
+  clear = FALSE,
+  width = 60 
+)
+
+state <- c(0)
+for (peptide in subset_target$Stripped.Sequence) {
+  pb$tick()
+  state <- state + 1
+  #*****
+  data_peptide <- data.frame(conc=c(log10(1e-12),log10(1e-5),log10(e-4),log10(2e-4),log10(5e-4),log10(1e-3),log10(5e-3),log10(1e-2)),ratio=subset_target[subset_target$Stripped.Sequence==peptide,]$Ratio)
+  
+  peptide_drm <- tryCatch(
+    drm(ratio~conc,data=data_peptide,fct = LL.4(),logDose = 10),
+    error=function(e){ print("Correlation LL.4 failed, L.4 backup performed");return(NA)}
+  )
+  
+  
+  # export PEC50
+  subset_target[state,EC50.col] <- tryCatch(
+    round(-log(coef(peptide_drm)[[4]],base =10),digits = 4),
+    error=function(e){return(NA)}
+  )
+  
+  # export lower
+  subset_target[state,lower.col] <- tryCatch(
+    as.numeric(coef(peptide_drm)[2]),
+    error=function(e){return(NA)}
+  )
+  
+  # export upper
+  subset_target[state,upper.col] <- tryCatch(
+    as.numeric(coef(peptide_drm)[3]),
+    error=function(e){return(NA)}
+  )
+  
+  
+  # export R
+  subset_target[state,R2.col] <- tryCatch(
+    round((cor(data_peptide$ratio, fitted(peptide_drm), method = "pearson"))^2,digits = 4),
+    error=function(e){return(NA)}
+  )
+  
+}
+
+stabilized_peptides <- subset_target %>%
+  pivot_wider(names_from = concentration, values_from = Ratio)
+class(stabilized_peptides)
+
+# output
+write.csv (file = paste0("export_dd_atp_peptide_stabilized_R1",".csv"), 
+           stabilized_peptides,row.names = F)
+
+}
+
+```
+
+
+
+# 4 Get affinity information for each peptide
+
+## 4.1 affinty data import
+
+```{r}
+
+affinity_rep1 <- 
+  bind_rows(
+    "stabilized" =  read.csv("export_dd_atp_peptide_stabilized_R1.csv"),
+    "destabilized" = read.csv("export_dd_atp_peptide_destabilized_R1.csv"),
+    .id ="type") %>%
+  filter(R2 >0.9) %>%
+  rename(EC50_rep1= EC50, R2_rep1=R2,lower_rep1 = lower, upper_rep1=upper)
+
+
+
+affinity_rep2 <- 
+  bind_rows(
+    "stabilized" =  read.csv("export_dd_atp_peptide_stabilized_R2.csv"),
+     "destabilized"= read.csv("export_dd_atp_peptide_destabilized_R2.csv"),
+    .id ="type") %>%
+  filter(R2 >0.9) %>%
+  rename(EC50_rep2= EC50, R2_rep2=R2,lower_rep2 = lower, upper_rep2=upper)
+
+
+affinity_rep3 <- 
+    bind_rows(
+    "stabilized" =  read.csv("export_dd_atp_peptide_stabilized_R3.csv"),
+     "destabilized"= read.csv("export_dd_atp_peptide_destabilized_R3.csv"),
+    .id ="type") %>%
+  filter(R2 >0.9)%>%
+  rename(EC50_rep3= EC50, R2_rep3=R2,lower_rep3 = lower, upper_rep3=upper)
+
+affinity_rep4 <- 
+  bind_rows(
+    "stabilized" =  read.csv("export_dd_atp_peptide_stabilized_R4.csv"),
+     "destabilized"= read.csv("export_dd_atp_peptide_destabilized_R4.csv"),
+    .id ="type") %>%
+  filter(R2 >0.9)%>%
+  rename(EC50_rep4= EC50, R2_rep4=R2,lower_rep4 = lower, upper_rep4=upper)
+
+
+
+```
+
+
+## 4.2 add affinities to each peptide
+
+```{r}
+
+affinity_reps <- list(affinity_rep1, affinity_rep2, affinity_rep3, affinity_rep4)
+
+
+sta_list <- lapply(affinity_reps, function(x) filter(x, type == "stabilized"))
+desta_list <- lapply(affinity_reps, function(x) filter(x, type == "destabilized"))
+
+
+
+peptide_dd_affinity_count <- peptide_dd_final %>%
+  mutate(
+    # stabilized counts
+    rep1_sta_dd = ifelse(Stripped.Sequence %in% sta_list[[1]]$Stripped.Sequence, 1, 0),
+    rep2_sta_dd = ifelse(Stripped.Sequence %in% sta_list[[2]]$Stripped.Sequence, 1, 0),
+    rep3_sta_dd = ifelse(Stripped.Sequence %in% sta_list[[3]]$Stripped.Sequence, 1, 0),
+    rep4_sta_dd = ifelse(Stripped.Sequence %in% sta_list[[4]]$Stripped.Sequence, 1, 0),
+    total_dd_count_sta = rep1_sta_dd +rep2_sta_dd+ rep3_sta_dd +rep4_sta_dd,
+    
+     # destabilized counts
+    rep1_des_dd = ifelse(Stripped.Sequence %in% desta_list[[1]]$Stripped.Sequence, 1, 0),
+    rep2_des_dd = ifelse(Stripped.Sequence %in% desta_list[[2]]$Stripped.Sequence, 1, 0),
+    rep3_des_dd = ifelse(Stripped.Sequence %in% desta_list[[3]]$Stripped.Sequence, 1, 0),
+    rep4_des_dd = ifelse(Stripped.Sequence %in% desta_list[[4]]$Stripped.Sequence, 1, 0),
+    total_dd_count_des = rep1_des_dd +rep2_des_dd+ rep3_des_dd + rep4_des_dd)  %>%
+  mutate(across(c(total_dd_count_sta, total_dd_count_des),as.factor))  %>%
+  mutate(regulation = 
+           case_when(
+             as.numeric(as.character(total_dd_count_des)) >2 ~"destabilized",
+            as.numeric(as.character(
+              total_dd_count_sta)) > 2 ~"stabilized",
+            as.numeric(as.character(
+              total_count)) <3 ~"underquantified",
+             as.numeric(as.character(
+               total_count)) >2 ~"unresponsive",
+             TRUE~"unknown"))
+
+
+## visualize how many peptides are stabilized or destabilized in how many replicates
+
+reps_count <- as.data.frame(table(peptide_dd_affinity_count$total_dd_count_sta))
+
+colnames(reps_count) <- c("number_of_reps", "count")
+
+
+ggplot(data=reps_count ,mapping=aes(x= number_of_reps, y=count))+geom_bar(stat = "identity",position = "dodge",color="black")+
+  theme_classic()+
+  geom_text(aes(label = count), vjust = -0.5, color = "black", size = 4) 
+
+table(peptide_dd_affinity_count$total_dd_count_sta)
+
+
+
+combine <- peptide_dd_affinity_count %>%
+  left_join(sta_list[[1]],by=c("Stripped.Sequence","Genes","First.Protein.Description","Protein.Ids"))%>%
+  left_join(sta_list[[2]],by=c("Stripped.Sequence","Genes","First.Protein.Description","Protein.Ids"))%>%
+  left_join(sta_list[[3]],by=c("Stripped.Sequence","Genes","First.Protein.Description","Protein.Ids"))%>%
+  left_join(sta_list[[4]],by=c("Stripped.Sequence","Genes","First.Protein.Description","Protein.Ids")) %>%   left_join(desta_list[[1]],by=c("Stripped.Sequence","Genes","First.Protein.Description","Protein.Ids"))%>%
+  left_join(desta_list[[2]],by=c("Stripped.Sequence","Genes","First.Protein.Description","Protein.Ids"))%>%
+  left_join(desta_list[[3]],by=c("Stripped.Sequence","Genes","First.Protein.Description","Protein.Ids"))%>%
+  left_join(desta_list[[4]],by=c("Stripped.Sequence","Genes","First.Protein.Description","Protein.Ids")) %>%
+  select(-contains("type"))
+
+colnames(combine)
+
+colnames_all <- names(combine[c(62:156)])
+dupe_prefixes <- unique(gsub("\\.(x|y)$", "", colnames_all))
+
+for (col in dupe_prefixes) {
+  col_x <- paste0(col, ".x")
+  col_y <- paste0(col, ".y")
+  
+ combine[[col]] <- coalesce(combine[[col_x]], combine[[col_y]])
+  combine[[col_x]] <- NULL
+  combine[[col_y]] <- NULL
+}
+
+colnames(combine)
+
+
+calculate_cv_all <- function(x) {
+  valid_values <- na.omit(x)
+  (sd(valid_values) / mean(valid_values))}
+
+## database
+atp_uniprot <- read.csv("ATP_binding_uniprot.csv",header = T)
+
+final_list <- combine %>%
+   mutate(
+  
+    CV_EC50 = NA_real_,
+    mean_EC50 = NA_real_,
+    CV_EC50 = ifelse(regulation %in% c("stabilized", "destabilized"),
+                     apply(select(., starts_with("EC50_")), 1, calculate_cv_all), CV_EC50),
+    mean_EC50 = ifelse(regulation %in% c("stabilized", "destabilized"),
+                      rowMeans(across(starts_with("EC50_rep")), na.rm = TRUE),mean_EC50),
+is.uniprot.atp = ifelse(Protein.Group %in% atp_uniprot$Entry,"yes","no"),
+is.EC50.reproducible = 
+           case_when(
+             CV_EC50 < 0.25 ~"yes",
+             CV_EC50 > 0.25 ~"no",
+             TRUE ~"unknown"))
+
+
+
+  
+colSums(!is.na(final_list))
+
+write.xlsx(final_list,file="Supplementary dataset 3.xlsx")
+
+```
+
+
+# 5. Get single concentration data HT-PELSA 5 mM for Fig.S2B
+
+```{r}
+
+load("peptide_dd_with_position.Rdata")
+
+colnames(peptide_dd_with_position)
+
+# step-1：data-processing
+  peptide_intensity <- peptide_dd_with_position %>%
+    select(Protein.Ids, Genes, First.Protein.Description, Stripped.Sequence, peptide.length, from, to, 
+           starts_with("sum_control"), starts_with("sum_5mM")) %>%
+    distinct(Stripped.Sequence, .keep_all = TRUE) %>%
+    ungroup()%>%
+    filter(rowSums(.[8:15] == 0) == 0)
+
+# step-2：Bayes t-test
+  data <- peptide_intensity 
+  columnnames <- c("Protein.Ids", "Genes", "name", "sequence", "length", "start", "end", "control_1", "control_2", "control_3", "control_4", "D1_1", "D1_2", "D1_3", "D1_4", "UID")
+  design <- model.matrix(~ 0 + factor(c(0, 0, 0, 0, 1, 1, 1, 1))) # 0=Vehicle; 1=Drug
+  colnames(design) <- c("V", "D") # 0=Vehicle; 1=Drug
+  
+  data.DIA <- grep("_", colnames(data))
+  data[, data.DIA] <- log((data[, data.DIA]), base = 2)
+  data.metanms <- grep("Stripped.Sequence", colnames(data))
+  data$last <- (regexpr(';', as.character(data$Protein.Ids)) - 1) # if no ";" then = -1
+  data$UID <- ifelse(data$last > 0, (substr(as.character(data$Protein.Ids), 1, data$last)),
+                     (as.character(data$Protein.Ids)))
+  data$last <- NULL
+  intensity <- grep("_", colnames(data))
+  data <- setNames(data, columnnames)
+  data$ID <- 1:nrow(data)
+  
+  fit <- lmFit(data[, intensity], design)
+  fit <- eBayes(fit) ## Apply empirical Bayes smoothing to the standard errors.
+  contrast <- makeContrasts("D-V", levels = design)
+  fit2 <- contrasts.fit(fit, contrast)
+  fit2 <- eBayes(fit2, trend = TRUE)
+  
+  ptopf <- topTableF(fit2, adjust = "BH", genelist = data[, c("ID")], number = Inf)
+  ptopf$rank <- 1:length(ptopf$F)
+  ptopf$numfp <- ptopf$rank * ptopf$adj.P.Val
+  
+  t.stat <- topTable(fit2, adjust = "BH", genelist = data[, "ID"], coef = 1, p.value = 1, number = Inf)
+  nms <- grep("logFC", colnames(t.stat)) 
+  colnames(t.stat)[nms] <- "Log2FC"
+  t.stat$Log10P.Value <- -log(t.stat$P.Value, base = 10)
+  t.stat$Log10adj.P.Val <- -log(t.stat$adj.P.Val, base = 10)
+  t.statNMS <- t.stat[c("ID", "Log2FC", "Log10P.Value", "Log10adj.P.Val", "P.Value", "adj.P.Val", "AveExpr", "t", "B")]
+  t.stat <- t.statNMS
+  
+  data.analysis <- merge(t.stat, data, by = "ID", all = TRUE, sort = FALSE)
+  
+  
+# step-3：annotation known binding
+  uniprot_atp <- read.csv("ATP_binding_uniprot.csv", header = TRUE)
+  
+colnames(data.analysis)
+data.analysis <- data.analysis %>%
+  mutate(is.uniprot.atp = ifelse(UID %in% atp_uniprot$Entry,"yes","no"))
+
+
+
+write.csv(data.analysis, file = "htPELSA_bayes_test_5mM_ATP.csv")
+
+```
+
+
+# 6. Plot
+
+## Fig.2A: Heatmap of all ATP-stabilized proteins
+
+```{r}
+
+other_columns <- final_list %>%
+  filter(total_dd_count_sta == 3 | total_dd_count_sta == 4) %>%
+  filter(CV_EC50 < 0.25) %>% 
+  select(-contains("_rep")) %>%  
+  distinct(Stripped.Sequence, .keep_all = TRUE) 
+
+stabilized_peptides <- final_list %>%
+  filter(total_dd_count_sta == 3 | total_dd_count_sta == 4) %>%
+  filter(CV_EC50 < 0.25) %>% 
+  select(1:11,110:112,contains("Ratio"))%>%
+  pivot_longer(
+    cols = contains("_rep"),
+    names_to = c(".value", "reps"), 
+    names_sep = "_rep") %>%
+  group_by(Stripped.Sequence) %>%
+  summarise(across(contains("Ratio"), mean, na.rm = TRUE)) %>%
+  left_join(other_columns,by="Stripped.Sequence")
+
+
+protein_level <- stabilized_peptides %>%
+  arrange(desc(mean_EC50)) %>%
+  distinct(Protein.Group,.keep_all = TRUE) %>%
+  mutate(across(contains("Ratio"), 
+                ~ log2(.), 
+                .names = "{.col}_log2")) 
+
+plot <- protein_level %>%
+  select(contains("_log2"))
+
+colnames(plot) <- c("control","10 uM","100 uM","200 uM",
+                    "500 uM","1 mM","5 mM","10 mM")
+
+row.names(plot) <- protein_level$Protein.Group  
+
+
+annotation_is.ATP  <- protein_level %>%
+  select(10,40) %>%
+  tibble::column_to_rownames(var = names(.)[1]) 
+
+
+annotation_EC50 <- protein_level %>%
+  select(10,39)%>%
+  tibble::column_to_rownames(var = names(.)[1]) 
+
+
+row.names(annotation) <- row.names(plot)
+ann_colors <- list(is.uniprot.atp = c("no" = "#cfcfcf","yes" = "#1d6375"),
+                   mean_EC50 = colorRampPalette(c("#f0b38c", "#6c1f58"))(10))
+
+
+
+plot <- as.matrix(plot)
+
+my_colors <- colorRampPalette(c("#176226","#f7fbff"))(40)
+
+pdf(file = "Fig.2A.pdf",width = 8,height = 8,onefile = FALSE)
+
+pheatmap(plot,cluster_rows = F, cluster_cols = F,
+                              annotation_names_col = F,
+                      annotation_names_row = F,
+                      annotation_row = cbind(annotation_EC50,annotation_is.ATP),
+                      show_rownames = FALSE, 
+                      color = my_colors,
+                      annotation_colors = ann_colors) 
+dev.off()
+getwd()
+
+
+while (!is.null(dev.list())) {
+  dev.off()
+}
+
+```
+
+
+## Fig.2B and Fig.S2C: pEC50 and CV of pEC50 distributions of ATP-stabilized peptides
+
+```{r}
+
+stabilized_peptides <- final_list %>%
+  filter(total_dd_count_sta == 3 | total_dd_count_sta == 4) %>%
+  filter(CV_EC50 < 0.25) 
+
+group_counts <- stabilized_peptides %>%
+  group_by(is.uniprot.atp) %>%
+  summarise(count = n()) %>%
+  mutate(label = paste0(is.uniprot.atp, " (n=", count, ")"))
+
+
+p <- ggplot(data=stabilized_peptides,mapping=aes(x=mean_EC50,fill=is.uniprot.atp ),color="black")+
+  geom_density(mapping = aes(y = after_stat(density * n/nrow(stabilized_peptides))),alpha=0.6,size=0.5)+theme_classic()+
+  scale_fill_manual(name="Is.uniprot.ATP",values = c("#6baed6","#7fc97f"),
+                    labels = group_counts$label,
+                    breaks = c("no","yes"))+
+  xlab("mean_pEC50")+
+  ylab("density")+mytheme+
+  annotate("text", 
+           x = max(stabilized_peptides$mean_EC50, na.rm = TRUE) ,
+           y = Inf,
+           label = paste("Total stabilized peptides n =", nrow(stabilized_peptides)),
+           vjust = 1.5, hjust = 1,
+           size = 2.4, color = "black")+
+  force_panelsizes(rows = unit(1.85, "in"),
+                   cols = unit(1.85, "in"))
+  
+  
+p
+
+ggsave("Fig.2B.pdf",p,width =8,height = 8,units = "cm")
+
+
+
+## for Fig.S2C
+
+median_val <- median(stabilized_peptides$CV_EC50, na.rm = TRUE)
+
+p <- ggplot(stabilized_peptides, aes(x = CV_EC50)) +
+  geom_density(fill = "#a995c4", alpha = 0.5, color = "black",size = 0.4)+
+  geom_vline(xintercept = median_val, color = "#999999", linetype = "dashed", linewidth = 0.3) +  
+  annotate(
+    "text", 
+    size=3,
+    x = median_val, 
+    y = 0.1 * max(density(stabilized_peptides$CV_EC50, na.rm = TRUE)$y),
+    label = paste("Median =", round(median_val, 2)),
+    color = "red", vjust = -1, hjust = -0.1
+  ) +
+  labs(
+    title = "CV of pEC50 for stabilized peptides",
+    x = "CV of pEC50 across replicates",
+    y = "Density"
+  ) + 
+  annotate("text", 
+           x = max(stabilized_peptides$CV_EC50, na.rm = TRUE) ,
+           y = Inf,
+           label = paste("Total destabilized peptides n =", nrow(stabilized_peptides)),
+           vjust = 1.5, hjust = 1,
+           size = 2.4, color = "black")+
+  force_panelsizes(rows = unit(1.85, "in"),
+                       cols = unit(1.85, "in"))+theme_classic()+mytheme
+
+p
+ggsave("Fig.S2C.pdf",p,width =8,height = 8,units = "cm")
+
+```
+
+
+## Fig.2C and S2A: Comparing dose-response results of HT-PELSA and LiP-MS (Fig.2C: peptide level; Fig.S2A: protein level)
+
+```{r}
+
+atp_uniprot <- read.csv("ATP_binding_uniprot.csv", header = T)
+
+lip_ms_dd <- bind_rows(
+  "lip_new" = openxlsx::read.xlsx("LiP-MS_dose_response.xlsx", sheet = "NEW_ATP_Proteins"), 
+  "lip_known" = openxlsx::read.xlsx("LiP-MS_dose_response.xlsx", sheet = "KNOWN_ATP_Proteins"),
+  .id="is.atp_lip") %>%  
+  mutate(is.uniprot.atp = ifelse(ProteinID %in% atp_uniprot$Entry,"yes","no")) %>% 
+  select("PeptideID","ProteinID",
+         "is.uniprot.atp" )
+
+
+
+pelsa_stabilized_peptides <- final_list %>%
+  filter(total_dd_count_sta == 3 | total_dd_count_sta == 4) %>%
+  filter(CV_EC50 < 0.25) %>% 
+  select("Stripped.Sequence","Protein.Group",
+         "is.uniprot.atp") %>% 
+  rename("PeptideID" = 1,"ProteinID"= "Protein.Group")
+  
+
+dd_compare <- bind_rows(
+  "lip_ms_dd" = lip_ms_dd,
+"pelsa_sta" = pelsa_stabilized_peptides,
+.id = "type") %>%
+  group_by(type,is.uniprot.atp) %>%
+  count()
+
+dd_compare_protein <- bind_rows(
+  "lip_ms_dd" = lip_ms_dd,
+"pelsa_sta" = pelsa_stabilized_peptides,
+.id = "type") %>%
+  distinct(ProteinID,.keep_all = TRUE) %>% 
+  group_by(type,is.uniprot.atp) %>%
+  count()
+
+
+## for Fig.2C
+data_plot <- dd_compare %>%
+  pivot_wider(names_from = is.uniprot.atp, values_from = n) %>%
+  mutate(Ratio = yes / (no + yes))%>%
+  pivot_longer(cols = c(yes, no), names_to = "Group", values_to = "n") 
+
+
+p <- ggplot(data=data_plot)+
+  geom_bar(aes(x=type,y=n,fill=Group),stat = "identity",width = 0.4)+
+  geom_point(aes(x=type,y=Ratio*2200),size=0.75,shape=15,color="chocolate")+
+  geom_line(aes(x=type,y=Ratio*2200,group=1),size=0.3,color="chocolate")+
+  scale_y_continuous("peptide number",breaks = c(0,300,600,900,1200,1500),limits = c(0,1650))+
+  scale_x_discrete(expand=c(0.1,0.1))+
+  scale_fill_manual(name="known.ATP.binders",breaks=c("yes","no"),values = c("#a995c4","gray75"))+
+  theme_classic()+
+  annotate(x=rep(c("lip_ms_dd", "pelsa_sta"),times=2),y=c(60,500,300,1250),label=c("137","1013","465","413"),geom = "text",size=2)+
+  annotate(x=rep(c("lip_ms_dd", "pelsa_sta"),times=1),y=c(600,1630),label=c("22.7%","71.0%"),geom = "text",size=2,color="chocolate")+
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(size=5,color="black",margin = margin(2,0,-4.5,0)),
+        axis.title.y = element_text(size = 6,margin = margin(0,0,0,-3)),
+        axis.text.y = element_text(size = 5,colour = "black",margin = margin(0,0.8,0,0)),
+        legend.position = "right",
+        legend.title = element_text(size = 5),
+        legend.key.size = unit(5,"points"),legend.spacing.x = unit(0.05,"cm"),legend.text = element_text(size = 5),legend.background = element_blank(),
+        axis.ticks = element_line(size = 0.2,color = "black"),
+        axis.ticks.length = unit(0.05,"cm"),
+        axis.line = element_line(size=0.2))
+
+p
+ggsave("Fig.2C.pdf",p,width =6.5,height = 6,units = "cm")
+
+
+## for Fig.S2A protein level
+data_plot_pro <- dd_compare_protein %>%
+  pivot_wider(names_from = is.uniprot.atp, values_from = n) %>%
+  mutate(Ratio = yes / (no + yes))%>%
+  pivot_longer(cols = c(yes, no), names_to = "Group", values_to = "n") 
+
+
+p <- ggplot(data=data_plot_pro)+
+  geom_bar(aes(x=type,y=n,fill=Group),stat = "identity",width = 0.4)+
+  geom_point(aes(x=type,y=Ratio*600),size=0.75,shape=15,color="chocolate")+
+  geom_line(aes(x=type,y=Ratio*600,group=1),size=0.3,color="chocolate")+
+  scale_y_continuous("protein number",breaks = c(0,50,100,150,200,250,300,350),limits = c(0,360))+
+  scale_x_discrete(expand=c(0.1,0.1))+
+  scale_fill_manual(name="known.ATP.binders",breaks=c("yes","no"),values = c("#a995c4","gray75"))+
+  theme_classic()+
+  annotate(x=rep(c("lip_ms_dd", "pelsa_sta"),times=2),y=c(30,90,100,250),label=c("52","174","123","127"),geom = "text",size=2)+
+  annotate(x=rep(c("lip_ms_dd", "pelsa_sta"),times=1),y=c(188,359),label=c("30%","58%"),geom = "text",size=2,color="chocolate")+
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(size=5,color="black",margin = margin(2,0,-4.5,0)),
+        axis.title.y = element_text(size = 6,margin = margin(0,0,0,-3)),
+        axis.text.y = element_text(size = 5,colour = "black",margin = margin(0,0.8,0,0)),
+        legend.position = "right",
+        legend.title = element_text(size = 5),
+        legend.key.size = unit(5,"points"),legend.spacing.x = unit(0.05,"cm"),legend.text = element_text(size = 5),legend.background = element_blank(),
+        axis.ticks = element_line(size = 0.2,color = "black"),
+        axis.ticks.length = unit(0.05,"cm"),
+        axis.line = element_line(size=0.2))
+
+p
+ggsave("Fig.S2A.pdf",p,width =6.5,height = 6,units = "cm")
+
+
+```
+
+
+## Fig.2D: The distance between des/stabilized/unchanged peptides and ATP-binding sites, 
+
+```{r}
+
+# "alphafold_peptide_start_end_distance_all_proteins.csv" calculated in python 
+# with ...py
+
+destabilized_peptides <- final_list %>%
+  filter(total_dd_count_des == 3 | total_dd_count_des == 4) %>%
+  filter(CV_EC50 < 0.25) %>% 
+   mutate(peptideID = paste0(Protein.Group, "_", as.character(from), "_", as.character(to)))
+  
+
+
+distance <- read.csv("alphafold_peptide_start_end_distance_all_proteins.csv", header = T)%>%
+  filter(grepl("ATP",binding_site_id)) %>%
+  mutate(atom_distance = pmin(min_atom_distance_start, min_atom_distance_end, na.rm = TRUE)) %>%
+  mutate(CA_distance = pmin(CA_distance_start, CA_distance_end, na.rm = TRUE)) %>%
+  arrange(atom_distance) %>%
+  distinct(Protein.Group, from, to,.keep_all = T) %>%
+  mutate(peptideID = paste0(Protein.Group, "_", as.character(from), "_", as.character(to)))%>%
+  mutate(is.changed_all = case_when(
+    peptideID %in% destabilized_peptides$peptideID ~ "destabilized",
+    is.changed == "stabilized" ~ "stabilized",
+    is.changed == "unchanged" ~ "unchanged",
+    TRUE ~ NA_character_  
+  )) %>%
+  mutate(
+  is.changed_all = factor(
+    is.changed_all,
+    levels = c("stabilized", "unchanged", "destabilized"),
+    ordered = TRUE))
+
+table(distance$is.changed_all)
+
+
+
+group_stats <- distance %>%
+  group_by(is.changed_all) %>%
+  summarise(
+    n = n(),
+    median_val = median(atom_distance, na.rm = TRUE))
+
+summary(distance)
+
+compaired <- list(c("stabilized", "unchanged"),c("unchanged","destabilized")) 
+
+##### get significant level
+
+p <- ggplot(data=distance,aes(x=factor(is.changed_all,levels = c("stabilized", "unchanged", "destabilized")),y=atom_distance,fill=is.changed_all))+
+  stat_boxplot(geom = "errorbar",width=0.3)+
+  geom_boxplot(fatten=1,
+               position = position_dodge(0.3),width=0.5,col="black",outlier.shape = NA)+
+  scale_fill_manual("is.changed",
+                    values = c("#b7b3d6","#bebebe","#fdad56"),limits=c("stabilized","unchanged","destabilized"))
+p <- p+ xlab("")+ylab("Atom distance to ATP-binding sites")+theme_bw()+mytheme+scale_y_continuous(limits = c(0,100),breaks = seq(0,100,20))+
+  scale_x_discrete(labels=function(x) str_wrap(x,width = 11))+
+  geom_signif(comparisons = compaired,map_signif_level = F,test = wilcox.test,y_position = c(65,80),textsize = 3,
+              tip_length = 0) +
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        axis.line = element_line(linewidth = 0.3),
+        axis.ticks = element_line(linewidth = 0.3),
+        panel.border = element_rect(linewidth = 0.3, color = "black", fill = NA))+
+  geom_text(
+    data = group_stats,
+    aes(
+      x = is.changed_all,
+      y = 70, 
+      label = paste0("n = ", n)
+    ),
+    vjust = 1,
+    size = 2.5,
+    color = "black"
+  ) +
+  geom_text(
+    data = group_stats,
+    aes(
+      x = is.changed_all,
+      y = median_val,
+      label = sprintf("%.1f", median_val)
+    ),
+    vjust = -0.5, 
+    size = 2.2,
+    color = "black"
+  ) 
+p <- p+ force_panelsizes(rows = unit(1.8, "in"),
+                         cols = unit(1.8, "in"))
+p
+
+
+ggsave(paste0("Fig.2D",".pdf"),width=8,height=8,useDingbats=FALSE)
+
+```
+
+
+## Fig.2F: Dot-plot showing the pEC50 values of Dnak ATP-responsive peptides
+
+```{r}
+
+Dnak_peptides <- bind_rows(
+  "stabilized" = final_list %>%
+    filter(Stripped.Sequence %in% c("KVAEFFGKEPR","MPMVQKK")) %>%
+    na.omit(), 
+  "destabilized" = final_list %>%
+    filter(Stripped.Sequence %in% c("ASSGLNEDEIQK","HSQVFSTAEDNQSAVTIHVLQGER"))  %>%
+    na.omit(),
+  .id = "type") %>% 
+select("type","Stripped.Sequence",contains("EC50")) %>% 
+  pivot_longer(
+    cols = starts_with("EC50_rep"),
+    names_to = "rep",
+    values_to = "EC50"
+  ) %>% 
+  mutate(rep = gsub("EC50_", "", rep))
+  
+  
+
+
+
+Dnak_summary <- Dnak_peptides  %>%
+  group_by(Stripped.Sequence) %>%
+  summarise(
+    Mean = mean( EC50, na.rm = TRUE),
+    SD = sd(EC50, na.rm = TRUE),
+    N = n(),
+    .groups = "drop"
+  )
+
+
+
+p <- ggplot() +
+  # Raw data points (jittered)
+  geom_jitter(
+    data = Dnak_peptides,
+    aes(x = Stripped.Sequence, y = EC50, color = type),
+    width = 0.15, 
+    size = 3, 
+    alpha = 0.8)+ 
+   scale_color_manual(values= c("#ef8a62","#67a9cf"))+
+  geom_errorbar(data = Dnak_summary,
+                aes(x= Stripped.Sequence,
+                    ymin = Mean - SD,  
+                    ymax = Mean + SD),
+                width = 0.1,                  
+                size = 0.3,
+                alpha = 1) +mytheme+
+  scale_y_continuous( name = "pEC50",
+                      limits = c(2.5, 4.5),
+                      breaks = seq(2.5, 4.5, by = 0.5))+
+  force_panelsizes(rows = unit(1.85, "in"),
+                   cols = unit(1.85, "in"))+mytheme+theme_bw()
+
+p
+
+ggsave("Fig.2F.pdf", plot = p,
+       width = 6,          
+       height = 4,         
+       bg = "white")  
+
+
+```
+
+
+## Fig.S2B: Comparing sing-conc results of HT-PELSA and LiP-MS for ATP-binding protein identification
+
+```{r}
+
+## ATP by bayes 
+lip_ms_singleConc <- read.xlsx("LiP-MS_singleCon_.xlsx", sheet = "ATP") %>%
+  mutate(is.target = if_any(c(is_known_alloTarget, is_known_reactant, is_known_notMetTarget), ~ .x == TRUE, TRUE, FALSE)) %>%
+  mutate(is.uniprot.atp = ifelse(UniProtKB_ID %in% atp_uniprot$Entry,"yes","no"))
+
+lip_ms_5mM <- lip_ms_singleConc %>% 
+  filter(is_C1_validated == "TRUE") %>%
+  group_by(is.uniprot.atp) %>%
+  count() %>%
+  mutate(type="LiP_5mM")
+
+lip_ms_25mM <- lip_ms_singleConc %>%  
+  filter(is_C2_validated == "TRUE") %>%
+  group_by(is.uniprot.atp) %>%
+  count() %>%
+  mutate(type="LiP_25mM")
+
+
+
+## PELSA by bayes obtained from Chunk 5 above
+pelsa_5mM <- read.csv("htPELSA_bayes_test_5mM_ATP.csv") %>%
+  distinct(UID,.keep_all = TRUE) %>%
+  filter(Log2FC < 0) %>% mutate(
+    rank = row_number(),
+    atp_count = cumsum(is.uniprot.atp == "yes"),
+    TRP = atp_count / rank)%>%
+  filter(rank < 283) %>%
+  group_by(is.uniprot.atp) %>%
+  count() %>%
+  mutate(type= "PELSA_5mM")
+
+
+combine <- bind_rows(lip_ms_5mM,lip_ms_25mM,pelsa_5mM)
+
+colnames(combine)
+
+data_plot <- combine %>%
+  pivot_wider(names_from = is.uniprot.atp, values_from = n)%>%
+  mutate(Ratio = yes / (no + yes))%>%
+  pivot_longer(cols = c(yes, no), names_to = "Group", values_to = "n") %>%
+  mutate(type = factor(type, 
+                         levels = c("LiP_5mM", "LiP_25mM", "PELSA_5mM"),
+                         ordered = TRUE))
+  
+  
+
+p <- ggplot(data=data_plot)+
+  geom_bar(aes(x=type,y=n,fill=Group),stat = "identity",width = 0.4)+
+  geom_point(aes(x=type,y=Ratio*400),size=0.75,shape=15,color="chocolate")+
+  geom_line(aes(x=type,y=Ratio*400,group=1),size=0.3,color="chocolate")+
+  scale_y_continuous("protein number",breaks = c(0,50,100,150,200,250,300),limits = c(0,300))+
+  scale_x_discrete(expand=c(0.1,0.1))+
+  scale_fill_manual(name="known.ATP.binders",breaks=c("yes","no"),values = c("#a995c4","gray75"))+
+  theme_classic()+
+  annotate(x=rep(c("LiP_5mM", "LiP_25mM", "PELSA_5mM"),times=2),y=c(30,40,90,100,125,200),label=c("66","84","172","96","147","110"),geom = "text",size=2)+
+  annotate(x=rep(c("LiP_5mM", "LiP_25mM", "PELSA_5mM"),times=1),y=c(155,155,255),label=c("41%","36%","61%"),geom = "text",size=2,color="chocolate")+
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(size=5,color="black",margin = margin(2,0,-4.5,0)),
+        axis.title.y = element_text(size = 6,margin = margin(0,0,0,-3)),
+        axis.text.y = element_text(size = 5,colour = "black",margin = margin(0,0.8,0,0)),
+        legend.position = "right",
+        legend.title = element_text(size = 5),
+        legend.key.size = unit(5,"points"),legend.spacing.x = unit(0.05,"cm"),legend.text = element_text(size = 5),legend.background = element_blank(),
+        axis.ticks = element_line(size = 0.2,color = "black"),
+        axis.ticks.length = unit(0.05,"cm"),
+        axis.line = element_line(size=0.2))
+
+p
+
+ggsave("FigS2B.pdf",p,width =7,height = 6,units = "cm")
+
+```
+
+
+## Fig.S2D: pEC50 distribution of all ATP-destabilized peptides
+```{r}
+
+
+destabilized_peptides <- final_list %>%
+  filter(total_dd_count_des == 3 | total_dd_count_des == 4) %>%
+  filter(CV_EC50 < 0.25) 
+
+group_counts <- destabilized_peptides %>%
+  group_by(is.uniprot.atp) %>%
+  summarise(count = n()) %>%
+  mutate(label = paste0(is.uniprot.atp, " (n=", count, ")"))
+
+
+p<- ggplot(data=destabilized_peptides,mapping=aes(x=mean_EC50,fill=is.uniprot.atp ),color="black")+
+  geom_density(mapping = aes(y = after_stat(density * n/nrow(destabilized_peptides))),alpha=0.6,size=0.5)+theme_classic()+
+  scale_fill_manual(name="Is.uniprot.ATP",values = c("#6baed6","#7fc97f"),
+                    labels = group_counts$label,
+                    breaks = c("no","yes"))+
+  xlab("mean_pEC50")+
+  ylab("density")+mytheme+
+  annotate("text", 
+           x = max(destabilized_peptides$mean_EC50, na.rm = TRUE) ,
+           y = Inf,
+           label = paste("Total destabilized peptides n =", nrow(destabilized_peptides)),
+           vjust = 1.5, hjust = 1,
+           size = 2.4, color = "black")+
+  force_panelsizes(rows = unit(1.85, "in"),
+                   cols = unit(1.85, "in"))
+  
+  
+p
+
+ggsave("Fig.S2D.pdf",p,width =8,height = 8,units = "cm")
+
+```
+
+
+## Fig.S2E: Heatmap of all ATP-destabilized proteins
+```{r}
+
+## this is to annotate the destabilized peptides
+other_columns <- final_list %>%
+  filter(total_dd_count_des == 3 | total_dd_count_des == 4) %>%
+  filter(CV_EC50 < 0.25) %>% 
+  select(-contains("_rep")) %>%  
+  distinct(Stripped.Sequence, .keep_all = TRUE) 
+
+destabilized_peptides <- final_list %>%
+  filter(total_dd_count_des == 3 | total_dd_count_des == 4) %>%
+  filter(CV_EC50 < 0.25)  %>% 
+  select(1:11,110:112,contains("Ratio"))%>%
+  pivot_longer(
+    cols = contains("_rep"),
+    names_to = c(".value", "reps"), 
+    names_sep = "_rep") %>%
+  group_by(Stripped.Sequence) %>%
+  summarise(across(contains("Ratio"), mean, na.rm = TRUE))%>%
+  left_join(other_columns,by="Stripped.Sequence")
+
+
+protein_level <- destabilized_peptides %>%
+  arrange(desc(mean_EC50)) %>%
+  distinct(Protein.Group,.keep_all = TRUE) %>%
+  mutate(across(contains("Ratio"), 
+                ~ log2(.), 
+                .names = "{.col}_log2")) 
+
+
+plot <- protein_level %>%
+  select(contains("_log2"))
+
+colnames(plot) <- c("control","10 uM","100 uM","200 uM",
+                    "500 uM","1 mM","5 mM","10 mM")
+
+row.names(plot) <- protein_level$Protein.Group  
+
+colnames(protein_level)
+
+
+annotation_is.ATP  <- protein_level %>%
+  select(10,40) %>%
+  tibble::column_to_rownames(var = names(.)[1]) 
+
+
+annotation_EC50 <- protein_level %>%
+  select(10,39)%>%
+  tibble::column_to_rownames(var = names(.)[1]) 
+
+
+
+
+ann_colors <- list(is.uniprot.atp = c("no" = "#cfcfcf","yes" = "#1d6375"),
+                   mean_EC50 = colorRampPalette(c("#f0b38c", "#6c1f58"))(10))
+
+
+
+my_colors = c(colorRampPalette(colors = c("#65a9a2","white"))(10),
+              colorRampPalette(colors = c("white","#683e9c"))(30))
+my_breaks <- c(
+  seq(-1, 0, length.out = 11),  
+  seq(0, 3, length.out = 31)[-1])
+
+
+plot <- as.matrix(plot)
+
+
+pdf(file = "Fig.S2E.pdf",width = 8,height = 8,onefile = FALSE)
+
+pheatmap(plot,cluster_rows = F, cluster_cols = F,
+         annotation_names_col = F,
+         annotation_names_row = F,
+         annotation_row = cbind(annotation_EC50,annotation_is.ATP),
+         show_rownames = FALSE, 
+         color = my_colors,
+         breaks = my_breaks,
+         annotation_colors = ann_colors) 
+
+dev.off()
+
+```
+
+
+## Fig.S2F and S2G: GO analysis of the high-affinity ATP-destabilized proteins
+
+```{r}
+
+high_affinity_destabilized_protein <- final_list %>%
+  filter(total_dd_count_des == 3 | total_dd_count_des == 4) %>%
+  filter(CV_EC50 < 0.25)%>% 
+  filter(mean_EC50 >3) %>% 
+  distinct(Protein.Group,.keep_all = TRUE)
+
+colnames(high_affinity_destabilized_protein)
+
+## background proteins are those with at least one peptide quantified in at least 3 replicates
+background_protein <- final_list %>% 
+  filter(total_count == 3 | total_count == 4 ) %>% 
+   distinct(Protein.Group,.keep_all = TRUE)
+
+```
+
