@@ -852,7 +852,7 @@ ggsave("Fig.S2A.pdf",p,width =6.5,height = 6,units = "cm")
 ```{r}
 
 # "alphafold_peptide_start_end_distance_all_proteins.csv" calculated in python 
-# with ...py
+# with compute_distances.py from peptide_dd_affinity.csv 
 
 destabilized_peptides <- final_list %>%
   filter(total_dd_count_des == 3 | total_dd_count_des == 4) %>%
