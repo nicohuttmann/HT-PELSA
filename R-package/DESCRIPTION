@@ -1,0 +1,28 @@
+Package: HT.PELSA
+Type: Package
+Title: Analysis package for PELSA data 
+Version: 1.0.0
+Authors@R: c(
+  person("Nico", "Hüttmann", email = "nico.huettmann@embl.de", role = c("aut", "cre"),
+         comment = c(ORCID = "0000-0001-9321-2675")), 
+  person("Kejia", "Li", role = c("aut"),
+         comment = c(ORCID = "0000-0001-9989-2069"))
+  )         
+Description: Analyze single-dose and dose-response PELSA data 
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+URL: https://github.com/nicohuttmann/HT-PELSA/, https://nicohuttmann.github.io/HT-PELSA/
+BugReports: https://github.com/nicohuttmann/HT-PELSA/issues
+Suggests: 
+    BiocManager, 
+    limma, 
+    biobroom, 
+    drc, 
+    furrr
+VignetteBuilder: knitr
+Imports:
+    tidyverse, 
+    vroom, 
+    arrow
+RoxygenNote: 7.3.1
