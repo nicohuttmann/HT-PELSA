@@ -1,0 +1,564 @@
+---
+title: "crude_liver"
+author: "Kejia Li"
+date: "2025-03-03"
+output:
+  html_document:
+    keep_md: true
+    toc: true
+    theme: united
+    toc_float: true
+    code_folding: hide
+  pdf_document:
+    toc: true
+editor_options:
+  
+  chunk_output_type: console
+---
+
+
+# 1.General settings 
+
+## 1.1 Chunk settings
+
+```{r setup}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  include = TRUE,
+  cache = TRUE,
+  cache.lazy = FALSE,
+  eval = TRUE,
+  fig.width = 4 * (1 + sqrt(5)) / 2, 
+  fig.height = 4,
+  dpi = 700
+)
+```
+
+
+## 1.2 Packages
+
+```{r, message=F, warning =F}
+library(tidyverse)
+library(ggplot2)
+library(reshape2)
+library(ggrepel)
+library(knitr)
+library(ggpubr)
+library(ggforce)
+library(UniprotR)
+library(Peptides)
+library(biomaRt)
+library(Biostrings)
+library(limma)
+library(vroom)
+library(stringr)
+library(corrplot)
+library(ggh4x)
+library(openxlsx)
+library(htmltools)
+
+
+mutate <- dplyr::mutate
+select <- dplyr::select
+group_by <- dplyr::group_by
+filter <- dplyr::filter
+rename <- dplyr::rename
+
+```
+
+
+## 1.3 Graphics
+
+```{r}
+
+mytheme <- theme( 
+  panel.background = element_rect(color = "black", linewidth = 0.5),
+  axis.title.x = element_text(colour = "black", size = 7),
+  axis.title.y = element_text(colour = "black", size = 7),
+  axis.text  = element_text(size = 7, color = "black"),
+  legend.position = "top", legend.key.size = unit(0.35, "cm"),
+  legend.title = element_blank(),
+  legend.text = element_text(colour = "black", size = 7)
+)
+
+```
+
+
+# 2. ht-PELSA data analysis
+
+## 2.1 Import data 
+
+```{r}
+
+datasets <- list(
+  htPELSA_liver = vroom::vroom("htpelsa_staurosporine_liver_report.pr_matrix.tsv") %>% 
+    select(1:10,18,17,16,15,14,13,12,11),
+  htPELSA_liver_treatSeparately = vroom::vroom("htpelsa_staurosporine_liver_treatSeparately_report.pr_matrix.tsv") %>% 
+    select(1:10,18,15,14,11,17,16,13,12))
+
+
+
+diann_prec_add_peptide_pos2 <- function(data_precursor, fasta, silent = T) {
+  
+  if (!hasArg(data_precursor)) stop("Please specify a data frame or a tibble of the DIA-NN precursors.")
+  
+  if (!hasArg(fasta)) fasta <- choose.files(multi = F, )
+  fasta <- Biostrings::readAAStringSet(fasta)
+  fasta <- as.character(fasta)
+  names(fasta) <- unlist(lapply(strsplit(x = names(fasta), "\\|"), \(x) x[2]))
+  
+  if (!silent) {
+    message(paste0(nrow(data_precursor), " precursors identified. This should take around ", 
+                   round(nrow(data_precursor) * 0.0000884 + 0.1463016, 2), " s."))
+    t0 <- Sys.time()
+  }
+  
+  # Add peptide positions
+  data_pos <- data_precursor %>% 
+    dplyr::rowwise() %>% 
+    dplyr::mutate(peptide.length = nchar(Stripped.Sequence), 
+                  from = regexpr(Stripped.Sequence, as.character(fasta[unlist(strsplit(Protein.Group, ";"))[1]]))[1], 
+                  to = from + peptide.length - 1, 
+                  .after = Modified.Sequence) %>% 
+    dplyr::ungroup()
+  
+  if (!silent) {
+    t1 <- Sys.time()
+    
+    duration <- t1 - t0
+    
+    if (duration > nrow(data_precursor) * 0.0000884 + 0.1463016) {
+      message(paste0("Sorry for the delay! It took ", round(duration, 2), " s."))
+    } else {
+      message(paste0("Wow, even faster! It only took ", round(duration, 2), " s."))
+    }
+  }
+  
+  return(data_pos)
+  
+}
+
+
+# Input the imported precursor data frame and specify the fasta file
+fasta_path <- "Mus_musculus_uniprotkb_proteome_UP000000589_AND_revi_2023_09_25.fasta"
+
+datasets <- purrr::map(datasets, 
+                       diann_prec_add_peptide_pos2, 
+                       fasta_path, 
+                       F)
+
+```
+
+
+## 2.2. Divide into two groups
+
+```{r}
+
+# Function to rename data frames 
+process_data <- function(data) {
+  data %>%
+    select(1:21) %>%
+    rename(
+      control_1 = 14, control_2 = 15, control_3 = 16, control_4 = 17, 
+      drug_1 = 18, drug_2 = 19, drug_3 = 20, drug_4 = 21)
+}
+
+# Apply the function to all datasets
+datasets <- purrr::map(datasets, process_data)
+
+colnames(datasets[["htPELSA_liver"]])
+
+```
+
+
+## 2.3 Statistic test analysis
+
+```{r, include=FALSE, eval=FALSE}
+
+analyse_dataset <- function(data, dataset_name) {
+  
+  
+  # step-1：data-processing
+  peptide_intensity <- data %>%
+    group_by(Stripped.Sequence) %>%
+    mutate(across(c(drug_1, drug_2, drug_3, drug_4, control_1, control_2, control_3, control_4), ~sum(.x, na.rm = TRUE), .names = "sum_{col}")) %>%
+    select(Protein.Ids, Genes, First.Protein.Description, Stripped.Sequence, peptide.length, from, to, 
+           starts_with("sum_")) %>%
+    distinct(Stripped.Sequence, .keep_all = TRUE) %>%
+    ungroup() %>%
+    filter(rowSums(.[8:15] == 0) == 0)
+  
+  
+  # step-2：Bayes t-test
+  data <- peptide_intensity %>% select(c(1:7, 12:15, 8:11))
+  columnnames <- c("Protein.Ids", "Genes", "name", "sequence", "length", "start", "end", 
+                   "control_1", "control_2", "control_3", "control_4", "D1_1", "D1_2", "D1_3", "D1_4", "UID")
+  design <- model.matrix(~ 0 + factor(c(0, 0, 0, 0, 1, 1, 1, 1))) # 0=Vehicle; 1=Drug
+  colnames(design) <- c("V", "D") # 0=Vehicle; 1=Drug
+  
+  data.DIA <- grep("_", colnames(data))
+  data[, data.DIA] <- log((data[, data.DIA]), base = 2)
+  data.metanms <- grep("Stripped.Sequence", colnames(data))
+  data$last <- (regexpr(';', as.character(data$Protein.Ids)) - 1) # if no ";" then = -1
+  data$UID <- ifelse(data$last > 0, (substr(as.character(data$Protein.Ids), 1, data$last)),
+                     (as.character(data$Protein.Ids)))
+  data$last <- NULL
+  intensity <- grep("_", colnames(data))
+  data <- setNames(data, columnnames)
+  data$ID <- 1:nrow(data)
+  
+  fit <- lmFit(data[, intensity], design)
+  fit <- eBayes(fit) ## Apply empirical Bayes smoothing to the standard errors.
+  contrast <- makeContrasts("D-V", levels = design)
+  fit2 <- contrasts.fit(fit, contrast)
+  fit2 <- eBayes(fit2, trend = TRUE)
+  
+  ptopf <- topTableF(fit2, adjust = "BH", genelist = data[, c("ID")], number = Inf)
+  ptopf$rank <- 1:length(ptopf$F)
+  ptopf$numfp <- ptopf$rank * ptopf$adj.P.Val
+  
+  t.stat <- topTable(fit2, adjust = "BH", genelist = data[, "ID"], coef = 1, p.value = 1, number = Inf)
+  nms <- grep("logFC", colnames(t.stat)) 
+  colnames(t.stat)[nms] <- "Log2FC"
+  t.stat$Log10P.Value <- -log(t.stat$P.Value, base = 10)
+  t.stat$Log10adj.P.Val <- -log(t.stat$adj.P.Val, base = 10)
+  t.statNMS <- t.stat[c("ID", "Log2FC", "Log10P.Value", "Log10adj.P.Val", "P.Value", "adj.P.Val", "AveExpr", "t", "B")]
+  t.stat <- t.statNMS
+  
+  
+    # step-3：annotation known binding
+  kinase <- read.csv("mouse_kinase_unprot.csv", header = TRUE)
+  
+  data.analysis <- merge(t.stat, data, by = "ID", all = TRUE, sort = FALSE) %>% 
+  mutate(is.kinase = ifelse(UID %in% kinase$Entry,"yes","no")) %>% 
+    mutate(cor_log2FC = -Log2FC)
+  
+  
+  # write csv or xlsx
+  write.csv(data.analysis, file = paste0("bayes_test_", dataset_name,".csv"))
+  
+}
+
+
+# Do limma analysis with all datasets and save as .csv
+purrr::iwalk(datasets, analyse_dataset)
+
+```
+
+
+## 2.4. Fig.3F and Fig.S6A: Volcano plot showing staurosporine target identification in the mouse liver lysates
+
+```{r}
+
+## run this line for Fig.3F
+data_for_volcano <- read.csv("bayes_test_htPELSA_liver.csv") %>% 
+  distinct(UID,.keep_all = TRUE)
+
+## run this line for Fig.S6A
+data_for_volcano <- read.csv("bayes_test_htPELSA_liver_treatSeparately.csv") %>% 
+  distinct(UID,.keep_all = TRUE)
+
+
+## for plotting
+
+p <- ggplot(data = data_for_volcano , aes(x = Log2FC, y = Log10P.Value, fill = is.kinase)) +
+  geom_point(shape = 21,color = "black", size = 2, alpha = 0.7,stroke= 0.2) +  
+  scale_fill_manual(name= "is.kinase",breaks = c("yes","no"), values = c("#E69F00","#b3b3b3")) + scale_x_continuous(
+    name = expression(Log["2"] * FC),
+    limits = c(-5, 5),
+    breaks = -4:4
+  ) +
+  scale_y_continuous(
+    name = expression(-Log["10"] * Pvalue),
+    limits = c(0, 14),
+    breaks = seq(0, 14, by = 2)
+  ) +
+  labs(
+    title = "liver_staurosporine",
+    color = "is.kinase"  
+  ) +
+  annotate(
+    "text", 
+    x = 0, y = 13, 
+    label = paste0("Protein number = ", nrow(data_for_volcano)), 
+    size = 5, 
+    hjust = 0.5, 
+    vjust = 1.5, 
+    color = "black"
+  ) +
+  theme_minimal()+ 
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0.5), 
+    axis.title = element_text(size = 12), 
+    axis.text = element_text(size = 12,color="black"), 
+    legend.title = element_text(size = 12), 
+    legend.text = element_text(size = 10),  
+    panel.grid.major = element_line(color = "grey80", linewidth = 0.2),  
+    panel.grid.minor = element_blank(),  
+    panel.background = element_rect(fill = "white", color = "black", linewidth = 1),  
+    plot.background = element_rect(fill = "white",colour = NA),axis.ticks = element_line(color = "black", linewidth = 0.5),  
+    axis.ticks.length = unit(0.2, "cm")  
+  )
+
+p
+
+
+ggsave(paste0("Fig.3F", ".pdf"), width = 6, height = 5.5, useDingbats = FALSE)
+
+```
+
+
+# 3 PISA and TPP 
+
+## 3.1 PISA and TPP data analysis:
+
+```{r, echo=TRUE}
+
+## Read datasets, these datasets come from DIANN output protein.group 
+
+datasets <- list(
+  TPP_T4 = vroom::vroom("DIA_TPP_T4_protein.CSV") %>%
+    select(1:5,11,13,12,8,10,7,9,6) ,
+  
+  TPP_T5 = vroom::vroom("DIA_TPP_T5_protein.csv") %>% 
+    select(1:5,11,12,9,13,10,6,8,7),
+  
+  TPP_T6 = vroom::vroom("DIA_TPP_T6_protein.csv") %>% 
+    select(1:5,11,7,13,8,10,12,6,9),
+    
+  TPP_T7 = vroom::vroom("DIA_TPP_T7_protein.csv") %>% 
+    select(1:5,12,7,9,13,11,10,6,8),
+    
+  PISA = vroom::vroom("DIA_PISA_protein.csv") %>% 
+   select(1:5,13,11,9,7,12,10,8,6))
+
+
+
+# Function to rename data frames 
+process_data <- function(data) {
+  data %>%
+    rename(
+      control_1 = 6, control_2 = 7, control_3 = 8, control_4 = 9, 
+      drug_1 = 10, drug_2 = 11, drug_3 = 12, drug_4 = 13)
+}
+
+# Apply the function to all datasets
+datasets <- purrr::map(datasets, process_data)
+
+
+
+analyse_dataset <- function(data, dataset_name) {
+  
+  # step-1：data-processing
+  data <- data %>%
+    mutate(UID=
+    ifelse(grepl(";", data$Protein.Group),
+                   sub(";.*", "", data$Protein.Group),
+                   data$Protein.Group)) %>%
+    filter(rowSums(.[6:13] == 0) == 0)
+  
+  
+  # step-2：Bayes t-test
+  
+  columnnames <- c("Protein.Group",
+    "Protein.Ids", "name", "Genes", "Description",
+                 "control_1", "control_2", "control_3", "control_4", 
+                   "D1_1", "D1_2", "D1_3", "D1_4", "UID")
+  
+  design <- model.matrix(~ 0 + factor(c(0, 0, 0, 0, 
+                                        1, 1, 1, 1))) # 0=Vehicle; 1=Drug
+  colnames(design) <- c("V", "D") # 0=Vehicle; 1=Drug
+  
+  data.DIA <- grep("_", colnames(data))
+  data[, data.DIA] <- log((data[, data.DIA]), base = 2)
+  data.metanms <- grep("Stripped.Sequence", colnames(data))
+  data$last <- (regexpr(';', as.character(data$Protein.Ids)) - 1) # if no ";" then = -1
+  data$UID <- ifelse(data$last > 0, 
+                     (substr(as.character(data$Protein.Ids), 1, data$last)),
+                     (as.character(data$Protein.Ids)))
+  data$last <- NULL
+  intensity <- grep("_", colnames(data))
+  data <- setNames(data, columnnames)
+  data$ID <- 1:nrow(data)
+  
+  fit <- lmFit(data[, intensity], design)
+  fit <- eBayes(fit) ## Apply empirical Bayes smoothing to the standard errors.
+  contrast <- makeContrasts("D-V", levels = design)
+  fit2 <- contrasts.fit(fit, contrast)
+  fit2 <- eBayes(fit2, trend = TRUE)
+  
+  ptopf <- topTableF(fit2, adjust = "BH", 
+                     genelist = data[, c("ID")], 
+                     number = Inf)
+  ptopf$rank <- 1:length(ptopf$F)
+  ptopf$numfp <- ptopf$rank * ptopf$adj.P.Val
+  
+  t.stat <- topTable(fit2, adjust = "BH", genelist = data[, "ID"], 
+                     coef = 1, p.value = 1, number = Inf)
+  nms <- grep("logFC", colnames(t.stat)) 
+  colnames(t.stat)[nms] <- "Log2FC"
+  t.stat$Log10P.Value <- -log(t.stat$P.Value, base = 10)
+  t.stat$Log10adj.P.Val <- -log(t.stat$adj.P.Val, base = 10)
+  t.statNMS <- t.stat[c("ID", "Log2FC", "Log10P.Value", "Log10adj.P.Val", 
+                        "P.Value", "adj.P.Val", "AveExpr", "t", "B")]
+  t.stat <- t.statNMS
+  
+  data.analysis <- merge(t.stat, data, by = "ID", all = TRUE, sort = FALSE) %>% 
+  distinct(UID,.keep_all = T)
+  
+  
+  # step-3：annotation known binding
+  kinase <- read.csv("mouse_kinase_unprot.csv", header = TRUE)
+
+  
+  data.analysis <- data.analysis %>%
+    mutate(is.kinase = ifelse(UID %in% kinase$Entry,"yes","no")) %>% 
+    mutate(cor_log2FC= Log2FC)
+    
+  
+  # write csv or xlsx
+  write.csv(data.analysis, file = paste0("bayes_test_", 
+                                         dataset_name, 
+                                         ".csv"))
+  
+}
+
+# Do limma analysis with all datasets and save as .csv
+purrr::iwalk(datasets, analyse_dataset)
+
+
+```
+
+
+## 3.2 Fig.3G: Ture positive curve to compare target identification
+
+```{r, echo=TRUE}
+
+extract_data <- function(file_path, type_name) {
+  read_csv(file_path) %>%  
+    distinct(UID, .keep_all = TRUE) %>%
+    filter(cor_log2FC > 0) %>%
+    mutate(
+      rank = row_number(),
+      kinase_count = cumsum(is.kinase == "yes"),
+      TRP = kinase_count / rank,
+      type = type_name
+    ) %>%
+    filter(rank < 180) %>%
+    select(rank, kinase_count, TRP, type)
+}
+
+
+file_info <- list(
+  list(path = "bayes_test_htPELSA_liver.csv", type = "htPELSA"),
+  list(path = "bayes_test_htPELSA_liver_treatSeparately.csv", type = "htPELSA_treatSeparately"),
+  list(path = "bayes_test_PISA.csv", type = "PISA"),
+  list(path = "bayes_test_TPP_T4.csv", type = "TPP_49.8"),
+  list(path = "bayes_test_TPP_T5.csv", type = "TPP_52.9"),
+  list(path = "bayes_test_TPP_T6.csv", type = "TPP_55.5"),
+  list(path = "bayes_test_TPP_T7.csv", type = "TPP_58.6")
+)
+
+
+list_results <- map_dfr(file_info, ~ extract_data(.x$path, .x$type))
+
+
+
+p <- ggplot() + 
+  geom_line(data = list_results, 
+            aes(x = rank, y = kinase_count, color = type), 
+            linewidth = 0.7) +
+  geom_abline(intercept = 0, 
+              slope = c(0.7, 1), 
+              color = c("black", "grey"), 
+              linetype = c("dashed", "solid"), 
+              linewidth = 0.5) + 
+  scale_x_continuous("All candidate targets", limits = c(0, 180)) +
+  scale_y_continuous("kinase count", limits = c(0, 180)) +
+  
+  mytheme + 
+  force_panelsizes(rows = unit(3, "in"), cols = unit(3, "in")) + 
+  theme_bw()
+
+p
+
+ggsave(paste0("Fig.3G", ".pdf"), width = 6, height = 4, useDingbats = FALSE) 
+
+```
+
+
+
+## 3.3: Fig.S6B-S6F Volcano plot
+
+```{r}
+
+## PISA
+data_for_volcano <- read.csv("bayes_test_PISA.csv") %>%
+  arrange(is.kinase)
+
+## TPP_49.8C
+data_for_volcano <- read.csv("bayes_test_TPP_T4.csv") %>%
+  arrange(is.kinase)
+
+## TPP_52.9C
+data_for_volcano <- read.csv("bayes_test_TPP_T5.csv") %>%
+  arrange(is.kinase)
+
+## TPP_55.5C
+data_for_volcano <- read.csv("bayes_test_TPP_T6.csv") %>%
+  arrange(is.kinase)
+
+## TPP_58.6C
+data_for_volcano <- read.csv("bayes_test_TPP_T7.csv") %>%
+  arrange(is.kinase)
+
+
+
+p <- ggplot(data = data_for_volcano , aes(x = Log2FC, y = Log10P.Value, fill = is.kinase)) +
+  geom_point(shape = 21,color = "black", size = 2, alpha = 0.7,stroke= 0.2) +  
+  scale_fill_manual(name= "is.kinase",breaks = c("yes","no"), values = c("#E69F00","#b3b3b3")) + scale_x_continuous(
+    name = expression(Log["2"] * FC),
+    limits = c(-5, 5),
+    breaks = -5:5
+  ) +
+  scale_y_continuous(
+    name = expression(-Log["10"] * Pvalue),
+    limits = c(0, 15),
+    breaks = seq(0, 14, by = 2)
+  ) +
+  labs(
+    title = "liver_staurosporine",
+    color = "is.kinase"  
+  ) +
+  annotate(
+    "text", 
+    x = 0, y = 15, 
+    label = paste0("Protein number = ", nrow(data_for_volcano)), 
+    size = 5, 
+    hjust = 0.5, 
+    vjust = 1.5, 
+    color = "black"
+  ) +
+  theme_minimal()+ 
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0.5), 
+    axis.title = element_text(size = 12), 
+    axis.text = element_text(size = 12, color = "black"), 
+    legend.title = element_text(size = 12), 
+    legend.text = element_text(size = 10),  
+    panel.grid.major = element_line(color = "grey80", linewidth = 0.2),  
+    panel.grid.minor = element_blank(),  
+    panel.background = element_rect(fill = "white", color = "black", linewidth = 1),  
+    plot.background = element_rect(fill = "white", colour = NA), 
+    axis.ticks = element_line(color = "black", linewidth = 0.5),  
+    axis.ticks.length = unit(0.2, "cm")  
+  )
+
+p
+
+
+ggsave(paste0("Fig.S6", ".pdf"), width = 6, height = 5.5, useDingbats=FALSE)
+
+```

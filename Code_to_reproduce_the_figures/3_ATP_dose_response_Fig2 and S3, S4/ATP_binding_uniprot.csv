@@ -1,0 +1,599 @@
+Entry,Reviewed,Entry Name,Protein names,Gene Names,Organism,Length,Mass
+P00452,reviewed,RIR1_ECOLI,Ribonucleoside-diphosphate reductase 1 subunit alpha (EC 1.17.4.1) (Protein B1) (Ribonucleoside-diphosphate reductase 1 R1 subunit) (Ribonucleotide reductase 1),nrdA dnaF b2234 JW2228,Escherichia coli (strain K12),761,85775
+P00547,reviewed,KHSE_ECOLI,Homoserine kinase (HK) (HSK) (EC 2.7.1.39),thrB b0003 JW0002,Escherichia coli (strain K12),310,33624
+P00561,reviewed,AK1H_ECOLI,Bifunctional aspartokinase/homoserine dehydrogenase 1 (Aspartokinase I/homoserine dehydrogenase I) (AKI-HDI) [Includes: Aspartokinase (EC 2.7.2.4); Homoserine dehydrogenase (EC 1.1.1.3)],thrA thrA1 thrA2 b0002 JW0001,Escherichia coli (strain K12),820,89120
+P00562,reviewed,AK2H_ECOLI,Bifunctional aspartokinase/homoserine dehydrogenase 2 (Aspartokinase II/homoserine dehydrogenase II) (AKII-HDII) [Includes: Aspartokinase (EC 2.7.2.4); Homoserine dehydrogenase (EC 1.1.1.3)],metL metM b3940 JW3911,Escherichia coli (strain K12),810,88888
+P00936,reviewed,CYAA_ECOLI,Adenylate cyclase (EC 4.6.1.1) (ATP pyrophosphate-lyase) (Adenylyl cyclase),cyaA cya b3806 JW3778,Escherichia coli (strain K12),848,97586
+P00954,reviewed,SYW_ECOLI,Tryptophan--tRNA ligase (EC 6.1.1.2) (Tryptophanyl-tRNA synthetase) (TrpRS),trpS b3384 JW3347,Escherichia coli (strain K12),334,37438
+P00956,reviewed,SYI_ECOLI,Isoleucine--tRNA ligase (EC 6.1.1.5) (Isoleucyl-tRNA synthetase) (IleRS),ileS ilvS b0026 JW0024,Escherichia coli (strain K12),938,104297
+P00957,reviewed,SYA_ECOLI,Alanine--tRNA ligase (EC 6.1.1.7) (Alanyl-tRNA synthetase) (AlaRS) (Protein lactyltransferase) (EC 6.-.-.-),alaS lovB b2697 JW2667,Escherichia coli (strain K12),876,96032
+P00959,reviewed,SYM_ECOLI,Methionine--tRNA ligase (EC 6.1.1.10) (Methionyl-tRNA synthetase) (MetRS),metG b2114 JW2101,Escherichia coli (strain K12),677,76255
+P00960,reviewed,SYGA_ECOLI,Glycine--tRNA ligase alpha subunit (EC 6.1.1.14) (Glycyl-tRNA synthetase alpha subunit) (GlyRS),glyQ glyS(A) b3560 JW3531,Escherichia coli (strain K12),303,34774
+P00961,reviewed,SYGB_ECOLI,Glycine--tRNA ligase beta subunit (EC 6.1.1.14) (Glycyl-tRNA synthetase beta subunit) (GlyRS),glyS glyS(B) b3559 JW3530,Escherichia coli (strain K12),689,76813
+P00962,reviewed,SYQ_ECOLI,Glutamine--tRNA ligase (EC 6.1.1.18) (Glutaminyl-tRNA synthetase) (GlnRS),glnS b0680 JW0666,Escherichia coli (strain K12),554,63478
+P00963,reviewed,ASNA_ECOLI,Aspartate--ammonia ligase (EC 6.3.1.1) (Asparagine synthetase A),asnA b3744 JW3722,Escherichia coli (strain K12),330,36651
+P00968,reviewed,CARB_ECOLI,Carbamoyl phosphate synthase large chain (EC 6.3.4.16) (EC 6.3.5.5) (Carbamoyl phosphate synthetase ammonia chain),carB pyrA b0033 JW0031,Escherichia coli (strain K12),1073,117842
+P02916,reviewed,MALF_ECOLI,Maltose/maltodextrin transport system permease protein MalF,malF b4033 JW3993,Escherichia coli (strain K12),514,57013
+P02924,reviewed,ARAF_ECOLI,L-arabinose-binding periplasmic protein (ABP),araF b1901 JW1889,Escherichia coli (strain K12),329,35541
+P02925,reviewed,RBSB_ECOLI,Ribose import binding protein RbsB,rbsB prlB rbsP b3751 JW3730,Escherichia coli (strain K12),296,30950
+P03004,reviewed,DNAA_ECOLI,Chromosomal replication initiator protein DnaA (EC 3.6.4.-),dnaA b3702 JW3679,Escherichia coli (strain K12),467,52551
+P03018,reviewed,UVRD_ECOLI,DNA helicase II (EC 5.6.2.4) (DNA 3'-5' helicase II),uvrD mutU pdeB rad recL b3813 JW3786,Escherichia coli (strain K12),720,81990
+P03960,reviewed,KDPB_ECOLI,Potassium-transporting ATPase ATP-binding subunit (EC 7.2.2.6) (ATP phosphohydrolase [potassium-transporting] B chain) (Potassium-binding and translocating subunit B) (Potassium-translocating ATPase B chain),kdpB b0697 JW0685,Escherichia coli (strain K12),682,72199
+P03961,reviewed,KDPC_ECOLI,Potassium-transporting ATPase KdpC subunit (ATP phosphohydrolase [potassium-transporting] C chain) (Potassium-binding and translocating subunit C) (Potassium-translocating ATPase C chain),kdpC b0696 JW0684,Escherichia coli (strain K12),190,20267
+P04079,reviewed,GUAA_ECOLI,GMP synthase [glutamine-hydrolyzing] (EC 6.3.5.2) (GMP synthetase) (GMPS) (Glutamine amidotransferase),guaA b2507 JW2491,Escherichia coli (strain K12),525,58679
+P04425,reviewed,GSHB_ECOLI,Glutathione synthetase (EC 6.3.2.3) (GSH synthetase) (GSH-S) (GSHase) (Glutathione synthase),gshB gsh-II b2947 JW2914,Escherichia coli (strain K12),316,35561
+P04805,reviewed,SYE_ECOLI,Glutamate--tRNA ligase (EC 6.1.1.17) (Glutamyl-tRNA synthetase) (GluRS),gltX b2400 JW2395,Escherichia coli (strain K12),471,53816
+P04816,reviewed,LIVK_ECOLI,Leucine-specific-binding protein (L-BP) (LS-BP),livK b3458 JW3423,Escherichia coli (strain K12),369,39379
+P04983,reviewed,RBSA_ECOLI,Ribose import ATP-binding protein RbsA (EC 7.5.2.7),rbsA b3749 JW3728,Escherichia coli (strain K12),501,55042
+P04993,reviewed,RECD_ECOLI,RecBCD enzyme subunit RecD (EC 5.6.2.3) (DNA 5'-3' helicase subunit RecB) (Exodeoxyribonuclease V 67 kDa polypeptide) (Exodeoxyribonuclease V alpha chain) (Exonuclease V subunit RecD) (ExoV subunit RecD) (Helicase/nuclease RecBCD subunit RecD),recD hopE b2819 JW2787,Escherichia coli (strain K12),608,66902
+P05824,reviewed,RECN_ECOLI,DNA repair protein RecN (Recombination protein N),recN radB b2616 JW5416,Escherichia coli (strain K12),553,61396
+P06609,reviewed,BTUC_ECOLI,Vitamin B12 import system permease protein BtuC,btuC b1711 JW1701,Escherichia coli (strain K12),326,34949
+P06611,reviewed,BTUD_ECOLI,Vitamin B12 import ATP-binding protein BtuD (EC 7.6.2.8) (Vitamin B12-transporting ATPase),btuD b1709 JW1699,Escherichia coli (strain K12),249,27081
+P06709,reviewed,BIRA_ECOLI,Bifunctional ligase/repressor BirA (Biotin operon repressor) (Biotin--[acetyl-CoA-carboxylase] ligase) (EC 6.3.4.15) (Biotin--protein ligase) (Biotin-[acetyl-CoA carboxylase] synthetase),birA bioR dhbB b3973 JW3941,Escherichia coli (strain K12),321,35312
+P06710,reviewed,DPO3X_ECOLI,DNA polymerase III subunit tau (EC 2.7.7.7) (DNA polymerase III subunit gamma),dnaX dnaZ dnaZX b0470 JW0459,Escherichia coli (strain K12),643,71138
+P06961,reviewed,CCA_ECOLI,"Multifunctional CCA protein [Includes: CCA-adding enzyme (EC 2.7.7.72) (CCA tRNA nucleotidyltransferase) (tRNA CCA-pyrophosphorylase) (tRNA adenylyl-/cytidylyl-transferase) (tRNA nucleotidyltransferase) (tRNA-NT); 2'-nucleotidase (EC 3.1.3.-); 2',3'-cyclic phosphodiesterase (EC 3.1.4.-); Phosphatase (EC 3.1.3.-)]",cca b3056 JW3028,Escherichia coli (strain K12),412,46467
+P06971,reviewed,FHUA_ECOLI,Ferrichrome outer membrane transporter/phage receptor (Ferric hydroxamate receptor) (Ferric hydroxamate uptake) (Ferrichrome-iron receptor),fhuA tonA b0150 JW0146,Escherichia coli (strain K12),747,82182
+P06972,reviewed,FHUB_ECOLI,Iron(3+)-hydroxamate import system permease protein FhuB (Ferric hydroxamate uptake protein B) (Ferrichrome transport system permease protein FhuB) (Ferrichrome uptake protein FhuB) (Iron(III)-hydroxamate import system permease protein FhuB),fhuB b0153 JW0149,Escherichia coli (strain K12),660,70423
+P06989,reviewed,HIS2_ECOLI,Histidine biosynthesis bifunctional protein HisIE [Includes: Phosphoribosyl-AMP cyclohydrolase (PRA-CH) (EC 3.5.4.19); Phosphoribosyl-ATP pyrophosphatase (PRA-PH) (EC 3.6.1.31)],hisI hisIE b2026 JW2008,Escherichia coli (strain K12),203,22756
+P06993,reviewed,MALT_ECOLI,HTH-type transcriptional regulator MalT (ATP-dependent transcriptional activator MalT),malT malA b3418 JW3381,Escherichia coli (strain K12),901,103118
+P06999,reviewed,PFKB_ECOLI,ATP-dependent 6-phosphofructokinase isozyme 2 (ATP-PFK 2) (Phosphofructokinase 2) (EC 2.7.1.11) (6-phosphofructokinase isozyme II) (Phosphohexokinase 2),pfkB b1723 JW5280,Escherichia coli (strain K12),309,32456
+P07109,reviewed,HISP_ECOLI,Histidine/lysine/arginine/ornithine transport ATP-binding protein HisP (EC 7.4.2.1),hisP b2306 JW2303,Escherichia coli (strain K12),257,28653
+P07118,reviewed,SYV_ECOLI,Valine--tRNA ligase (EC 6.1.1.9) (Valyl-tRNA synthetase) (ValRS),valS b4258 JW4215,Escherichia coli (strain K12),951,108192
+P07363,reviewed,CHEA_ECOLI,Chemotaxis protein CheA (EC 2.7.13.3),cheA b1888 JW1877,Escherichia coli (strain K12),654,71382
+P07395,reviewed,SYFB_ECOLI,Phenylalanine--tRNA ligase beta subunit (EC 6.1.1.20) (Phenylalanyl-tRNA synthetase beta subunit) (PheRS),pheT b1713 JW1703,Escherichia coli (strain K12),795,87378
+P07604,reviewed,TYRR_ECOLI,HTH-type transcriptional regulatory protein TyrR,tyrR b1323 JW1316,Escherichia coli (strain K12),513,57656
+P07648,reviewed,RECC_ECOLI,RecBCD enzyme subunit RecC (Exodeoxyribonuclease V 125 kDa polypeptide) (Exodeoxyribonuclease V gamma chain) (Exonuclease V subunit RecC) (ExoV subunit RecC) (Helicase/nuclease RecBCD subunit RecC),recC b2822 JW2790,Escherichia coli (strain K12),1122,128848
+P07654,reviewed,PSTA_ECOLI,Phosphate transport system permease protein PstA,pstA phoT b3726 JW3704,Escherichia coli (strain K12),296,32322
+P07813,reviewed,SYL_ECOLI,Leucine--tRNA ligase (EC 6.1.1.4) (Leucyl-tRNA synthetase) (LeuRS),leuS b0642 JW0637,Escherichia coli (strain K12),860,97234
+P07821,reviewed,FHUC_ECOLI,Iron(3+)-hydroxamate import ATP-binding protein FhuC (EC 7.2.2.16) (Ferric hydroxamate uptake protein C) (Ferrichrome transport ATP-binding protein FhuC) (Iron(III)-hydroxamate import ATP-binding protein FhuC),fhuC b0151 JW0147,Escherichia coli (strain K12),265,28886
+P07822,reviewed,FHUD_ECOLI,Iron(3+)-hydroxamate-binding protein FhuD (Ferric hydroxamate uptake protein D) (Ferrichrome-binding periplasmic protein) (Iron(III)-hydroxamate-binding protein FhuD),fhuD b0152 JW0148,Escherichia coli (strain K12),296,32998
+P07862,reviewed,DDLB_ECOLI,D-alanine--D-alanine ligase B (EC 6.3.2.4) (D-Ala-D-Ala ligase B) (D-alanylalanine synthetase B),ddlB ddl b0092 JW0090,Escherichia coli (strain K12),306,32840
+P08178,reviewed,PUR5_ECOLI,Phosphoribosylformylglycinamidine cyclo-ligase (EC 6.3.3.1) (AIR synthase) (AIRS) (Phosphoribosyl-aminoimidazole synthetase),purM purG b2499 JW2484,Escherichia coli (strain K12),345,36854
+P08192,reviewed,FOLC_ECOLI,Dihydrofolate synthase/folylpolyglutamate synthase (DHFS / FPGS) (EC 6.3.2.12) (EC 6.3.2.17) (Folylpoly-gamma-glutamate synthetase-dihydrofolate synthetase) (Folylpolyglutamate synthetase) (Tetrahydrofolylpolyglutamate synthase),folC dedC b2315 JW2312,Escherichia coli (strain K12),422,45406
+P08204,reviewed,ARAB_ECOLI,Ribulokinase (EC 2.7.1.16),araB b0063 JW0062,Escherichia coli (strain K12),566,61089
+P08312,reviewed,SYFA_ECOLI,Phenylalanine--tRNA ligase alpha subunit (EC 6.1.1.20) (Phenylalanyl-tRNA synthetase alpha subunit) (PheRS),pheS b1714 JW5277,Escherichia coli (strain K12),327,36832
+P08394,reviewed,RECB_ECOLI,RecBCD enzyme subunit RecB (EC 3.1.11.5) (EC 5.6.2.4) (DNA 3'-5' helicase subunit RecB) (Exodeoxyribonuclease V 135 kDa polypeptide) (Exodeoxyribonuclease V beta chain) (Exonuclease V subunit RecB) (ExoV subunit RecB) (Helicase/nuclease RecBCD subunit RecB),recB ior rorA b2820 JW2788,Escherichia coli (strain K12),1180,133959
+P08400,reviewed,PHOR_ECOLI,Phosphate regulon sensor protein PhoR (EC 2.7.13.3),phoR nmpB b0400 JW0390,Escherichia coli (strain K12),431,49629
+P08401,reviewed,CREC_ECOLI,Sensor protein CreC (EC 2.7.13.3),creC phoM b4399 JW4362,Escherichia coli (strain K12),474,52176
+P08622,reviewed,DNAJ_ECOLI,Chaperone protein DnaJ (HSP40) (Heat shock protein J),dnaJ groP b0015 JW0014,Escherichia coli (strain K12),376,41100
+P08660,reviewed,AK3_ECOLI,Lysine-sensitive aspartokinase 3 (EC 2.7.2.4) (Aspartate kinase III) (AKIII) (Lysine-sensitive aspartokinase III),lysC apk b4024 JW3984,Escherichia coli (strain K12),449,48532
+P08956,reviewed,T1RK_ECOLI,Type I restriction enzyme EcoKI endonuclease subunit (EcoKI) (R protein) (EC 3.1.21.3),hsdR hsr b4350 JW4313,Escherichia coli (strain K12),1170,134095
+P09029,reviewed,PURK_ECOLI,N5-carboxyaminoimidazole ribonucleotide synthase (N5-CAIR synthase) (EC 6.3.4.18) (5-(carboxyamino)imidazole ribonucleotide synthetase),purK b0522 JW0511,Escherichia coli (strain K12),355,39461
+P09099,reviewed,XYLB_ECOLI,Xylulose kinase (XK) (Xylulokinase) (EC 2.7.1.17) (1-deoxy-D-xylulokinase) (EC 2.7.1.-),xylB b3564 JW3536,Escherichia coli (strain K12),484,52618
+P09130,reviewed,TRAD1_ECOLI,Coupling protein TraD (DNA transport protein TraD),traD ECOK12F102,Escherichia coli (strain K12),717,81489
+P09372,reviewed,GRPE_ECOLI,Protein GrpE (HSP-70 cofactor) (HSP24) (Heat shock protein B25.3),grpE b2614 JW2594,Escherichia coli (strain K12),197,21798
+P09551,reviewed,ARGT_ECOLI,Lysine/arginine/ornithine-binding periplasmic protein (LAO-binding protein),argT b2310 JW2307,Escherichia coli (strain K12),260,27992
+P09833,reviewed,MODC_ECOLI,Molybdenum import ATP-binding protein ModC (EC 7.3.2.5),modC chlD narD b0765 JW0748,Escherichia coli (strain K12),352,39102
+P09835,reviewed,UHPB_ECOLI,Signal transduction histidine-protein kinase/phosphatase UhpB (EC 2.7.13.3) (EC 3.1.3.-),uhpB b3668 JW3643,Escherichia coli (strain K12),500,56306
+P09980,reviewed,REP_ECOLI,ATP-dependent DNA helicase Rep (EC 5.6.2.4) (DNA 3'-5' helicase Rep),rep b3778 JW5604,Escherichia coli (strain K12),673,77024
+P0A698,reviewed,UVRA_ECOLI,UvrABC system protein A (UvrA protein) (Excinuclease ABC subunit A),uvrA dinE b4058 JW4019,Escherichia coli (strain K12),940,103868
+P0A6A0,reviewed,UBIB_ECOLI,Probable protein kinase UbiB (EC 2.7.-.-) (Ubiquinone biosynthesis protein UbiB),ubiB aarF yigQ yigR yigS b3835 JW3812,Escherichia coli (strain K12),546,63203
+P0A6A3,reviewed,ACKA_ECOLI,Acetate kinase (EC 2.7.2.1) (Acetokinase),ackA ack b2296 JW2293,Escherichia coli (strain K12),400,43290
+P0A6C8,reviewed,ARGB_ECOLI,Acetylglutamate kinase (EC 2.7.2.8) (N-acetyl-L-glutamate 5-phosphotransferase) (NAG kinase) (NAGK),argB b3959 JW5553,Escherichia coli (strain K12),258,27160
+P0A6D7,reviewed,AROK_ECOLI,Shikimate kinase 1 (SK 1) (EC 2.7.1.71) (Shikimate kinase I) (SKI),aroK b3390 JW5947,Escherichia coli (strain K12),173,19538
+P0A6E1,reviewed,AROL_ECOLI,Shikimate kinase 2 (SK 2) (EC 2.7.1.71) (Shikimate kinase II) (SKII),aroL b0388 JW0379,Escherichia coli (strain K12),174,19151
+P0A6E4,reviewed,ASSY_ECOLI,Argininosuccinate synthase (EC 6.3.4.5) (Citrulline--aspartate ligase),argG b3172 JW3140,Escherichia coli (strain K12),447,49898
+P0A6E6,reviewed,ATPE_ECOLI,ATP synthase epsilon chain (ATP synthase F1 sector epsilon subunit) (F-ATPase epsilon subunit),atpC papG uncC b3731 JW3709,Escherichia coli (strain K12),139,15068
+P0A6E9,reviewed,BIOD2_ECOLI,ATP-dependent dethiobiotin synthetase BioD 2 (EC 6.3.3.3) (DTB synthetase 2) (DTBS 2) (Dethiobiotin synthase 2),bioD2 ynfK b1593 JW5264,Escherichia coli (strain K12),231,24981
+P0A6F1,reviewed,CARA_ECOLI,Carbamoyl phosphate synthase small chain (EC 6.3.5.5) (Carbamoyl phosphate synthetase glutamine chain),carA pyrA b0032 JW0030,Escherichia coli (strain K12),382,41431
+P0A6F3,reviewed,GLPK_ECOLI,Glycerol kinase (EC 2.7.1.30) (ATP:glycerol 3-phosphotransferase) (Glycerokinase) (GK),glpK b3926 JW3897,Escherichia coli (strain K12),502,56231
+P0A6F5,reviewed,CH60_ECOLI,Chaperonin GroEL (EC 5.6.1.7) (60 kDa chaperonin) (Chaperonin-60) (Cpn60) (GroEL protein),groEL groL mopA b4143 JW4103,Escherichia coli (strain K12),548,57329
+P0A6F9,reviewed,CH10_ECOLI,Co-chaperonin GroES (10 kDa chaperonin) (Chaperonin-10) (Cpn10),groES groS mopB b4142 JW4102,Escherichia coli (strain K12),97,10387
+P0A6G7,reviewed,CLPP_ECOLI,ATP-dependent Clp protease proteolytic subunit (EC 3.4.21.92) (Caseinolytic protease) (Endopeptidase Clp) (Heat shock protein F21.5) (Protease Ti),clpP lopP b0437 JW0427,Escherichia coli (strain K12),207,23187
+P0A6H1,reviewed,CLPX_ECOLI,ATP-dependent Clp protease ATP-binding subunit ClpX (ATP-dependent unfoldase ClpX),clpX lopC b0438 JW0428,Escherichia coli (strain K12),424,46356
+P0A6H5,reviewed,HSLU_ECOLI,ATP-dependent protease ATPase subunit HslU (Heat shock protein HslU) (Unfoldase HslU),hslU htpI b3931 JW3902,Escherichia coli (strain K12),443,49594
+P0A6I0,reviewed,KCY_ECOLI,Cytidylate kinase (CK) (EC 2.7.4.25) (Cytidine monophosphate kinase) (CMP kinase) (Protein MssA) (p25),cmk mssA ycaF ycaG b0910 JW0893,Escherichia coli (strain K12),227,24746
+P0A6I3,reviewed,COAA_ECOLI,Pantothenate kinase (EC 2.7.1.33) (Pantothenic acid kinase) (Rts protein),coaA panK rts b3974 JW3942,Escherichia coli (strain K12),316,36360
+P0A6I6,reviewed,COAD_ECOLI,Phosphopantetheine adenylyltransferase (EC 2.7.7.3) (Dephospho-CoA pyrophosphorylase) (Pantetheine-phosphate adenylyltransferase) (PPAT),coaD kdtB yicA b3634 JW3609,Escherichia coli (strain K12),159,17837
+P0A6I9,reviewed,COAE_ECOLI,Dephospho-CoA kinase (EC 2.7.1.24) (Dephosphocoenzyme A kinase),coaE yacE b0103 JW0100,Escherichia coli (strain K12),206,22622
+P0A6J1,reviewed,CYSC_ECOLI,Adenylyl-sulfate kinase (EC 2.7.1.25) (APS kinase) (ATP adenosine-5'-phosphosulfate 3'-phosphotransferase) (Adenosine-5'-phosphosulfate kinase),cysC b2750 JW2720,Escherichia coli (strain K12),201,22321
+P0A6J8,reviewed,DDLA_ECOLI,D-alanine--D-alanine ligase A (EC 6.3.2.4) (D-Ala-D-Ala ligase A) (D-alanylalanine synthetase A),ddlA b0381 JW0372,Escherichia coli (strain K12),364,39316
+P0A6T3,reviewed,GAL1_ECOLI,Galactokinase (EC 2.7.1.6) (Galactose kinase),galK galA b0757 JW0740,Escherichia coli (strain K12),382,41442
+P0A6V1,reviewed,GLGC_ECOLI,Glucose-1-phosphate adenylyltransferase (EC 2.7.7.27) (ADP-glucose pyrophosphorylase) (ADPGlc PPase) (ADP-glucose synthase),glgC b3430 JW3393,Escherichia coli (strain K12),431,48698
+P0A6V8,reviewed,GLK_ECOLI,Glucokinase (EC 2.7.1.2) (Glucose kinase),glk b2388 JW2385,Escherichia coli (strain K12),321,34723
+P0A6W9,reviewed,GSH1_ECOLI,Glutamate--cysteine ligase (EC 6.3.2.2) (Gamma-ECS) (GCS) (Gamma-glutamylcysteine synthetase),gshA gsh-I b2688 JW2663,Escherichia coli (strain K12),518,58269
+P0A6X3,reviewed,HFQ_ECOLI,RNA-binding protein Hfq (HF-1) (Host factor-I protein) (HF-I),hfq b4172 JW4130,Escherichia coli (strain K12),102,11166
+P0A6Y8,reviewed,DNAK_ECOLI,Chaperone protein DnaK (HSP70) (Heat shock 70 kDa protein) (Heat shock protein 70),dnaK groP grpF seg b0014 JW0013,Escherichia coli (strain K12),638,69115
+P0A6Z1,reviewed,HSCA_ECOLI,Chaperone protein HscA (Hsc66),hscA hsc b2526 JW2510,Escherichia coli (strain K12),616,65652
+P0A6Z3,reviewed,HTPG_ECOLI,Chaperone protein HtpG (Heat shock protein C62.5) (Heat shock protein HtpG) (High temperature protein G),htpG b0473 JW0462,Escherichia coli (strain K12),624,71423
+P0A717,reviewed,KPRS_ECOLI,Ribose-phosphate pyrophosphokinase (RPPK) (EC 2.7.6.1) (5-phospho-D-ribosyl alpha-1-diphosphate synthase) (Phosphoribosyl diphosphate synthase) (Phosphoribosyl pyrophosphate synthase) (P-Rib-PP synthase) (PRPP synthase) (PRPPase),prs prsA b1207 JW1198,Escherichia coli (strain K12),315,34218
+P0A720,reviewed,KTHY_ECOLI,Thymidylate kinase (EC 2.7.4.9) (Thymidine monophosphate kinase) (dTMP kinase) (TMPK),tmk ycfG b1098 JW1084,Escherichia coli (strain K12),213,23783
+P0A752,reviewed,NADD_ECOLI,Nicotinate-nucleotide adenylyltransferase (EC 2.7.7.18) (Deamido-NAD(+) diphosphorylase) (Deamido-NAD(+) pyrophosphorylase) (Nicotinate mononucleotide adenylyltransferase) (NaMN adenylyltransferase),nadD ybeN b0639 JW0634,Escherichia coli (strain K12),213,24528
+P0A763,reviewed,NDK_ECOLI,Nucleoside diphosphate kinase (NDK) (NDP kinase) (EC 2.7.4.6) (Nucleoside-2-P kinase),ndk b2518 JW2502,Escherichia coli (strain K12),143,15463
+P0A796,reviewed,PFKA_ECOLI,ATP-dependent 6-phosphofructokinase isozyme 1 (ATP-PFK 1) (Phosphofructokinase 1) (EC 2.7.1.11) (6-phosphofructokinase isozyme I) (Phosphohexokinase 1) (Sedoheptulose-7-phosphate kinase),pfkA b3916 JW3887,Escherichia coli (strain K12),320,34842
+P0A799,reviewed,PGK_ECOLI,Phosphoglycerate kinase (EC 2.7.2.3),pgk b2926 JW2893,Escherichia coli (strain K12),387,41118
+P0A7B1,reviewed,PPK1_ECOLI,Polyphosphate kinase (EC 2.7.4.1) (ATP-polyphosphate phosphotransferase) (Polyphosphoric acid kinase),ppk b2501 JW2486,Escherichia coli (strain K12),688,80432
+P0A7B3,reviewed,NADK_ECOLI,NAD kinase (EC 2.7.1.23) (ATP-dependent NAD kinase),nadK yfjB yfjE b2615 JW2596,Escherichia coli (strain K12),292,32566
+P0A7B5,reviewed,PROB_ECOLI,Glutamate 5-kinase (EC 2.7.2.11) (Gamma-glutamyl kinase) (GK),proB b0242 JW0232,Escherichia coli (strain K12),367,39057
+P0A7B8,reviewed,HSLV_ECOLI,ATP-dependent protease subunit HslV (EC 3.4.25.2) (Heat shock protein HslV),hslV htpO yiiC b3932 JW3903,Escherichia coli (strain K12),176,19093
+P0A7D7,reviewed,PUR7_ECOLI,Phosphoribosylaminoimidazole-succinocarboxamide synthase (EC 6.3.2.6) (SAICAR synthetase),purC b2476 JW2461,Escherichia coli (strain K12),237,26995
+P0A7E5,reviewed,PYRG_ECOLI,CTP synthase (EC 6.3.4.2) (Cytidine 5'-triphosphate synthase) (Cytidine triphosphate synthetase) (CTP synthetase) (CTPS) (UTP--ammonia ligase),pyrG b2780 JW2751,Escherichia coli (strain K12),545,60374
+P0A7E9,reviewed,PYRH_ECOLI,Uridylate kinase (UK) (EC 2.7.4.22) (Uridine monophosphate kinase) (UMP kinase) (UMPK),pyrH smbA b0171 JW0166,Escherichia coli (strain K12),241,25970
+P0A7G6,reviewed,RECA_ECOLI,Protein RecA (Recombinase A),recA lexB recH rnmB tif umuB zab b2699 JW2669,Escherichia coli (strain K12),353,37973
+P0A7H0,reviewed,RECF_ECOLI,DNA replication and repair protein RecF,recF uvrF b3700 JW3677,Escherichia coli (strain K12),357,40514
+P0A7Y0,reviewed,RNC_ECOLI,Ribonuclease 3 (EC 3.1.26.3) (Ribonuclease III) (RNase III),rnc b2567 JW2551,Escherichia coli (strain K12),226,25550
+P0A809,reviewed,RUVA_ECOLI,Holliday junction branch migration complex subunit RuvA,ruvA b1861 JW1850,Escherichia coli (strain K12),203,22086
+P0A812,reviewed,RUVB_ECOLI,Holliday junction branch migration complex subunit RuvB (EC 3.6.4.-),ruvB b1860 JW1849,Escherichia coli (strain K12),336,37174
+P0A817,reviewed,METK_ECOLI,S-adenosylmethionine synthase (AdoMet synthase) (EC 2.5.1.6) (MAT) (Methionine adenosyltransferase),metK metX b2942 JW2909,Escherichia coli (strain K12),384,41952
+P0A836,reviewed,SUCC_ECOLI,Succinate--CoA ligase [ADP-forming] subunit beta (EC 6.2.1.5) (Succinyl-CoA synthetase subunit beta) (SCS-beta),sucC b0728 JW0717,Escherichia coli (strain K12),388,41393
+P0A894,reviewed,RAPZ_ECOLI,RNase adapter protein RapZ,rapZ yhbJ b3205 JW3172,Escherichia coli (strain K12),284,32492
+P0A8A4,reviewed,PSRP_ECOLI,"Phosphoenolpyruvate synthase regulatory protein (PEP synthase regulatory protein) (PSRP) (EC 2.7.11.33) (EC 2.7.4.28) (Pyruvate, water dikinase regulatory protein)",ppsR ydiA b1703 JW1693,Escherichia coli (strain K12),277,31211
+P0A8D0,reviewed,NRDR_ECOLI,Transcriptional repressor NrdR,nrdR ybaD b0413 JW0403,Escherichia coli (strain K12),149,17229
+P0A8E7,reviewed,YAJQ_ECOLI,UPF0234 protein YajQ,yajQ b0426 JW5058,Escherichia coli (strain K12),163,18344
+P0A8F4,reviewed,URK_ECOLI,Uridine kinase (EC 2.7.1.48) (Cytidine monophosphokinase) (Uridine monophosphokinase),udk b2066 JW2051,Escherichia coli (strain K12),213,24353
+P0A8F8,reviewed,UVRB_ECOLI,UvrABC system protein B (Protein UvrB) (Excinuclease ABC subunit B),uvrB b0779 JW0762,Escherichia coli (strain K12),673,76226
+P0A8J8,reviewed,RHLB_ECOLI,ATP-dependent RNA helicase RhlB (EC 3.6.4.13),rhlB mmrA b3780 JW3753,Escherichia coli (strain K12),421,47126
+P0A8L1,reviewed,SYS_ECOLI,Serine--tRNA ligase (EC 6.1.1.11) (Seryl-tRNA synthetase) (SerRS) (Seryl-tRNA(Ser/Sec) synthetase),serS b0893 JW0876,Escherichia coli (strain K12),430,48414
+P0A8M0,reviewed,SYN_ECOLI,Asparagine--tRNA ligase (EC 6.1.1.22) (Asparaginyl-tRNA synthetase) (AsnRS),asnS tss b0930 JW0913,Escherichia coli (strain K12),466,52570
+P0A8M3,reviewed,SYT_ECOLI,Threonine--tRNA ligase (EC 6.1.1.3) (Threonyl-tRNA synthetase) (ThrRS),thrS b1719 JW1709,Escherichia coli (strain K12),642,74014
+P0A8N3,reviewed,SYK1_ECOLI,Lysine--tRNA ligase (EC 6.1.1.6) (Lysyl-tRNA synthetase) (LysRS),lysS asuD herC b2890 JW2858,Escherichia coli (strain K12),505,57603
+P0A8N5,reviewed,SYK2_ECOLI,"Lysine--tRNA ligase, heat inducible (EC 6.1.1.6) (Lysyl-tRNA synthetase) (LysRS)",lysU b4129 JW4090,Escherichia coli (strain K12),505,57827
+P0A8N7,reviewed,EPMA_ECOLI,Elongation factor P--(R)-beta-lysine ligase (EF-P--(R)-beta-lysine ligase) (EC 6.3.1.-) (EF-P post-translational modification enzyme A) (EF-P-lysine lysyltransferase) (GX),epmA genX poxA yjeA b4155 JW4116,Escherichia coli (strain K12),325,36976
+P0A9C5,reviewed,GLN1B_ECOLI,Glutamine synthetase (GS) (EC 6.3.1.2) (Glutamate--ammonia ligase) (Glutamine synthetase I beta) (GSI beta),glnA b3870 JW3841,Escherichia coli (strain K12),469,51904
+P0A9H5,reviewed,BTUR_ECOLI,"Corrinoid adenosyltransferase (EC 2.5.1.17) (Cob(II)alamin adenosyltransferase) (Cob(II)yrinic acid a,c-diamide adenosyltransferase) (Cobinamide/cobalamin adenosyltransferase)",btuR cobA b1270 JW1262,Escherichia coli (strain K12),196,21999
+P0A9J6,reviewed,RBSK_ECOLI,Ribokinase (RK) (EC 2.7.1.15),rbsK b3752 JW3731,Escherichia coli (strain K12),309,32291
+P0A9K1,reviewed,PHOH_ECOLI,Protein PhoH (Phosphate starvation-inducible protein PsiH),phoH psiH b1020 JW1005,Escherichia coli (strain K12),354,39265
+P0A9K3,reviewed,PHOL_ECOLI,PhoH-like protein,ybeZ b0660 JW0657,Escherichia coli (strain K12),346,39039
+P0A9M0,reviewed,LON_ECOLI,Lon protease (EC 3.4.21.53) (ATP-dependent protease La),lon capR deg lopA muc b0439 JW0429,Escherichia coli (strain K12),784,87438
+P0A9P6,reviewed,DEAD_ECOLI,ATP-dependent RNA helicase DeaD (EC 3.6.4.13) (Cold-shock DEAD box protein A) (Translation factor W2),deaD csdA mssB rhlD b3162 JW5531,Escherichia coli (strain K12),629,70546
+P0A9Q5,reviewed,ACCD_ECOLI,Acetyl-coenzyme A carboxylase carboxyl transferase subunit beta (ACCase subunit beta) (Acetyl-CoA carboxylase carboxyltransferase subunit beta) (EC 2.1.3.15),accD dedB usg b2316 JW2313,Escherichia coli (strain K12),304,33322
+P0A9R7,reviewed,FTSE_ECOLI,Cell division ATP-binding protein FtsE,ftsE b3463 JW3428,Escherichia coli (strain K12),222,24439
+P0A9S7,reviewed,LIVG_ECOLI,High-affinity branched-chain amino acid transport ATP-binding protein LivG (LIV-I protein G),livG b3455 JW3420,Escherichia coli (strain K12),255,28427
+P0A9T8,reviewed,YBBA_ECOLI,Uncharacterized ABC transporter ATP-binding protein YbbA,ybbA b0495 JW0484,Escherichia coli (strain K12),228,24533
+P0A9U1,reviewed,YBHF_ECOLI,Probable multidrug ABC transporter ATP-binding protein YbhF,ybhF b0794 JW5104,Escherichia coli (strain K12),578,63132
+P0A9U3,reviewed,YBIT_ECOLI,Probable ATP-binding protein YbiT,ybiT b0820 JW0804,Escherichia coli (strain K12),530,59858
+P0A9V1,reviewed,LPTB_ECOLI,Lipopolysaccharide export system ATP-binding protein LptB (EC 7.5.2.-),lptB yhbG b3201 JW3168,Escherichia coli (strain K12),241,26801
+P0A9W3,reviewed,ETTA_ECOLI,Energy-dependent translational throttle protein EttA (EC 3.6.1.-) (Translational regulatory factor EttA),ettA yjjK b4391 JW4354,Escherichia coli (strain K12),555,62443
+P0A9X1,reviewed,ZNUC_ECOLI,Zinc import ATP-binding protein ZnuC (EC 7.2.2.20),znuC yebM b1858 JW1847,Escherichia coli (strain K12),251,27867
+P0A9X4,reviewed,MREB_ECOLI,Cell shape-determining protein MreB (Actin-like MreB protein) (Rod shape-determining protein MreB),mreB envB rodY b3251 JW3220,Escherichia coli (strain K12),347,36952
+P0A9Z1,reviewed,GLNB_ECOLI,Nitrogen regulatory protein P-II 1,glnB b2553 JW2537,Escherichia coli (strain K12),112,12425
+P0AA93,reviewed,YPDA_ECOLI,Sensor histidine kinase YpdA (EC 2.7.13.3),ypdA b2380 JW5388,Escherichia coli (strain K12),565,62657
+P0AAD4,reviewed,TYRP_ECOLI,Tyrosine-specific transport system (Tyrosine permease) (Tyrosine:H(+) symporter),tyrP b1907 JW1895,Escherichia coli (strain K12),403,42819
+P0AAF3,reviewed,ARAG_ECOLI,Arabinose import ATP-binding protein AraG (EC 7.5.2.12),araG b1900 JW1888,Escherichia coli (strain K12),504,55018
+P0AAF6,reviewed,ARTP_ECOLI,Arginine transport ATP-binding protein ArtP (EC 7.4.2.1),artP b0864 JW0848,Escherichia coli (strain K12),242,27022
+P0AAG0,reviewed,DPPD_ECOLI,Dipeptide transport ATP-binding protein DppD (EC 7.4.2.9),dppD b3541 JW3510,Escherichia coli (strain K12),327,35844
+P0AAG3,reviewed,GLTL_ECOLI,Glutamate/aspartate import ATP-binding protein GltL (EC 7.4.2.1),gltL b0652 JW0647,Escherichia coli (strain K12),241,26661
+P0AAG5,reviewed,MDLB_ECOLI,Multidrug resistance-like ATP-binding protein MdlB (EC 7.6.2.2),mdlB mdl b0449 JW5061,Escherichia coli (strain K12),593,65222
+P0AAG8,reviewed,MGLA_ECOLI,Galactose/methyl galactoside import ATP-binding protein MglA (EC 7.5.2.11),mglA b2149 JW2136,Escherichia coli (strain K12),506,56415
+P0AAH0,reviewed,PSTB_ECOLI,Phosphate import ATP-binding protein PstB (EC 7.3.2.1) (ABC phosphate transporter) (Phosphate-transporting ATPase),pstB phoT b3725 JW3703,Escherichia coli (strain K12),257,29027
+P0AAH4,reviewed,SAPD_ECOLI,Putrescine export system ATP-binding protein SapD,sapD trkE b1291 JW1284,Escherichia coli (strain K12),330,37661
+P0AAH8,reviewed,SAPF_ECOLI,Putrescine export system ATP-binding protein SapF,sapF b1290 JW1283,Escherichia coli (strain K12),268,30571
+P0AAI1,reviewed,SSUB_ECOLI,Aliphatic sulfonates import ATP-binding protein SsuB (EC 7.6.2.14),ssuB ycbE b0933 JW0916,Escherichia coli (strain K12),255,27738
+P0AAI3,reviewed,FTSH_ECOLI,ATP-dependent zinc metalloprotease FtsH (EC 3.4.24.-) (Cell division protease FtsH),ftsH hflB mrsC std tolZ b3178 JW3145,Escherichia coli (strain K12),644,70708
+P0AAV4,reviewed,PXPB_ECOLI,5-oxoprolinase subunit B (5-OPase subunit B) (EC 3.5.2.9) (5-oxoprolinase (ATP-hydrolyzing) subunit B),pxpB ybgJ b0711 JW0701,Escherichia coli (strain K12),218,23947
+P0AAZ4,reviewed,RARA_ECOLI,Replication-associated recombination protein A,rarA mgsA ycaJ b0892 JW0875,Escherichia coli (strain K12),447,49626
+P0ABA6,reviewed,ATPG_ECOLI,ATP synthase gamma chain (ATP synthase F1 sector gamma subunit) (F-ATPase gamma subunit),atpG papC uncG b3733 JW3711,Escherichia coli (strain K12),287,31577
+P0ABB0,reviewed,ATPA_ECOLI,ATP synthase subunit alpha (EC 7.1.2.2) (ATP synthase F1 sector subunit alpha) (F-ATPase subunit alpha),atpA papA uncA b3734 JW3712,Escherichia coli (strain K12),513,55222
+P0ABB4,reviewed,ATPB_ECOLI,ATP synthase subunit beta (EC 7.1.2.2) (ATP synthase F1 sector subunit beta) (F-ATPase subunit beta),atpD papB uncD b3732 JW3710,Escherichia coli (strain K12),460,50325
+P0ABB8,reviewed,ATMA_ECOLI,"Magnesium-transporting ATPase, P-type 1 (EC 7.2.2.14) (Mg(2+) transport ATPase, P-type 1)",mgtA corB mgt b4242 JW4201,Escherichia coli (strain K12),898,99466
+P0ABD5,reviewed,ACCA_ECOLI,Acetyl-coenzyme A carboxylase carboxyl transferase subunit alpha (ACCase subunit alpha) (Acetyl-CoA carboxylase carboxyltransferase subunit alpha) (EC 2.1.3.15),accA b0185 JW0180,Escherichia coli (strain K12),319,35242
+P0ABF1,reviewed,PCNB_ECOLI,Poly(A) polymerase I (PAP I) (EC 2.7.7.19) (Plasmid copy number protein),pcnB b0143 JW5808,Escherichia coli (strain K12),465,53871
+P0ABH0,reviewed,FTSA_ECOLI,Cell division protein FtsA,ftsA divA b0094 JW0092,Escherichia coli (strain K12),420,45330
+P0ABH9,reviewed,CLPA_ECOLI,ATP-dependent Clp protease ATP-binding subunit ClpA,clpA lopD b0882 JW0866,Escherichia coli (strain K12),758,84207
+P0ABL8,reviewed,CCMB_ECOLI,Heme exporter protein B (Cytochrome c-type biogenesis protein CcmB),ccmB yejV b2200 JW2188,Escherichia coli (strain K12),220,23619
+P0ABM1,reviewed,CCMC_ECOLI,Heme exporter protein C (Cytochrome c-type biogenesis protein CcmC),ccmC yejT yejU b2199 JW2187,Escherichia coli (strain K12),245,27885
+P0ABM5,reviewed,CCMD_ECOLI,Heme exporter protein D (Cytochrome c-type biogenesis protein CcmD),ccmD yojM b2198 JW2186,Escherichia coli (strain K12),69,7745
+P0ABN1,reviewed,KDGL_ECOLI,Diacylglycerol kinase (DAGK) (EC 2.7.1.107) (Diglyceride kinase) (DGK),dgkA dgk b4042 JW4002,Escherichia coli (strain K12),122,13245
+P0ABU2,reviewed,YCHF_ECOLI,Ribosome-binding ATPase YchF,ychF engD gtp1 b1203 JW1194,Escherichia coli (strain K12),363,39667
+P0AC28,reviewed,5FCL_ECOLI,"5-formyltetrahydrofolate cyclo-ligase (5-FCL) (EC 6.3.3.2) (5,10-methenyltetrahydrofolate synthetase) (MTHFS)",ygfA b2912 JW2879,Escherichia coli (strain K12),182,21105
+P0AC55,reviewed,GLNK_ECOLI,Nitrogen regulatory protein GlnK (Nitrogen regulatory protein P-II 2) (PII-like protein),glnK ybaI b0450 JW0440,Escherichia coli (strain K12),112,12259
+P0ACB0,reviewed,DNAB_ECOLI,Replicative DNA helicase DnaB (EC 5.6.2.3) (DNA 5'-3' helicase DnaB),dnaB groP grpA b4052 JW4012,Escherichia coli (strain K12),471,52390
+P0AD12,reviewed,YEEZ_ECOLI,Protein YeeZ,yeeZ b2016 JW1998,Escherichia coli (strain K12),274,29680
+P0AD14,reviewed,BTSS_ECOLI,Sensor histidine kinase BtsS (EC 2.7.13.3),btsS yehU b2126 JW5353,Escherichia coli (strain K12),561,62092
+P0AD61,reviewed,KPYK1_ECOLI,Pyruvate kinase I (EC 2.7.1.40) (PK-1),pykF b1676 JW1666,Escherichia coli (strain K12),470,50729
+P0AD96,reviewed,LIVJ_ECOLI,Leu/Ile/Val-binding protein (LIV-BP),livJ b3460 JW3425,Escherichia coli (strain K12),367,39076
+P0ADC3,reviewed,LOLC_ECOLI,Lipoprotein-releasing system transmembrane protein LolC,lolC ycfU b1116 JW5161,Escherichia coli (strain K12),399,43264
+P0ADC6,reviewed,LPTG_ECOLI,Lipopolysaccharide export system permease protein LptG,lptG yjgQ b4262 JW5760,Escherichia coli (strain K12),360,39619
+P0ADG7,reviewed,IMDH_ECOLI,Inosine-5'-monophosphate dehydrogenase (IMP dehydrogenase) (IMPD) (IMPDH) (EC 1.1.1.205),guaB guaR b2508 JW5401,Escherichia coli (strain K12),488,52022
+P0ADT5,reviewed,YGIC_ECOLI,Putative acid--amine ligase YgiC (EC 6.3.1.-),ygiC b3038 JW3006,Escherichia coli (strain K12),386,45026
+P0ADV7,reviewed,MLAC_ECOLI,Intermembrane phospholipid transport system binding protein MlaC,mlaC yrbC b3192 JW3159,Escherichia coli (strain K12),211,23963
+P0AE26,reviewed,ARAH_ECOLI,L-arabinose transport system permease protein AraH,araH b4460 JW1887,Escherichia coli (strain K12),328,34211
+P0AE30,reviewed,ARTM_ECOLI,Arginine ABC transporter permease protein ArtM,artM b0861 JW0845,Escherichia coli (strain K12),222,24914
+P0AE34,reviewed,ARTQ_ECOLI,Arginine ABC transporter permease protein ArtQ,artQ b0862 JW0846,Escherichia coli (strain K12),238,26217
+P0AE76,reviewed,COBU_ECOLI,Bifunctional adenosylcobalamin biosynthesis protein CobU (Adenosylcobinamide kinase) (EC 2.7.1.156) (Adenosylcobinamide-phosphate guanylyltransferase) (EC 2.7.7.62),cobU b1993 JW1971,Escherichia coli (strain K12),181,20164
+P0AE82,reviewed,CPXA_ECOLI,Sensor histidine kinase CpxA (EC 2.7.13.3),cpxA ecfB eup ssd b3911 JW3882,Escherichia coli (strain K12),457,51624
+P0AEB0,reviewed,CYSW_ECOLI,Sulfate transport system permease protein CysW,cysW b2423 JW2416,Escherichia coli (strain K12),291,32538
+P0AEC3,reviewed,ARCB_ECOLI,Aerobic respiration control sensor protein ArcB (EC 2.7.13.3),arcB b3210 JW5536,Escherichia coli (strain K12),778,87983
+P0AEC5,reviewed,BARA_ECOLI,Signal transduction histidine-protein kinase BarA (EC 2.7.13.3),barA b2786 JW2757,Escherichia coli (strain K12),918,102453
+P0AEC8,reviewed,DCUS_ECOLI,Sensor histidine kinase DcuS (EC 2.7.13.3) (Fumarate sensor),dcuS yjdH b4125 JW4086,Escherichia coli (strain K12),543,60551
+P0AEE5,reviewed,MGLB_ECOLI,D-galactose/methyl-galactoside binding periplasmic protein MglB (D-galactose-binding periplasmic protein) (GBP) (D-galactose/D-glucose-binding protein) (GGBP),mglB b2150 JW2137,Escherichia coli (strain K12),332,35713
+P0AEF0,reviewed,DNAC_ECOLI,Replicative helicase loader DnaC (EC 3.6.4.-) (DNA replication protein DnaC),dnaC dnaD b4361 JW4325,Escherichia coli (strain K12),245,27935
+P0AEF8,reviewed,DPPB_ECOLI,Dipeptide transport system permease protein DppB,dppB b3543 JW3512,Escherichia coli (strain K12),339,37497
+P0AEG1,reviewed,DPPC_ECOLI,Dipeptide transport system permease protein DppC,dppC b3542 JW3511,Escherichia coli (strain K12),300,32308
+P0AEJ4,reviewed,ENVZ_ECOLI,Sensor histidine kinase EnvZ (EC 2.7.13.3) (Osmolarity sensor protein EnvZ),envZ ompB perA tpo b3404 JW3367,Escherichia coli (strain K12),450,50334
+P0AEL6,reviewed,FEPB_ECOLI,Ferric enterobactin-binding periplasmic protein FepB,fepB b0592 JW0584,Escherichia coli (strain K12),318,34283
+P0AEM9,reviewed,TCYJ_ECOLI,L-cystine-binding protein TcyJ (CBP) (Protein FliY) (Sulfate starvation-induced protein 7) (SSI7),tcyJ fliY yzzR b1920 JW1905,Escherichia coli (strain K12),266,29039
+P0AEQ3,reviewed,GLNH_ECOLI,Glutamine-binding periplasmic protein (GlnBP),glnH b0811 JW0796,Escherichia coli (strain K12),248,27190
+P0AEQ6,reviewed,GLNP_ECOLI,Glutamine transport system permease protein GlnP,glnP b0810 JW0795,Escherichia coli (strain K12),219,24364
+P0AER3,reviewed,GLTJ_ECOLI,Glutamate/aspartate import permease protein GltJ,gltJ b0654 JW0649,Escherichia coli (strain K12),246,27503
+P0AER5,reviewed,GLTK_ECOLI,Glutamate/aspartate import permease protein GltK,gltK b0653 JW0648,Escherichia coli (strain K12),224,24915
+P0AES0,reviewed,GSP_ECOLI,Bifunctional glutathionylspermidine synthetase/amidase (GspSA) [Includes: Glutathionylspermidine amidase (Gsp amidase) (EC 3.5.1.78) (Glutathionylspermidine amidohydrolase [spermidine-forming]); Glutathionylspermidine synthetase (Gsp synthetase) (EC 6.3.1.8) (Glutathione:spermidine ligase [ADP-forming]) (Gsp synthase)],gss gsp b2988 JW2956,Escherichia coli (strain K12),619,70532
+P0AES4,reviewed,GYRA_ECOLI,DNA gyrase subunit A (EC 5.6.2.2),gyrA hisW nalA parD b2231 JW2225,Escherichia coli (strain K12),875,96964
+P0AES6,reviewed,GYRB_ECOLI,DNA gyrase subunit B (EC 5.6.2.2) (Type IIA topoisomerase subunit GyrB),gyrB acrB cou himB hisU nalC parA pcbA b3699 JW5625,Escherichia coli (strain K12),804,89950
+P0AEU0,reviewed,HISJ_ECOLI,Histidine-binding periplasmic protein (HBP),hisJ b2309 JW2306,Escherichia coli (strain K12),260,28483
+P0AEU3,reviewed,HISM_ECOLI,Histidine/lysine/arginine/ornithine transport system permease protein HisM,hisM b2307 JW2304,Escherichia coli (strain K12),238,26870
+P0AEW6,reviewed,INGK_ECOLI,Guanosine-inosine kinase (EC 2.7.1.73),gsk b0477 JW0466,Escherichia coli (strain K12),434,48449
+P0AEW9,reviewed,K1PF_ECOLI,1-phosphofructokinase (EC 2.7.1.56) (Fructose 1-phosphate kinase) (Fru1PK),fruK fpk b2168 JW2155,Escherichia coli (strain K12),312,33756
+P0AEX5,reviewed,KPPR_ECOLI,Probable phosphoribulokinase (PRK) (PRKase) (EC 2.7.1.19) (Phosphopentokinase),prkB yhfF b3355 JW3318,Escherichia coli (strain K12),289,32344
+P0AEX7,reviewed,LIVH_ECOLI,High-affinity branched-chain amino acid transport system permease protein LivH (LIV-I protein H),livH b3457 JW3422,Escherichia coli (strain K12),308,32982
+P0AEX9,reviewed,MALE_ECOLI,Maltose/maltodextrin-binding periplasmic protein (MMBP) (Maltodextrin-binding protein) (Maltose-binding protein) (MBP),malE b4034 JW3994,Escherichia coli (strain K12),396,43388
+P0AEY3,reviewed,MAZG_ECOLI,Nucleoside triphosphate pyrophosphohydrolase (NTP-PPase) (EC 3.6.1.8),mazG b2781 JW2752,Escherichia coli (strain K12),263,30412
+P0AEZ3,reviewed,MIND_ECOLI,Septum site-determining protein MinD (Cell division inhibitor MinD),minD b1175 JW1164,Escherichia coli (strain K12),270,29614
+P0AF01,reviewed,MODB_ECOLI,Molybdenum transport system permease protein ModB,modB chlJ b0764 JW0747,Escherichia coli (strain K12),229,24939
+P0AF03,reviewed,MOG_ECOLI,Molybdopterin adenylyltransferase (MPT adenylyltransferase) (EC 2.7.7.75),mog chlG mogA yaaG b0009 JW0008,Escherichia coli (strain K12),195,21222
+P0AF08,reviewed,APBC_ECOLI,Iron-sulfur cluster carrier protein,mrp b2113 JW2100,Escherichia coli (strain K12),369,39938
+P0AF28,reviewed,NARL_ECOLI,Nitrate/nitrite response regulator protein NarL,narL frdR b1221 JW1212,Escherichia coli (strain K12),216,23927
+P0AF67,reviewed,TSAE_ECOLI,tRNA threonylcarbamoyladenosine biosynthesis protein TsaE (t(6)A37 threonylcarbamoyladenosine biosynthesis protein TsaE),tsaE yjeE b4168 JW4126,Escherichia coli (strain K12),153,16853
+P0AF98,reviewed,LPTF_ECOLI,Lipopolysaccharide export system permease protein LptF,lptF yjgP b4261 JW4218,Escherichia coli (strain K12),366,40358
+P0AFA2,reviewed,NARX_ECOLI,Nitrate/nitrite sensor protein NarX (EC 2.7.13.3),narX narR b1222 JW1213,Escherichia coli (strain K12),598,67084
+P0AFA9,reviewed,NIKC_ECOLI,Nickel transport system permease protein NikC,nikC b3478 JW3443,Escherichia coli (strain K12),277,30362
+P0AFB5,reviewed,NTRB_ECOLI,Sensory histidine kinase/phosphatase NtrB (EC 2.7.13.3) (EC 3.1.3.-) (Nitrogen regulation protein NR(II)) (Nitrogen regulator II) (NRII),glnL glnR ntrB b3869 JW3840,Escherichia coli (strain K12),349,38556
+P0AFB8,reviewed,NTRC_ECOLI,DNA-binding transcriptional regulator NtrC (Nitrogen regulation protein NR(I)) (Nitrogen regulator I) (NRI),glnG glnT ntrC b3868 JW3839,Escherichia coli (strain K12),469,52255
+P0AFH2,reviewed,OPPB_ECOLI,Oligopeptide transport system permease protein OppB,oppB b1244 JW1236,Escherichia coli (strain K12),306,33443
+P0AFH6,reviewed,OPPC_ECOLI,Oligopeptide transport system permease protein OppC,oppC b1245 JW1237,Escherichia coli (strain K12),302,33022
+P0AFI2,reviewed,PARC_ECOLI,DNA topoisomerase 4 subunit A (EC 5.6.2.2) (Topoisomerase IV subunit A),parC b3019 JW2987,Escherichia coli (strain K12),752,83831
+P0AFK4,reviewed,POTB_ECOLI,Spermidine/putrescine transport system permease protein PotB,potB b1125 JW1111,Escherichia coli (strain K12),275,31062
+P0AFK6,reviewed,POTC_ECOLI,Spermidine/putrescine transport system permease protein PotC,potC b1124 JW1110,Escherichia coli (strain K12),264,29111
+P0AFK9,reviewed,POTD_ECOLI,Spermidine/putrescine-binding periplasmic protein (SPBP),potD b1123 JW1109,Escherichia coli (strain K12),348,38867
+P0AFL1,reviewed,POTI_ECOLI,Putrescine transport system permease protein PotI,potI b0857 JW0841,Escherichia coli (strain K12),281,30541
+P0AFM2,reviewed,PROX_ECOLI,Glycine betaine/proline betaine-binding periplasmic protein (GBBP),proX proU b2679 JW2654,Escherichia coli (strain K12),330,36023
+P0AFN6,reviewed,YADH_ECOLI,Inner membrane transport permease YadH,yadH b0128 JW0124,Escherichia coli (strain K12),256,28516
+P0AFP9,reviewed,YBHR_ECOLI,Probable multidrug ABC transporter permease YbhR,ybhR b0792 JW5803,Escherichia coli (strain K12),368,41566
+P0AFQ2,reviewed,YBHS_ECOLI,Probable multidrug ABC transporter permease YbhS,ybhS b0793 JW0777,Escherichia coli (strain K12),377,42060
+P0AFR7,reviewed,YCJO_ECOLI,Inner membrane ABC transporter permease protein YcjO,ycjO b1311 JW1304,Escherichia coli (strain K12),293,33225
+P0AFR9,reviewed,YDCV_ECOLI,Inner membrane ABC transporter permease protein YdcV,ydcV b1443 JW1438,Escherichia coli (strain K12),264,28722
+P0AFS1,reviewed,LSRD_ECOLI,Autoinducer 2 import system permease protein LsrD (AI-2 import system permease protein LsrD),lsrD ydeZ b1515 JW1508,Escherichia coli (strain K12),330,34456
+P0AFT2,reviewed,TCYL_ECOLI,L-cystine transport system permease protein TcyL,tcyL yecS b1918 JW1903,Escherichia coli (strain K12),222,24801
+P0AFU0,reviewed,YEJB_ECOLI,Inner membrane ABC transporter permease protein YejB,yejB b2178 JW2166,Escherichia coli (strain K12),364,40360
+P0AFU4,reviewed,GLRR_ECOLI,Transcriptional regulatory protein GlrR,glrR yfhA b2554 JW2538,Escherichia coli (strain K12),444,49148
+P0AFY6,reviewed,SBMA_ECOLI,Peptide antibiotic transporter SbmA,sbmA b0377 JW0368,Escherichia coli (strain K12),406,46459
+P0AFZ7,reviewed,TRKH_ECOLI,Trk system potassium uptake protein TrkH,trkH b3849 JW5576,Escherichia coli (strain K12),483,52960
+P0AG20,reviewed,RELA_ECOLI,GTP pyrophosphokinase (EC 2.7.6.5) ((p)ppGpp synthase) (ATP:GTP 3'-pyrophosphotransferase) (ppGpp synthase I),relA b2784 JW2755,Escherichia coli (strain K12),744,83876
+P0AG30,reviewed,RHO_ECOLI,Transcription termination factor Rho (EC 3.6.4.-) (ATP-dependent helicase Rho),rho nitA psuA rnsC sbaA tsu b3783 JW3756,Escherichia coli (strain K12),419,47004
+P0AG40,reviewed,RIBF_ECOLI,Bifunctional riboflavin kinase/FMN adenylyltransferase (Riboflavin biosynthesis protein RibF) [Includes: Riboflavin kinase (EC 2.7.1.26) (Flavokinase); FMN adenylyltransferase (EC 2.7.7.2) (FAD pyrophosphorylase) (FAD synthase)],ribF yaaC b0025 JW0023,Escherichia coli (strain K12),313,34734
+P0AG78,reviewed,SUBI_ECOLI,Sulfate-binding protein (Sulfate starvation-induced protein 2) (SSI2),sbp b3917 JW3888,Escherichia coli (strain K12),329,36659
+P0AG80,reviewed,UGPB_ECOLI,sn-glycerol-3-phosphate-binding periplasmic protein UgpB (Bile-responsive chaperone),ugpB b3453 JW3418,Escherichia coli (strain K12),438,48449
+P0AG82,reviewed,PSTS_ECOLI,Phosphate-binding protein PstS (PBP),pstS phoS b3728 JW3706,Escherichia coli (strain K12),346,37024
+P0AGG0,reviewed,THIL_ECOLI,Thiamine-monophosphate kinase (TMP kinase) (Thiamine-phosphate kinase) (EC 2.7.4.16),thiL b0417 JW0407,Escherichia coli (strain K12),325,35071
+P0AGH1,reviewed,YHHJ_ECOLI,Inner membrane transport permease YhhJ,yhhJ b3485 JW5677,Escherichia coli (strain K12),374,41062
+P0AGH3,reviewed,SAPB_ECOLI,Putrescine export system permease protein SapB,sapB b1293 JW1286,Escherichia coli (strain K12),321,36038
+P0AGH5,reviewed,SAPC_ECOLI,Putrescine export system permease protein SapC,sapC b1292 JW1285,Escherichia coli (strain K12),296,31548
+P0AGH8,reviewed,PSTC_ECOLI,Phosphate transport system permease protein PstC,pstC phoW b3727 JW3705,Escherichia coli (strain K12),319,34121
+P0AGI1,reviewed,RBSC_ECOLI,Ribose import permease protein RbsC,rbsC b3750 JW3729,Escherichia coli (strain K12),321,33452
+P0AGI4,reviewed,XYLH_ECOLI,Xylose transport system permease protein XylH,xylH b3568 JW3540,Escherichia coli (strain K12),393,41031
+P0AGJ9,reviewed,SYY_ECOLI,Tyrosine--tRNA ligase (EC 6.1.1.1) (Tyrosyl-tRNA synthetase) (TyrRS),tyrS b1637 JW1629,Escherichia coli (strain K12),424,47527
+P0C0K3,reviewed,SRKA_ECOLI,Stress response kinase A (EC 2.7.11.1) (Serine/threonine protein kinase YihE) (Serine/threonine-protein kinase SrkA),srkA rdoA yihE b3859 JW3831,Escherichia coli (strain K12),328,38120
+P0C0U4,reviewed,RIMK_ECOLI,Ribosomal protein bS6--L-glutamate ligase (EC 6.3.2.-) (Polyglutamate synthase) (Ribosomal protein bS6 modification protein),rimK b0852 JW0836,Escherichia coli (strain K12),300,32436
+P0DMC5,reviewed,RCSC_ECOLI,Sensor histidine kinase RcsC (EC 2.7.13.3) (Capsular synthesis regulator component C),rcsC b2218 JW5917/JW5920,Escherichia coli (strain K12),949,106506
+P0DP69,reviewed,PHNE1_ECOLI,Putative cryptic phosphonate transport system permease protein PhnE1,phnE1 b4104 JW4065,Escherichia coli (strain K12),206,22797
+P0DP70,reviewed,PHNE2_ECOLI,Putative cryptic phosphonate transport system permease protein PhnE2,phnE phnE2 b4103 JW4065,Escherichia coli (strain K12),122,13335
+P0DP92,reviewed,BCSQ_ECOLI,Cellulose biosynthesis protein BcsQ,bcsQ yhjQ,Escherichia coli (strain K12),250,27878
+P10346,reviewed,GLNQ_ECOLI,Glutamine transport ATP-binding protein GlnQ,glnQ b0809 JW0794,Escherichia coli (strain K12),240,26731
+P10378,reviewed,ENTE_ECOLI,"Enterobactin synthase component E (EC 6.3.2.14) (2,3-dihydroxybenzoate-AMP ligase) (DHB-AMP ligase) (2,3-dihydroxybenzoate-AMP synthase) (EC 6.2.1.71) (Dihydroxybenzoic acid-activating enzyme) (Enterochelin synthase E)",entE b0594 JW0586,Escherichia coli (strain K12),536,59112
+P10408,reviewed,SECA_ECOLI,Protein translocase subunit SecA (EC 7.4.2.8),secA azi pea prlD b0098 JW0096,Escherichia coli (strain K12),901,102023
+P10905,reviewed,UGPA_ECOLI,sn-glycerol-3-phosphate transport system permease protein UgpA,ugpA b3452 JW3417,Escherichia coli (strain K12),295,33264
+P10906,reviewed,UGPE_ECOLI,sn-glycerol-3-phosphate transport system permease protein UgpE,ugpE b3451 JW3416,Escherichia coli (strain K12),281,31500
+P10907,reviewed,UGPC_ECOLI,sn-glycerol-3-phosphate import ATP-binding protein UgpC (EC 7.6.2.10),ugpC b3450 JW3415,Escherichia coli (strain K12),356,39524
+P11071,reviewed,ACEK_ECOLI,Isocitrate dehydrogenase kinase/phosphatase (IDH kinase/phosphatase) (IDHK/P) (EC 2.7.11.5) (EC 3.1.3.-),aceK b4016 JW3976,Escherichia coli (strain K12),578,67699
+P11454,reviewed,ENTF_ECOLI,Enterobactin synthase component F (EC 6.3.2.14) (Enterochelin synthase F) (Nonribosomal peptide synthetase EntF) [Includes: L-serine--[L-seryl-carrier protein] ligase (EC 6.2.1.72) (Serine-activating enzyme) (Seryl-AMP ligase)],entF b0586 JW0578,Escherichia coli (strain K12),1293,141991
+P11553,reviewed,FUCK_ECOLI,L-fuculokinase (EC 2.7.1.51) (L-fuculose kinase),fucK b2803 JW2774,Escherichia coli (strain K12),472,52259
+P11664,reviewed,YGGC_ECOLI,Uncharacterized protein YggC,yggC b2928 JW2895,Escherichia coli (strain K12),237,27132
+P11868,reviewed,TDCD_ECOLI,Propionate kinase (EC 2.7.2.15),tdcD yhaA b3115 JW5806,Escherichia coli (strain K12),402,43384
+P11875,reviewed,SYR_ECOLI,Arginine--tRNA ligase (EC 6.1.1.19) (Arginyl-tRNA synthetase) (ArgRS),argS b1876 JW1865,Escherichia coli (strain K12),577,64683
+P11880,reviewed,MURF_ECOLI,UDP-N-acetylmuramoyl-tripeptide--D-alanyl-D-alanine ligase (EC 6.3.2.10) (D-alanyl-D-alanine-adding enzyme) (UDP-MurNAc-pentapeptide synthetase),murF mra b0086 JW0084,Escherichia coli (strain K12),452,47447
+P12282,reviewed,MOEB_ECOLI,Molybdopterin-synthase adenylyltransferase (EC 2.7.7.80) (MoaD protein adenylase) (Molybdopterin-converting factor subunit 1 adenylase) (Sulfur carrier protein MoaD adenylyltransferase),moeB chlN b0826 JW0810,Escherichia coli (strain K12),249,26719
+P12758,reviewed,UDP_ECOLI,Uridine phosphorylase (UPase) (UrdPase) (EC 2.4.2.3),udp b3831 JW3808,Escherichia coli (strain K12),253,27159
+P13000,reviewed,BIOD1_ECOLI,ATP-dependent dethiobiotin synthetase BioD 1 (EC 6.3.3.3) (DTB synthetase 1) (DTBS 1) (Dethiobiotin synthase 1),bioD1 b0778 JW0761,Escherichia coli (strain K12),225,24140
+P13458,reviewed,SBCC_ECOLI,Nuclease SbcCD subunit C,sbcC rmuA b0397 JW0387,Escherichia coli (strain K12),1048,118721
+P14175,reviewed,PROV_ECOLI,Glycine betaine/proline betaine transport system ATP-binding protein ProV,proV b2677 JW2652,Escherichia coli (strain K12),400,44163
+P14176,reviewed,PROW_ECOLI,Glycine betaine/proline betaine transport system permease protein ProW,proW b2678 JW2653,Escherichia coli (strain K12),354,37620
+P14375,reviewed,ZRAR_ECOLI,Transcriptional regulatory protein ZraR,zraR hydG b4004 JW3968,Escherichia coli (strain K12),441,48395
+P14377,reviewed,ZRAS_ECOLI,Sensor histidine kinase ZraS (EC 2.7.13.3),zraS hydH b4003 JW3967,Escherichia coli (strain K12),465,51032
+P14565,reviewed,TRAI1_ECOLI,Multifunctional conjugation protein TraI [Includes: DNA relaxase TraI (EC 5.6.2.1) (DNA nickase TraI) (Transesterase TraI); DNA helicase I (EC 3.6.4.12)],traI ECOK12F104,Escherichia coli (strain K12),1756,192016
+P14900,reviewed,MURD_ECOLI,UDP-N-acetylmuramoylalanine--D-glutamate ligase (EC 6.3.2.9) (D-glutamic acid-adding enzyme) (UDP-N-acetylmuramoyl-L-alanyl-D-glutamate synthetase),murD b0088 JW0086,Escherichia coli (strain K12),438,46974
+P15005,reviewed,MCRB_ECOLI,Type IV methyl-directed restriction enzyme EcoKMcrB subunit (EcoKMcrBC) (5-methylcytosine-specific restriction enzyme B) (EC 3.1.21.-),mcrB rglB b4346 JW5871,Escherichia coli (strain K12),459,53157
+P15028,reviewed,FECB_ECOLI,Fe(3+) dicitrate-binding periplasmic protein FecB (Iron(III) dicitrate-binding periplasmic protein),fecB b4290 JW4250,Escherichia coli (strain K12),300,33146
+P15029,reviewed,FECD_ECOLI,Fe(3+) dicitrate transport system permease protein FecD (Iron(III) dicitrate transport system permease protein FecD),fecD b4288 JW4248,Escherichia coli (strain K12),318,34131
+P15030,reviewed,FECC_ECOLI,Fe(3+) dicitrate transport system permease protein FecC (Iron(III) dicitrate transport system permease protein FecC),fecC b4289 JW4249,Escherichia coli (strain K12),332,34893
+P15031,reviewed,FECE_ECOLI,Fe(3+) dicitrate transport ATP-binding protein FecE (EC 7.2.2.18) (Iron(III) dicitrate transport ATP-binding protein FecE),fecE b4287 JW4247,Escherichia coli (strain K12),255,28191
+P15038,reviewed,HELD_ECOLI,DNA helicase IV (EC 5.6.2.4) (75 kDa helicase) (DNA 3'-5' helicase IV),helD b0962 JW0945,Escherichia coli (strain K12),684,77976
+P15043,reviewed,RECQ_ECOLI,ATP-dependent DNA helicase RecQ (EC 5.6.2.4) (DNA 3'-5' helicase RecQ),recQ b3822 JW5855,Escherichia coli (strain K12),609,68364
+P15254,reviewed,PUR4_ECOLI,Phosphoribosylformylglycinamidine synthase (FGAM synthase) (FGAMS) (EC 6.3.5.3) (Formylglycinamide ribonucleotide amidotransferase) (FGAR amidotransferase) (FGAR-AT),purL purI b2557 JW2541,Escherichia coli (strain K12),1295,141403
+P15640,reviewed,PUR2_ECOLI,Phosphoribosylamine--glycine ligase (EC 6.3.4.13) (GARS) (Glycinamide ribonucleotide synthetase) (Phosphoribosylglycinamide synthetase),purD b4005 JW3969,Escherichia coli (strain K12),429,45940
+P16384,reviewed,MIAA_ECOLI,tRNA dimethylallyltransferase (EC 2.5.1.75) (Dimethylallyl diphosphate:tRNA dimethylallyltransferase) (DMAPP:tRNA dimethylallyltransferase) (DMATase) (Isopentenyl-diphosphate:tRNA isopentenyltransferase) (IPP transferase) (IPPT) (IPTase),miaA trpX b4171 JW4129,Escherichia coli (strain K12),316,35065
+P16456,reviewed,SELD_ECOLI,"Selenide, water dikinase (EC 2.7.9.3) (Selenium donor protein) (Selenophosphate synthase)",selD fdhB b1764 JW1753,Escherichia coli (strain K12),347,36687
+P16659,reviewed,SYP_ECOLI,Proline--tRNA ligase (EC 6.1.1.15) (Global RNA synthesis factor) (Prolyl-tRNA synthetase) (ProRS),proS drpA b0194 JW0190,Escherichia coli (strain K12),572,63693
+P16676,reviewed,CYSA_ECOLI,Sulfate/thiosulfate import ATP-binding protein CysA (EC 7.3.2.3) (Sulfate-transporting ATPase),cysA b2422 JW2415,Escherichia coli (strain K12),365,41059
+P16677,reviewed,PHNC_ECOLI,Phosphonates import ATP-binding protein PhnC (EC 7.3.2.2),phnC b4106 JW4067,Escherichia coli (strain K12),262,29431
+P16678,reviewed,PHNK_ECOLI,Putative phosphonates utilization ATP-binding protein PhnK,phnK b4097 JW5727,Escherichia coli (strain K12),252,27831
+P16679,reviewed,PHNL_ECOLI,Alpha-D-ribose 1-methylphosphonate 5-triphosphate synthase subunit PhnL (RPnTP synthase subunit PhnL) (EC 2.7.8.37),phnL b4096 JW4057,Escherichia coli (strain K12),226,24705
+P16682,reviewed,PHND_ECOLI,Phosphonates-binding periplasmic protein,phnD psiD b4105 JW4066,Escherichia coli (strain K12),338,37371
+P16690,reviewed,PHNN_ECOLI,"Ribose 1,5-bisphosphate phosphokinase PhnN (EC 2.7.4.23) (Ribose 1,5-bisphosphokinase)",phnN b4094 JW4055,Escherichia coli (strain K12),185,20730
+P16700,reviewed,CYSP_ECOLI,Thiosulfate-binding protein,cysP b2425 JW2418,Escherichia coli (strain K12),338,37615
+P16701,reviewed,CYST_ECOLI,Sulfate transport system permease protein CysT,cysU cysT b2424 JW2417,Escherichia coli (strain K12),277,30292
+P17115,reviewed,GUTQ_ECOLI,Arabinose 5-phosphate isomerase GutQ (API) (G-API) (EC 5.3.1.13) (Phosphosugar aldol-ketol isomerase),gutQ srlQ b2708 JW5431,Escherichia coli (strain K12),321,34031
+P17888,reviewed,PRIA_ECOLI,Primosomal protein N' (EC 3.6.4.-) (ATP-dependent helicase PriA) (Replication factor Y),priA b3935 JW3906,Escherichia coli (strain K12),732,81655
+P17952,reviewed,MURC_ECOLI,UDP-N-acetylmuramate--L-alanine ligase (EC 6.3.2.8) (UDP-N-acetylmuramoyl-L-alanine synthetase),murC b0091 JW0089,Escherichia coli (strain K12),491,53626
+P18392,reviewed,RSTB_ECOLI,Sensor protein RstB (EC 2.7.13.3),rstB uspT b1609 JW1601,Escherichia coli (strain K12),433,49283
+P18843,reviewed,NADE_ECOLI,NH(3)-dependent NAD(+) synthetase (EC 6.3.1.5) (Nicotinamide adenine dinucleotide synthetase) (NADS) (Nitrogen regulatory protein),nadE efg ntrL b1740 JW1729,Escherichia coli (strain K12),275,30637
+P19323,reviewed,FHLA_ECOLI,Formate hydrogenlyase transcriptional activator FhlA,fhlA b2731 JW2701,Escherichia coli (strain K12),692,78468
+P20083,reviewed,PARE_ECOLI,DNA topoisomerase 4 subunit B (EC 5.6.2.2) (Topoisomerase IV subunit B),parE nfxD b3030 JW2998,Escherichia coli (strain K12),630,70244
+P20605,reviewed,FIC_ECOLI,Probable protein adenylyltransferase Fic (EC 2.7.7.108) (Cell filamentation protein Fic),fic b3361 JW3324,Escherichia coli (strain K12),200,22960
+P21156,reviewed,CYSD_ECOLI,Sulfate adenylyltransferase subunit 2 (EC 2.7.7.4) (ATP-sulfurylase small subunit) (Sulfate adenylate transferase) (SAT),cysD b2752 JW2722,Escherichia coli (strain K12),302,35188
+P21507,reviewed,SRMB_ECOLI,ATP-dependent RNA helicase SrmB (EC 3.6.4.13),srmB rbaB rhlA b2576 JW2560,Escherichia coli (strain K12),444,49914
+P21599,reviewed,KPYK2_ECOLI,Pyruvate kinase II (EC 2.7.1.40) (PK-2),pykA b1854 JW1843,Escherichia coli (strain K12),480,51357
+P21693,reviewed,DBPA_ECOLI,ATP-dependent RNA helicase DbpA (EC 3.6.4.13),dbpA b1343 JW1337,Escherichia coli (strain K12),457,49188
+P21865,reviewed,KDPD_ECOLI,Sensor protein KdpD (EC 2.7.13.3),kdpD b0695 JW0683,Escherichia coli (strain K12),894,98718
+P21888,reviewed,SYC_ECOLI,Cysteine--tRNA ligase (EC 6.1.1.16) (Cysteinyl-tRNA synthetase) (CysRS),cysS b0526 JW0515,Escherichia coli (strain K12),461,52202
+P21889,reviewed,SYD_ECOLI,Aspartate--tRNA ligase (EC 6.1.1.12) (Aspartyl-tRNA synthetase) (AspRS),aspS tls b1866 JW1855,Escherichia coli (strain K12),590,65913
+P22106,reviewed,ASNB_ECOLI,Asparagine synthetase B [glutamine-hydrolyzing] (AS-B) (EC 6.3.5.4),asnB b0674 JW0660,Escherichia coli (strain K12),554,62659
+P22188,reviewed,MURE_ECOLI,"UDP-N-acetylmuramoyl-L-alanyl-D-glutamate--2,6-diaminopimelate ligase (EC 6.3.2.13) (Meso-A2pm-adding enzyme) (Meso-diaminopimelate-adding enzyme) (UDP-MurNAc-L-Ala-D-Glu:meso-diaminopimelate ligase) (UDP-MurNAc-tripeptide synthetase) (UDP-N-acetylmuramyl-tripeptide synthetase)",murE b0085 JW0083,Escherichia coli (strain K12),495,53344
+P22259,reviewed,PCKA_ECOLI,Phosphoenolpyruvate carboxykinase (ATP) (PCK) (PEP carboxykinase) (PEPCK) (EC 4.1.1.49),pckA pck b3403 JW3366,Escherichia coli (strain K12),540,59643
+P22523,reviewed,MUKB_ECOLI,Chromosome partition protein MukB (Structural maintenance of chromosome-related protein),mukB b0924 JW0907,Escherichia coli (strain K12),1486,170230
+P22729,reviewed,LIVM_ECOLI,High-affinity branched-chain amino acid transport system permease protein LivM (LIV-I protein M),livM b3456 JW3421,Escherichia coli (strain K12),425,46269
+P22731,reviewed,LIVF_ECOLI,High-affinity branched-chain amino acid transport ATP-binding protein LivF (LIV-I protein F),livF b3454 JW3419,Escherichia coli (strain K12),237,26310
+P22787,reviewed,YIFB_ECOLI,Uncharacterized protein YifB,yifB b3765 JW3738,Escherichia coli (strain K12),506,55146
+P23200,reviewed,MGLC_ECOLI,Galactose/methyl galactoside import permease protein MglC,mglC b2148 JW2135,Escherichia coli (strain K12),336,35550
+P23331,reviewed,KITH_ECOLI,Thymidine kinase (EC 2.7.1.21),tdk b1238 JW1226,Escherichia coli (strain K12),205,23457
+P23367,reviewed,MUTL_ECOLI,DNA mismatch repair protein MutL,mutL b4170 JW4128,Escherichia coli (strain K12),615,67924
+P23524,reviewed,GLXK1_ECOLI,Glycerate 2-kinase (EC 2.7.1.165) (Glycerate kinase 1) (GK1),garK yhaD b3124 JW3093,Escherichia coli (strain K12),381,39104
+P23538,reviewed,PPSA_ECOLI,"Phosphoenolpyruvate synthase (PEP synthase) (EC 2.7.9.2) (Pyruvate, water dikinase)",ppsA pps b1702 JW1692,Escherichia coli (strain K12),792,87435
+P23837,reviewed,PHOQ_ECOLI,Sensor protein PhoQ (EC 2.7.13.3) (EC 3.1.3.-) (Sensor histidine protein kinase/phosphatase PhoQ),phoQ b1129 JW1115,Escherichia coli (strain K12),486,55300
+P23843,reviewed,OPPA_ECOLI,Periplasmic oligopeptide-binding protein OppA (Polyamine-induced protein) (PI protein),oppA b1243 JW1235,Escherichia coli (strain K12),543,60899
+P23845,reviewed,CYSN_ECOLI,Sulfate adenylyltransferase subunit 1 (EC 2.7.7.4) (ATP-sulfurylase large subunit) (Sulfate adenylate transferase) (SAT),cysN b2751 JW2721,Escherichia coli (strain K12),475,52558
+P23847,reviewed,DPPA_ECOLI,Dipeptide-binding protein (DBP) (Periplasmic dipeptide transport protein),dppA b3544 JW3513,Escherichia coli (strain K12),535,60294
+P23849,reviewed,TRKG_ECOLI,Trk system potassium uptake protein TrkG,trkG b1363 JW1358,Escherichia coli (strain K12),485,53944
+P23874,reviewed,HIPA_ECOLI,Serine/threonine-protein kinase toxin HipA (Ser/Thr-protein kinase HipA) (EC 2.7.11.1) (Toxin HipA),hipA b1507 JW1500,Escherichia coli (strain K12),440,49276
+P23876,reviewed,FEPD_ECOLI,Ferric enterobactin transport system permease protein FepD,fepD b0590 JW0582,Escherichia coli (strain K12),334,33871
+P23877,reviewed,FEPG_ECOLI,Ferric enterobactin transport system permease protein FepG,fepG b0589 JW0581,Escherichia coli (strain K12),330,34910
+P23878,reviewed,FEPC_ECOLI,Ferric enterobactin transport ATP-binding protein FepC (EC 7.2.2.17),fepC b0588 JW0580,Escherichia coli (strain K12),271,29784
+P23886,reviewed,CYDC_ECOLI,Glutathione/L-cysteine transport system ATP-binding/permease protein CydC (EC 7.4.2.-),cydC mdrA mdrH surB b0886 JW0869,Escherichia coli (strain K12),573,62920
+P23909,reviewed,MUTS_ECOLI,DNA mismatch repair protein MutS,mutS fdv b2733 JW2703,Escherichia coli (strain K12),853,95247
+P23917,reviewed,MAK_ECOLI,Fructokinase (EC 2.7.1.4) (D-fructose kinase) (Manno(fructo)kinase),mak yajF b0394 JW0385,Escherichia coli (strain K12),302,32500
+P24182,reviewed,ACCC_ECOLI,Biotin carboxylase (EC 6.3.4.14) (Acetyl-coenzyme A carboxylase biotin carboxylase subunit A),accC fabG b3256 JW3224,Escherichia coli (strain K12),449,49321
+P24230,reviewed,RECG_ECOLI,ATP-dependent DNA helicase RecG (EC 5.6.2.4) (DNA branch migration protein RecG) (Probable DNA 3'-5' helicase RecG),recG radC spoV b3652 JW3627,Escherichia coli (strain K12),693,76430
+P24554,reviewed,RADA_ECOLI,DNA repair protein RadA (EC 3.6.4.-) (Branch migration protein RadA) (DNA repair protein Sms),radA sms b4389 JW4352,Escherichia coli (strain K12),460,49472
+P25519,reviewed,HFLX_ECOLI,GTPase HflX (GTP-binding protein HflX),hflX b4173 JW4131,Escherichia coli (strain K12),426,48327
+P25741,reviewed,WAAP_ECOLI,Lipopolysaccharide core heptose(I) kinase WaaP (EC 2.7.1.235),waaP rfaP b3630 JW3605,Escherichia coli (strain K12),265,30872
+P25745,reviewed,MNMA_ECOLI,tRNA-specific 2-thiouridylase MnmA (EC 2.8.1.13),mnmA asuE trmU ycfB b1133 JW1119,Escherichia coli (strain K12),368,40959
+P25888,reviewed,RHLE_ECOLI,ATP-dependent RNA helicase RhlE (EC 3.6.4.13),rhlE b0797 JW0781,Escherichia coli (strain K12),454,49989
+P26281,reviewed,HPPK_ECOLI,"2-amino-4-hydroxy-6-hydroxymethyldihydropteridine pyrophosphokinase (EC 2.7.6.3) (6-hydroxymethyl-7,8-dihydropterin pyrophosphokinase) (PPPK) (7,8-dihydro-6-hydroxymethylpterin-pyrophosphokinase) (HPPK)",folK b0142 JW0138,Escherichia coli (strain K12),159,18079
+P27240,reviewed,WAAY_ECOLI,Lipopolysaccharide core heptose(II) kinase WaaY (EC 2.7.1.-),waaY rfaY b3625 JW3600,Escherichia coli (strain K12),232,27461
+P27254,reviewed,ARGK_ECOLI,GTPase ArgK (EC 3.6.5.-) (G-protein chaperone),argK ygfD b2918 JW2885,Escherichia coli (strain K12),331,36704
+P27278,reviewed,NADR_ECOLI,Trifunctional NAD biosynthesis/regulator protein NadR [Includes: Transcriptional regulator NadR; Nicotinamide mononucleotide adenylyltransferase (NMN adenylyltransferase) (NMN-AT) (NMNAT) (EC 2.7.7.1) (Nicotinamide ribonucleotide adenylyltransferase) (Nicotinamide-nucleotide adenylyltransferase); Ribosylnicotinamide kinase (RNK) (EC 2.7.1.22) (Nicotinamide riboside kinase) (NRK) (NmR-K)],nadR nadI b4390 JW5800,Escherichia coli (strain K12),410,47346
+P27296,reviewed,DING_ECOLI,ATP-dependent DNA helicase DinG (EC 5.6.2.3) (DNA 5'-3' helicase DinG),dinG rarB b0799 JW0784,Escherichia coli (strain K12),716,81440
+P27297,reviewed,BAX_ECOLI,Protein bax,bax b3570 JW5653,Escherichia coli (strain K12),274,30868
+P27300,reviewed,LPXK_ECOLI,Tetraacyldisaccharide 4'-kinase (EC 2.7.1.130) (Lipid A 4'-kinase),lpxK ycaH b0915 JW0898,Escherichia coli (strain K12),328,35589
+P27305,reviewed,GLUQ_ECOLI,Glutamyl-Q tRNA(Asp) synthetase (Glu-Q-RSs) (EC 6.1.1.-),gluQ yadB b0144 JW5892,Escherichia coli (strain K12),308,34868
+P27550,reviewed,ACSA_ECOLI,Acetyl-coenzyme A synthetase (AcCoA synthetase) (Acs) (EC 6.2.1.1) (Acetate--CoA ligase) (Acyl-activating enzyme),acs yfaC b4069 JW4030,Escherichia coli (strain K12),652,72094
+P27896,reviewed,NARQ_ECOLI,Nitrate/nitrite sensor protein NarQ (EC 2.7.13.3),narQ b2469 JW2453,Escherichia coli (strain K12),566,63697
+P28635,reviewed,METQ_ECOLI,D-methionine-binding lipoprotein MetQ,metQ yaeC b0197 JW0193,Escherichia coli (strain K12),271,29432
+P28903,reviewed,NRDD_ECOLI,Anaerobic ribonucleoside-triphosphate reductase (EC 1.1.98.6) (Class III ribonucleoside-triphosphate reductase),nrdD b4238 JW4197,Escherichia coli (strain K12),712,80023
+P29018,reviewed,CYDD_ECOLI,Glutathione/L-cysteine transport system ATP-binding/permease protein CydD (EC 7.4.2.-),cydD htrD b0887 JW0870,Escherichia coli (strain K12),588,65056
+P30015,reviewed,LHR_ECOLI,Probable ATP-dependent helicase Lhr (EC 3.6.4.-) (Large helicase-related protein),lhr rhlF b1653 JW1645,Escherichia coli (strain K12),1538,169381
+P30138,reviewed,THIF_ECOLI,Sulfur carrier protein ThiS adenylyltransferase (EC 2.7.7.73),thiF b3992 JW3956,Escherichia coli (strain K12),251,26970
+P30235,reviewed,PSUK_ECOLI,Pseudouridine kinase (EC 2.7.1.83),psuK pscK yeiC b2166 JW2153,Escherichia coli (strain K12),313,33573
+P30750,reviewed,METN_ECOLI,Methionine import ATP-binding protein MetN (EC 7.4.2.11),metN abc b0199 JW0195,Escherichia coli (strain K12),343,37788
+P30844,reviewed,BASS_ECOLI,Sensor protein BasS (EC 2.7.13.3),basS pmrB b4112 JW4073,Escherichia coli (strain K12),363,41029
+P30847,reviewed,BAES_ECOLI,Signal transduction histidine-protein kinase BaeS (EC 2.7.13.3),baeS b2078 JW2063,Escherichia coli (strain K12),467,51991
+P30855,reviewed,EVGS_ECOLI,Sensor protein EvgS (EC 2.7.13.3),evgS b2370 JW2367,Escherichia coli (strain K12),1197,134743
+P30859,reviewed,ARTI_ECOLI,Putative ABC transporter arginine-binding protein 2,artI b0863 JW0847,Escherichia coli (strain K12),243,26930
+P30860,reviewed,ARTJ_ECOLI,ABC transporter arginine-binding protein 1,artJ b0860 JW0844,Escherichia coli (strain K12),243,26829
+P30870,reviewed,GLNE_ECOLI,Bifunctional glutamine synthetase adenylyltransferase/adenylyl-removing enzyme (ATP:glutamine synthetase adenylyltransferase) (ATase) [Includes: Glutamine synthetase adenylyl-L-tyrosine phosphorylase (EC 2.7.7.89) (Adenylyl removase) (AR) (AT-N) (AT-N440) (P-I); Glutamine synthetase adenylyl transferase (EC 2.7.7.42) (Adenylyl transferase) (AT) (AT-C)],glnE b3053 JW3025,Escherichia coli (strain K12),946,108418
+P30958,reviewed,MFD_ECOLI,Transcription-repair-coupling factor (TRCF) (EC 3.6.4.-),mfd b1114 JW1100,Escherichia coli (strain K12),1148,129983
+P31060,reviewed,MODF_ECOLI,ABC transporter ATP-binding protein ModF (Photorepair protein PhrA),modF ORF6 phrA b0760 JW0743,Escherichia coli (strain K12),490,54536
+P31119,reviewed,AAS_ECOLI,Bifunctional protein Aas [Includes: 2-acylglycerophosphoethanolamine acyltransferase (EC 2.3.1.40) (2-acyl-GPE acyltransferase) (Acyl-[acyl-carrier-protein]--phospholipid O-acyltransferase); Acyl-[acyl-carrier-protein] synthetase (EC 6.2.1.20) (Acyl-ACP synthetase) (Long-chain-fatty-acid--[acyl-carrier-protein] ligase)],aas b2836 JW2804,Escherichia coli (strain K12),719,80700
+P31133,reviewed,POTF_ECOLI,Putrescine-binding periplasmic protein PotF,potF b0854 JW0838,Escherichia coli (strain K12),370,40840
+P31134,reviewed,POTG_ECOLI,Putrescine transport ATP-binding protein PotG (EC 7.6.2.16),potG b0855 JW5818,Escherichia coli (strain K12),377,41931
+P31135,reviewed,POTH_ECOLI,Putrescine transport system permease protein PotH,potH b0856 JW0840,Escherichia coli (strain K12),317,35490
+P31459,reviewed,DGOK_ECOLI,2-dehydro-3-deoxygalactonokinase (EC 2.7.1.58) (2-keto-3-deoxy-galactonokinase) (2-oxo-3-deoxygalactonate kinase),dgoK yidV b3693 JW3670,Escherichia coli (strain K12),292,31374
+P31473,reviewed,RAVA_ECOLI,ATPase RavA (EC 3.6.3.-) (Regulatory ATPase variant A),ravA yieN b3746 JW3725,Escherichia coli (strain K12),498,56389
+P31547,reviewed,METI_ECOLI,D-methionine transport system permease protein MetI,metI yaeE b0198 JW0194,Escherichia coli (strain K12),217,23256
+P31548,reviewed,THIQ_ECOLI,Thiamine import ATP-binding protein ThiQ (EC 7.6.2.15),thiQ yabJ b0066 JW0065,Escherichia coli (strain K12),232,24999
+P31549,reviewed,THIP_ECOLI,Thiamine transport system permease protein ThiP,thiP yabK b0067 JW0066,Escherichia coli (strain K12),536,59533
+P31550,reviewed,THIB_ECOLI,Thiamine-binding periplasmic protein,thiB tbpA yabL b0068 JW0067,Escherichia coli (strain K12),327,36163
+P31663,reviewed,PANC_ECOLI,Pantothenate synthetase (PS) (EC 6.3.2.1) (Pantoate--beta-alanine ligase) (Pantoate-activating enzyme),panC b0133 JW0129,Escherichia coli (strain K12),283,31598
+P31802,reviewed,NARP_ECOLI,Nitrate/nitrite response regulator protein NarP,narP b2193 JW2181,Escherichia coli (strain K12),215,23575
+P31806,reviewed,NNR_ECOLI,Bifunctional NAD(P)H-hydrate repair enzyme Nnr (Nicotinamide nucleotide repair protein) [Includes: ADP-dependent (S)-NAD(P)H-hydrate dehydratase (EC 4.2.1.136) (ADP-dependent NAD(P)HX dehydratase); NAD(P)H-hydrate epimerase (EC 5.1.99.6) (NAD(P)HX epimerase)],nnr yjeF b4167 JW4125,Escherichia coli (strain K12),515,54650
+P31826,reviewed,YDDA_ECOLI,Inner membrane ABC transporter ATP-binding protein YddA (CDS102),yddA b1496 JW5242,Escherichia coli (strain K12),561,64985
+P32099,reviewed,LPLA_ECOLI,Lipoate-protein ligase A (EC 6.3.1.20) (Lipoate--protein ligase),lplA yjjF b4386 JW4349,Escherichia coli (strain K12),338,37926
+P32143,reviewed,SQUV_ECOLI,Sulfofructose kinase (SF kinase) (EC 2.7.1.184),yihV b3883 JW5568,Escherichia coli (strain K12),298,31728
+P32171,reviewed,RHAB_ECOLI,L-Rhamnulokinase (RhaB) (RhuK) (EC 2.7.1.5) (ATP:L-rhamnulose phosphotransferase) (L-rhamnulose 1-kinase) (Rhamnulose kinase),rhaB b3904 JW3875,Escherichia coli (strain K12),489,54069
+P32718,reviewed,ALSK_ECOLI,D-allose kinase (Allokinase) (EC 2.7.1.55),alsK yjcT b4084 JW5724,Escherichia coli (strain K12),309,33821
+P32720,reviewed,ALSC_ECOLI,D-allose transport system permease protein AlsC,alsC yjcV b4086 JW4047,Escherichia coli (strain K12),326,34316
+P32721,reviewed,ALSA_ECOLI,D-allose import ATP-binding protein AlsA (EC 7.5.2.8),alsA yjcW b4087 JW4048,Escherichia coli (strain K12),510,56745
+P33221,reviewed,PURT_ECOLI,Formate-dependent phosphoribosylglycinamide formyltransferase (EC 6.3.1.21) (5'-phosphoribosylglycinamide transformylase 2) (Formate-dependent GAR transformylase) (GAR transformylase 2) (GART 2) (GAR transformylase T) (Non-folate glycinamide ribonucleotide transformylase) (Phosphoribosylglycinamide formyltransferase 2),purT b1849 JW1838,Escherichia coli (strain K12),392,42434
+P33222,reviewed,YJFC_ECOLI,Putative acid--amine ligase YjfC (EC 6.3.1.-),yjfC b4186 JW4144,Escherichia coli (strain K12),387,45020
+P33348,reviewed,YEHL_ECOLI,Uncharacterized protein YehL,yehL b2119 JW5349,Escherichia coli (strain K12),362,39682
+P33359,reviewed,YEHW_ECOLI,Glycine betaine uptake system permease protein YehW,yehW b2128 JW2116,Escherichia coli (strain K12),243,25515
+P33360,reviewed,YEHX_ECOLI,Glycine betaine uptake system ATP-binding protein YehX (EC 7.4.2.-),yehX b2129 JW2117,Escherichia coli (strain K12),308,34425
+P33361,reviewed,YEHY_ECOLI,Glycine betaine uptake system permease protein YehY,yehY b2130 JW2118,Escherichia coli (strain K12),385,41139
+P33362,reviewed,YEHZ_ECOLI,Glycine betaine-binding protein YehZ,yehZ osmF b2131 JW2119,Escherichia coli (strain K12),305,32609
+P33590,reviewed,NIKA_ECOLI,Nickel-binding periplasmic protein,nikA b3476 JW3441,Escherichia coli (strain K12),524,58719
+P33591,reviewed,NIKB_ECOLI,Nickel transport system permease protein NikB,nikB b3477 JW3442,Escherichia coli (strain K12),314,35248
+P33593,reviewed,NIKD_ECOLI,Nickel import ATP-binding protein NikD (EC 7.2.2.11),nikD b3479 JW3444,Escherichia coli (strain K12),254,26820
+P33594,reviewed,NIKE_ECOLI,Nickel import ATP-binding protein NikE (EC 7.2.2.11),nikE b3480 JW3445,Escherichia coli (strain K12),268,29722
+P33913,reviewed,YEJA_ECOLI,Uncharacterized protein YejA,yejA b2177 JW2165,Escherichia coli (strain K12),604,69669
+P33915,reviewed,YEJE_ECOLI,Inner membrane ABC transporter permease protein YejE,yejE b2179 JW2167,Escherichia coli (strain K12),341,38092
+P33916,reviewed,YEJF_ECOLI,Uncharacterized ABC transporter ATP-binding protein YejF,yejF b2180 JW2168,Escherichia coli (strain K12),529,58726
+P33919,reviewed,RADD_ECOLI,Putative DNA repair helicase RadD (EC 3.6.4.12),radD yejH yejI yejJ b2184 JW2172,Escherichia coli (strain K12),586,66413
+P33931,reviewed,CCMA_ECOLI,Cytochrome c biogenesis ATP-binding export protein CcmA (EC 7.6.2.5) (Heme exporter protein A),ccmA yejW b2201 JW5366,Escherichia coli (strain K12),207,23053
+P33941,reviewed,YOJI_ECOLI,ABC transporter ATP-binding/permease protein YojI,yojI yojJ b2211 JW2199,Escherichia coli (strain K12),547,61553
+P36645,reviewed,HOFB_ECOLI,Protein transport protein HofB homolog,hofB hopB b0107 JW0103,Escherichia coli (strain K12),461,50615
+P36879,reviewed,YADG_ECOLI,Uncharacterized ABC transporter ATP-binding protein YadG,yadG b0127 JW0123,Escherichia coli (strain K12),308,34647
+P36928,reviewed,YEGD_ECOLI,Uncharacterized chaperone protein YegD,yegD b2069 JW2054,Escherichia coli (strain K12),450,49371
+P37009,reviewed,FBPC_ECOLI,Fe(3+) ions import ATP-binding protein FbpC (EC 7.2.2.7),fbpC afuC yagC b0262 JW0254,Escherichia coli (strain K12),348,39059
+P37013,reviewed,NORR_ECOLI,Anaerobic nitric oxide reductase transcription regulator NorR,norR ygaA b2709 JW5843,Escherichia coli (strain K12),504,55236
+P37024,reviewed,HRPB_ECOLI,ATP-dependent RNA helicase HrpB (EC 3.6.4.13),hrpB yadO b0148 JW0144,Escherichia coli (strain K12),809,89148
+P37028,reviewed,BTUF_ECOLI,Vitamin B12-binding protein,btuF yadT b0158 JW0154,Escherichia coli (strain K12),266,29367
+P37306,reviewed,ALLK_ECOLI,Carbamate kinase (EC 2.7.2.2) (Catabolic carbamate kinase) (Catabolic CK),allK arcC ybcF b0521 JW0510,Escherichia coli (strain K12),297,31644
+P37313,reviewed,DPPF_ECOLI,Dipeptide transport ATP-binding protein DppF (EC 7.4.2.9),dppF dppE b3540 JW3509,Escherichia coli (strain K12),334,37560
+P37329,reviewed,MODA_ECOLI,Molybdate-binding protein ModA (Molybdate/tungstate-binding protein ModA),modA b0763 JW0746,Escherichia coli (strain K12),257,27364
+P37344,reviewed,PSPF_ECOLI,Psp operon transcriptional activator (Phage shock protein F),pspF ycjB b1303 JW1296,Escherichia coli (strain K12),325,36986
+P37353,reviewed,MENE_ECOLI,2-succinylbenzoate--CoA ligase (EC 6.2.1.26) (o-succinylbenzoyl-CoA synthetase) (OSB-CoA synthetase),menE b2260 JW2255,Escherichia coli (strain K12),451,50185
+P37387,reviewed,XYLF_ECOLI,D-xylose-binding periplasmic protein,xylF xylT b3566 JW3538,Escherichia coli (strain K12),330,35734
+P37388,reviewed,XYLG_ECOLI,Xylose import ATP-binding protein XylG (EC 7.5.2.10),xylG b3567 JW3539,Escherichia coli (strain K12),513,56470
+P37617,reviewed,ZNTA_ECOLI,Zinc/cadmium/lead-transporting P-type ATPase (EC 7.2.2.-) (EC 7.2.2.12) (EC 7.2.2.21) (Pb(II)/Cd(II)/Zn(II)-translocating ATPase) (Zn(2+)/Cd(2+)/Pb(2+) export ATPase),zntA yhhO b3469 JW3434,Escherichia coli (strain K12),732,76840
+P37624,reviewed,RBBA_ECOLI,Ribosome-associated ATPase (Ribosomal bound ATPase),rbbA yhiG yhiH b3486 JW5676,Escherichia coli (strain K12),911,100785
+P37626,reviewed,YHII_ECOLI,Uncharacterized protein YhiI,yhiI b3487 JW3454,Escherichia coli (strain K12),355,38828
+P37647,reviewed,KDGK_ECOLI,2-dehydro-3-deoxygluconokinase (EC 2.7.1.45) (2-keto-3-deoxygluconokinase) (3-deoxy-2-oxo-D-gluconate kinase) (KDG kinase),kdgK yhjI b3526 JW5668,Escherichia coli (strain K12),309,33962
+P37655,reviewed,BCSQP_ECOLI,Putative cellulose biosynthesis protein BcsQ,bcsQ yhjQ b3534,Escherichia coli (strain K12),242,27140
+P37677,reviewed,LYXK_ECOLI,L-xylulose/3-keto-L-gulonate kinase (L-xylulokinase) (EC 2.7.1.-) (EC 2.7.1.53) (3-dehydro-L-gulonate kinase),lyx lyxK sgbK xylK yiaP b3580 JW3552,Escherichia coli (strain K12),498,55155
+P37772,reviewed,YJFF_ECOLI,Inner membrane ABC transporter permease protein YjfF,yjfF b4231 JW5754,Escherichia coli (strain K12),331,34978
+P37773,reviewed,MPL_ECOLI,"UDP-N-acetylmuramate--L-alanyl-gamma-D-glutamyl-meso-2,6-diaminoheptandioate ligase (EC 6.3.2.45) (Murein peptide ligase) (UDP-N-acetylmuramate:L-alanyl-gamma-D-glutamyl-meso-diaminopimelate ligase)",mpl yjfG b4233 JW4192,Escherichia coli (strain K12),457,49874
+P37774,reviewed,TCYN_ECOLI,L-cystine transport system ATP-binding protein TcyN (EC 7.4.2.12),tcyN yecC b1917 JW1902,Escherichia coli (strain K12),250,27677
+P37902,reviewed,GLTI_ECOLI,Glutamate/aspartate import solute-binding protein,gltI ybeJ yzzK b0655 JW5092,Escherichia coli (strain K12),302,33420
+P37903,reviewed,USPF_ECOLI,Universal stress protein F,uspF ynaF yzzL b1376 JW1370,Escherichia coli (strain K12),144,16017
+P38035,reviewed,RTCR_ECOLI,Transcriptional regulatory protein RtcR,rtcR yhgB b3422 JW3385,Escherichia coli (strain K12),532,60299
+P38036,reviewed,CAS3_ECOLI,CRISPR-associated endonuclease/helicase Cas3 (EC 3.1.-.-) (EC 3.6.4.-),ygcB cas3 b2761 JW2731,Escherichia coli (strain K12),888,100545
+P38134,reviewed,ETK_ECOLI,Tyrosine-protein kinase etk (EC 2.7.10.-),etk yccC b0981 JW0964,Escherichia coli (strain K12),726,81242
+P38135,reviewed,FADK_ECOLI,Medium-chain fatty-acid--CoA ligase (EC 6.2.1.-) (Acyl-CoA synthetase) (ACS) (Fatty acyl-CoA synthetase FadK),fadK ydiD b1701 JW5910,Escherichia coli (strain K12),566,62759
+P39172,reviewed,ZNUA_ECOLI,High-affinity zinc uptake system protein ZnuA,znuA yebL yzzP b1857 JW5831,Escherichia coli (strain K12),310,33777
+P39208,reviewed,IDNK_ECOLI,Thermosensitive gluconokinase (EC 2.7.1.12) (Gluconate kinase 1),idnK gntV b4268 JW4225,Escherichia coli (strain K12),187,21004
+P39265,reviewed,ALSB_ECOLI,D-allose-binding periplasmic protein (ALBP),alsB yjcX b4088 JW4049,Escherichia coli (strain K12),311,32910
+P39325,reviewed,YTFQ_ECOLI,Galactofuranose-binding protein YtfQ,ytfQ b4227 JW4186,Escherichia coli (strain K12),318,34345
+P39328,reviewed,YTFT_ECOLI,Galactofuranose transporter permease protein YtfT,ytfT b4230 JW5753,Escherichia coli (strain K12),341,35659
+P39452,reviewed,RIR3_ECOLI,Ribonucleoside-diphosphate reductase 2 subunit alpha (EC 1.17.4.1) (R1E protein) (Ribonucleotide reductase 2),nrdE b2675 JW2650,Escherichia coli (strain K12),714,80479
+P39453,reviewed,TORS_ECOLI,Sensor protein TorS (EC 2.7.13.3),torS yccI b0993 JW5135,Escherichia coli (strain K12),914,101024
+P39832,reviewed,ZNUB_ECOLI,High-affinity zinc uptake system membrane protein ZnuB,znuB yebI b1859 JW1848,Escherichia coli (strain K12),261,27729
+P39838,reviewed,RCSD_ECOLI,Phosphotransferase RcsD (EC 2.7.2.-) (Phosphotransfer intermediate RcsD),rcsD yojN yojP yojQ b2216 JW2204,Escherichia coli (strain K12),890,100372
+P40191,reviewed,PDXK_ECOLI,Pyridoxine/pyridoxal/pyridoxamine kinase (PN/PL/PM kinase) (EC 2.7.1.35) (B6-vitamer kinase) (Pyridoxal kinase 1) (PL kinase 1),pdxK yfeI b2418 JW2411,Escherichia coli (strain K12),283,30847
+P40719,reviewed,QSEC_ECOLI,Sensor protein QseC (EC 2.7.13.3),qseC ygiY b3026 JW2994,Escherichia coli (strain K12),449,50282
+P43329,reviewed,HRPA_ECOLI,ATP-dependent RNA helicase HrpA (EC 3.6.4.13),hrpA b1413 JW5905,Escherichia coli (strain K12),1300,149028
+P43672,reviewed,UUP_ECOLI,ATP-binding protein Uup (EC 3.6.1.-),uup ycbH ycbI b0949 JW0932,Escherichia coli (strain K12),635,72067
+P45425,reviewed,NANK_ECOLI,N-acetylmannosamine kinase (EC 2.7.1.60) (ManNAc kinase) (N-acetyl-D-mannosamine kinase),nanK yhcI b3222 JW5538,Escherichia coli (strain K12),291,29644
+P45543,reviewed,FRLD_ECOLI,Fructoselysine 6-kinase (EC 2.7.1.218),frlD yhfQ b3374 JW3337,Escherichia coli (strain K12),261,28332
+P45748,reviewed,TSAC_ECOLI,Threonylcarbamoyl-AMP synthase (TC-AMP synthase) (EC 2.7.7.87) (L-threonylcarbamoyladenylate synthase) (Ribosome maturation factor TsaC) (t(6)A37 threonylcarbamoyladenosine biosynthesis protein TsaC) (tRNA threonylcarbamoyladenosine biosynthesis protein TsaC),tsaC rimN yrdC b3282 JW3243,Escherichia coli (strain K12),190,20768
+P45756,reviewed,GSPA_ECOLI,Putative general secretion pathway protein A,gspA yheD b3323 JW3285,Escherichia coli (strain K12),489,55298
+P45759,reviewed,GSPE_ECOLI,Putative type II secretion system protein E (T2SS protein E) (EC 7.4.2.8) (Putative general secretion pathway protein E) (Type II traffic warden ATPase),gspE yheG b3326 JW3288,Escherichia coli (strain K12),493,54611
+P45766,reviewed,YHDW_ECOLI,Putative amino-acid ABC transporter-binding protein YhdW,yhdW b3268 JW3236,Escherichia coli (strain K12),341,37021
+P45767,reviewed,YHDX_ECOLI,Putative amino-acid ABC transporter permease protein YhdX,yhdX b3269 JW5544,Escherichia coli (strain K12),393,43261
+P45768,reviewed,YHDY_ECOLI,Inner membrane amino-acid ABC transporter permease protein YhdY,yhdY b3270 JW5545,Escherichia coli (strain K12),367,41484
+P45769,reviewed,YHDZ_ECOLI,Uncharacterized amino-acid ABC transporter ATP-binding protein YhdZ,yhdZ b3271 JW3239,Escherichia coli (strain K12),252,28574
+P46849,reviewed,RTCA_ECOLI,RNA 3'-terminal phosphate cyclase (RNA cyclase) (RNA-3'-phosphate cyclase) (EC 6.5.1.4),rtcA yhgJ yhgK b4475 JW5688,Escherichia coli (strain K12),338,35903
+P46859,reviewed,GNTK_ECOLI,Thermoresistant gluconokinase (EC 2.7.1.12) (Gluconate kinase 2),gntK b3437 JW3400,Escherichia coli (strain K12),175,19543
+P46889,reviewed,FTSK_ECOLI,DNA translocase FtsK,ftsK b0890 JW0873,Escherichia coli (strain K12),1329,146663
+P52052,reviewed,YGGR_ECOLI,Uncharacterized protein YggR,yggR b2950 JW2917,Escherichia coli (strain K12),326,35994
+P52094,reviewed,HISQ_ECOLI,Histidine/lysine/arginine/ornithine transport system permease protein HisQ,hisQ b2308 JW2305,Escherichia coli (strain K12),228,24649
+P52097,reviewed,TILS_ECOLI,tRNA(Ile)-lysidine synthase (EC 6.3.4.19) (tRNA(Ile)-2-lysyl-cytidine synthase) (tRNA(Ile)-lysidine synthetase),tilS mesJ yaeN b0188 JW0183,Escherichia coli (strain K12),432,48204
+P52101,reviewed,GLRK_ECOLI,Sensor histidine kinase GlrK (EC 2.7.13.3),glrK yfhK b2556 JW5407,Escherichia coli (strain K12),475,53330
+P52126,reviewed,ABPB_ECOLI,Anti-bacteriophage protein B (Probable helicase AbpB),abpB yfjK b2627 JW2608,Escherichia coli (strain K12),729,83062
+P52612,reviewed,FLII_ECOLI,Flagellum-specific ATP synthase (EC 7.1.2.2),fliI fla AIII flaC b1941 JW1925,Escherichia coli (strain K12),457,49316
+P60240,reviewed,RAPA_ECOLI,RNA polymerase-associated protein RapA (EC 3.6.4.-) (ATP-dependent helicase HepA),rapA hepA yabA b0059 JW0058,Escherichia coli (strain K12),968,109769
+P60546,reviewed,KGUA_ECOLI,Guanylate kinase (EC 2.7.4.8) (GMP kinase),gmk spoR b3648 JW3623,Escherichia coli (strain K12),207,23593
+P60664,reviewed,HIS6_ECOLI,Imidazole glycerol phosphate synthase subunit HisF (EC 4.3.2.10) (IGP synthase cyclase subunit) (IGP synthase subunit HisF) (ImGP synthase subunit HisF) (IGPS subunit HisF),hisF b2025 JW2007,Escherichia coli (strain K12),258,28454
+P60752,reviewed,MSBA_ECOLI,ATP-dependent lipid A-core flippase (EC 7.5.2.6) (Lipid A export ATP-binding/permease protein MsbA) (Lipid flippase),msbA b0914 JW0897,Escherichia coli (strain K12),582,64461
+P60757,reviewed,HIS1_ECOLI,ATP phosphoribosyltransferase (ATP-PRT) (ATP-PRTase) (EC 2.4.2.17),hisG b2019 JW2001,Escherichia coli (strain K12),299,33367
+P60906,reviewed,SYH_ECOLI,Histidine--tRNA ligase (EC 6.1.1.21) (Histidyl-tRNA synthetase) (HisRS),hisS b2514 JW2498,Escherichia coli (strain K12),424,47029
+P62615,reviewed,ISPE_ECOLI,4-diphosphocytidyl-2-C-methyl-D-erythritol kinase (CMK) (EC 2.7.1.148) (4-(cytidine-5'-diphospho)-2-C-methyl-D-erythritol kinase),ispE ipk ychB b1208 JW1199,Escherichia coli (strain K12),283,30925
+P62707,reviewed,GPMA_ECOLI,"2,3-bisphosphoglycerate-dependent phosphoglycerate mutase (BPG-dependent PGAM) (PGAM) (Phosphoglyceromutase) (dPGM) (EC 5.4.2.11)",gpmA gpm pgm pgmA b0755 JW0738,Escherichia coli (strain K12),250,28556
+P63284,reviewed,CLPB_ECOLI,Chaperone protein ClpB (ClpB disaggregase) (Heat shock protein F84.1),clpB htpM b2592 JW2573,Escherichia coli (strain K12),857,95585
+P63386,reviewed,MLAF_ECOLI,Intermembrane phospholipid transport system ATP-binding protein MlaF (EC 7.6.2.-),mlaF yrbF b3195 JW3162,Escherichia coli (strain K12),269,29097
+P63389,reviewed,YHES_ECOLI,Probable ATP-binding protein YheS,yheS b3352 JW3315,Escherichia coli (strain K12),637,71843
+P64572,reviewed,YGHR_ECOLI,Uncharacterized ATP-binding protein YghR,yghR b2984 JW2952,Escherichia coli (strain K12),252,28151
+P64602,reviewed,MLAB_ECOLI,Intermembrane phospholipid transport system binding protein MlaB,mlaB yrbB b3191 JW5535,Escherichia coli (strain K12),97,10680
+P64604,reviewed,MLAD_ECOLI,Intermembrane phospholipid transport system binding protein MlaD,mlaD yrbD b3193 JW3160,Escherichia coli (strain K12),183,19576
+P64606,reviewed,MLAE_ECOLI,Intermembrane phospholipid transport system permease protein MlaE,mlaE yrbE b3194 JW3161,Escherichia coli (strain K12),260,27863
+P64612,reviewed,ZAPE_ECOLI,Cell division protein ZapE (Z ring-associated protein ZapE),zapE yhcM b3232 JW3201,Escherichia coli (strain K12),375,43064
+P65643,reviewed,EUTT_ECOLI,Corrinoid adenosyltransferase EutT (EC 2.5.1.154) (ATP:co(I)rrinoid adenosyltransferase) (ACAT) (Cob(II)alamin adenosyltransferase EutT) (Ethanolamine utilization cobalamin adenosyltransferase) (Ethanolamine utilization corrinoid adenosyltransferase) (EutT adenosyltransferase),eutT ypfB b2459 JW2443,Escherichia coli (strain K12),267,30172
+P68183,reviewed,MALG_ECOLI,Maltose/maltodextrin transport system permease protein MalG,malG b4032 JW3992,Escherichia coli (strain K12),296,32225
+P68187,reviewed,MALK_ECOLI,Maltose/maltodextrin import ATP-binding protein MalK (EC 7.5.2.1),malK b4035 JW3995,Escherichia coli (strain K12),371,40990
+P69441,reviewed,KAD_ECOLI,Adenylate kinase (AK) (EC 2.7.4.3) (ATP-AMP transphosphorylase) (ATP:AMP phosphotransferase) (Adenylate monophosphate kinase),adk dnaW plsA b0474 JW0463,Escherichia coli (strain K12),214,23586
+P69451,reviewed,LCFA_ECOLI,Long-chain-fatty-acid--CoA ligase (EC 6.2.1.3) (Long-chain acyl-CoA synthetase) (Acyl-CoA synthetase),fadD oldD b1805 JW1794,Escherichia coli (strain K12),561,62332
+P69490,reviewed,CCME_ECOLI,Cytochrome c-type biogenesis protein CcmE (Cytochrome c maturation protein E) (Heme chaperone CcmE),ccmE yejS b2197 JW2185,Escherichia coli (strain K12),159,17698
+P69874,reviewed,POTA_ECOLI,Spermidine/putrescine import ATP-binding protein PotA (EC 7.6.2.11),potA b1126 JW1112,Escherichia coli (strain K12),378,43028
+P71229,reviewed,HYFR_ECOLI,DNA-binding transcriptional activator HyfR (Hydrogenase-4 transcriptional activator),hyfR b2491 JW2476,Escherichia coli (strain K12),670,75305
+P75745,reviewed,PXPC_ECOLI,5-oxoprolinase subunit C (5-OPase subunit C) (EC 3.5.2.9) (5-oxoprolinase (ATP-hydrolyzing) subunit C),pxpC ybgK b0712 JW0702,Escherichia coli (strain K12),310,34386
+P75746,reviewed,PXPA_ECOLI,5-oxoprolinase subunit A (5-OPase subunit A) (EC 3.5.2.9) (5-oxoprolinase (ATP-hydrolyzing) subunit A),pxpA ybgL b0713 JW0703,Escherichia coli (strain K12),244,25800
+P75777,reviewed,YBHG_ECOLI,UPF0194 membrane protein YbhG,ybhG b0795 JW0779,Escherichia coli (strain K12),332,36416
+P75796,reviewed,GSIA_ECOLI,Glutathione import ATP-binding protein GsiA (EC 7.4.2.10),gsiA yliA b0829 JW5897,Escherichia coli (strain K12),623,69114
+P75797,reviewed,GSIB_ECOLI,Glutathione-binding protein GsiB,gsiB yliB b0830 JW5111,Escherichia coli (strain K12),512,56470
+P75798,reviewed,GSIC_ECOLI,Glutathione transport system permease protein GsiC,gsiC yliC b0831 JW0815,Escherichia coli (strain K12),306,34066
+P75799,reviewed,GSID_ECOLI,Glutathione transport system permease protein GsiD,gsiD yliD b0832 JW0816,Escherichia coli (strain K12),303,33238
+P75828,reviewed,YBJD_ECOLI,Uncharacterized protein YbjD,ybjD b0876 JW0860,Escherichia coli (strain K12),552,63589
+P75830,reviewed,MACA_ECOLI,Macrolide export protein MacA,macA ybjY b0878 JW0862,Escherichia coli (strain K12),371,40624
+P75831,reviewed,MACB_ECOLI,Macrolide export ATP-binding/permease protein MacB (EC 7.6.2.-),macB ybjZ b0879 JW0863,Escherichia coli (strain K12),648,70702
+P75851,reviewed,SSUC_ECOLI,Putative aliphatic sulfonates transport permease protein SsuC,ssuC ycbM b0934 JW5121,Escherichia coli (strain K12),263,28925
+P75853,reviewed,SSUA_ECOLI,Putative aliphatic sulfonates-binding protein,ssuA ycbO b0936 JW0919,Escherichia coli (strain K12),319,34558
+P75867,reviewed,LONH_ECOLI,Putative Lon protease homolog (EC 3.4.21.-) (ATP-dependent protease La homolog),ycbZ b0955 JW0938,Escherichia coli (strain K12),586,65819
+P75948,reviewed,THIK_ECOLI,Thiamine kinase (EC 2.7.1.89),thiK ycfN b1106 JW1092,Escherichia coli (strain K12),274,32397
+P75957,reviewed,LOLD_ECOLI,Lipoprotein-releasing system ATP-binding protein LolD (EC 7.6.2.-),lolD ycfV b1117 JW5162,Escherichia coli (strain K12),233,25438
+P75958,reviewed,LOLE_ECOLI,Lipoprotein-releasing system transmembrane protein LolE,lolE ycfW b1118 JW1104,Escherichia coli (strain K12),414,45344
+P75959,reviewed,NAGK_ECOLI,N-acetyl-D-glucosamine kinase (EC 2.7.1.59) (GlcNAc kinase),nagK ycfX b1119 JW1105,Escherichia coli (strain K12),303,33043
+P76014,reviewed,DHAL_ECOLI,"PEP-dependent dihydroxyacetone kinase, ADP-binding subunit DhaL (EC 2.7.1.121)",dhaL ycgS b1199 JW5186,Escherichia coli (strain K12),210,22632
+P76016,reviewed,DHAR_ECOLI,PTS-dependent dihydroxyacetone kinase operon regulatory protein,dhaR ycgU b1201 JW5188,Escherichia coli (strain K12),639,70562
+P76027,reviewed,OPPD_ECOLI,Oligopeptide transport ATP-binding protein OppD (EC 7.4.2.6),oppD b1246 JW1238,Escherichia coli (strain K12),337,37188
+P76042,reviewed,YCJN_ECOLI,Putative ABC transporter periplasmic-binding protein YcjN,ycjN b1310 JW1303,Escherichia coli (strain K12),430,46808
+P76055,reviewed,TTCA_ECOLI,tRNA-cytidine(32) 2-sulfurtransferase (EC 2.8.1.-) (Two-thiocytidine biosynthesis protein A) (tRNA 2-thiocytidine biosynthesis protein TtcA),ttcA ydaO b1344 JW1338,Escherichia coli (strain K12),311,35561
+P76085,reviewed,PAAK_ECOLI,Phenylacetate-coenzyme A ligase (EC 6.2.1.30) (Phenylacetyl-CoA ligase) (PA-CoA ligase),paaK b1398 JW5218,Escherichia coli (strain K12),437,48953
+P76108,reviewed,YDCS_ECOLI,Bifunctional polyhydroxybutyrate synthase / ABC transporter periplasmic binding protein (Poly-3-hydroxybutyrate synthase) (PHB synthase) (EC 2.3.1.-) (cPHB synthase),ydcS b1440 JW1435,Escherichia coli (strain K12),381,42295
+P76128,reviewed,DDPA_ECOLI,"Probable D,D-dipeptide-binding periplasmic protein DdpA",ddpA yddS b1487 JW5240,Escherichia coli (strain K12),516,57641
+P76142,reviewed,LSRB_ECOLI,Autoinducer 2-binding protein LsrB (AI-2-binding protein LsrB),lsrB yneA b1516 JW1509,Escherichia coli (strain K12),340,36685
+P76223,reviewed,YNJB_ECOLI,Protein YnjB,ynjB b1754 JW5284,Escherichia coli (strain K12),388,42845
+P76224,reviewed,YNJC_ECOLI,Inner membrane ABC transporter permease protein YnjC,ynjC b1755 JW5285,Escherichia coli (strain K12),511,56243
+P76257,reviewed,YOAA_ECOLI,ATP-dependent DNA helicase YoaA (EC 5.6.2.3) (DNA 5'-3' helicase YoaA),yoaA b1808 JW1797,Escherichia coli (strain K12),636,70378
+P76339,reviewed,HPRS_ECOLI,Sensor histidine kinase HprS (EC 2.7.13.3) (Hydrogen peroxide response sensor),hprS yedV b1968 JW1951,Escherichia coli (strain K12),452,50850
+P76387,reviewed,WZC_ECOLI,Tyrosine-protein kinase wzc (EC 2.7.10.-),wzc b2060 JW2045,Escherichia coli (strain K12),720,79343
+P76393,reviewed,YEGI_ECOLI,Protein kinase YegI (EC 2.7.-.-),yegI b2070 JW2055,Escherichia coli (strain K12),648,71639
+P76407,reviewed,YEGS_ECOLI,Lipid kinase YegS (EC 2.7.1.-),yegS b2086 JW2070,Escherichia coli (strain K12),299,32039
+P76422,reviewed,THID_ECOLI,Hydroxymethylpyrimidine/phosphomethylpyrimidine kinase (EC 2.7.1.49) (EC 2.7.4.7) (Hydroxymethylpyrimidine kinase) (HMP kinase) (Hydroxymethylpyrimidine phosphate kinase) (HMP-P kinase) (HMP-phosphate kinase) (HMPP kinase),thiD thiJ b2103 JW2090,Escherichia coli (strain K12),266,28634
+P76423,reviewed,THIM_ECOLI,Hydroxyethylthiazole kinase (EC 2.7.1.50) (4-methyl-5-beta-hydroxyethylthiazole kinase) (TH kinase) (Thz kinase),thiM b2104 JW2091,Escherichia coli (strain K12),262,27339
+P76506,reviewed,MLAA_ECOLI,Intermembrane phospholipid transport system lipoprotein MlaA,mlaA vacJ b2346 JW2343,Escherichia coli (strain K12),251,28042
+P76556,reviewed,EUTP_ECOLI,Probable acetate kinase EutP (EC 2.7.2.1) (Ethanolamine utilization protein EutP),eutP ypfD b2461 JW2445,Escherichia coli (strain K12),159,17659
+P76562,reviewed,TMCA_ECOLI,tRNA(Met) cytidine acetyltransferase TmcA (EC 2.3.1.193) (Lysine 2-hydroxyisobutyryltransferase) (EC 2.3.1.-),tmcA ypfI b2474 JW2459,Escherichia coli (strain K12),671,74893
+P76594,reviewed,LYSAC_ECOLI,Peptidyl-lysine N-acetyltransferase PatZ (EC 2.3.1.-) (Protein lysine acetyltransferase),patZ pka yfiQ b2584 JW2568,Escherichia coli (strain K12),886,97987
+P76658,reviewed,HLDE_ECOLI,Bifunctional protein HldE [Includes: D-beta-D-heptose 7-phosphate kinase (EC 2.7.1.167) (D-beta-D-heptose 7-phosphotransferase) (D-glycero-beta-D-manno-heptose-7-phosphate kinase); D-beta-D-heptose 1-phosphate adenylyltransferase (EC 2.7.7.70) (D-glycero-beta-D-manno-heptose 1-phosphate adenylyltransferase)],hldE rfaE waaE yqiF b3052 JW3024,Escherichia coli (strain K12),477,51051
+P76909,reviewed,YNJD_ECOLI,Uncharacterized ABC transporter ATP-binding protein YnjD,ynjD b1756 JW5286,Escherichia coli (strain K12),217,24017
+P77150,reviewed,PDXY_ECOLI,Pyridoxal kinase PdxY (PL kinase) (EC 2.7.1.35) (Pyridoxal kinase 2) (PL kinase 2),pdxY ydgS b1636 JW1628,Escherichia coli (strain K12),287,31322
+P77156,reviewed,YDCU_ECOLI,Inner membrane ABC transporter permease protein YdcU,ydcU b1442 JW1437,Escherichia coli (strain K12),313,34360
+P77213,reviewed,GCS2_ECOLI,Putative glutamate--cysteine ligase 2 (EC 6.3.2.2) (Gamma-glutamylcysteine synthetase 2) (GCS 2) (Gamma-GCS 2),ybdK b0581 JW0570,Escherichia coli (strain K12),372,41688
+P77231,reviewed,CITG_ECOLI,2-(5''-triphosphoribosyl)-3'-dephosphocoenzyme-A synthase (2-(5''-triphosphoribosyl)-3'-dephospho-CoA synthase) (EC 2.4.2.52),citG ybdT b0613 JW0605,Escherichia coli (strain K12),292,31644
+P77257,reviewed,LSRA_ECOLI,Autoinducer 2 import ATP-binding protein LsrA (AI-2 import ATP-binding protein LsrA) (EC 7.6.2.13) (EGO10A),lsrA ego ydeX b1513 JW1506,Escherichia coli (strain K12),511,55821
+P77265,reviewed,MDLA_ECOLI,Multidrug resistance-like ATP-binding protein MdlA (EC 7.6.2.2),mdlA mdl b0448 JW0438,Escherichia coli (strain K12),590,66017
+P77268,reviewed,DDPD_ECOLI,"Probable D,D-dipeptide transport ATP-binding protein DdpD",ddpD yddP b1484 JW1479,Escherichia coli (strain K12),328,36100
+P77269,reviewed,YPHF_ECOLI,ABC transporter periplasmic-binding protein YphF,yphF b2548 JW2532,Escherichia coli (strain K12),327,35058
+P77279,reviewed,FETA_ECOLI,Probable iron export ATP-binding protein FetA (EC 7.2.2.-),fetA ybbL b0490 JW0479,Escherichia coli (strain K12),225,25382
+P77307,reviewed,FETB_ECOLI,Probable iron export permease protein FetB,fetB ybbM b0491 JW5066,Escherichia coli (strain K12),259,28165
+P77308,reviewed,DDPB_ECOLI,"Probable D,D-dipeptide transport system permease protein DdpB",ddpB yddR b1486 JW1481,Escherichia coli (strain K12),340,37345
+P77315,reviewed,YPHD_ECOLI,Probable ABC transporter permease protein YphD,yphD b2546 JW2530,Escherichia coli (strain K12),332,34483
+P77319,reviewed,HSCC_ECOLI,Chaperone protein HscC (Hsc62),hscC ybeW b0650 JW0645,Escherichia coli (strain K12),556,61986
+P77348,reviewed,MPPA_ECOLI,Periplasmic murein peptide-binding protein MppA (Murein peptide permease A),mppA ynaH b1329 JW1322,Escherichia coli (strain K12),537,59900
+P77364,reviewed,GLXK2_ECOLI,Glycerate 3-kinase (EC 2.7.1.31) (D-Glycerate-3-kinase) (Glycerate kinase 2) (GK2),glxK glxB5 ybbZ b0514 JW0502,Escherichia coli (strain K12),381,38734
+P77390,reviewed,CITC_ECOLI,[Citrate [pro-3S]-lyase] ligase (EC 6.2.1.22) (Acetate:SH-citrate lyase ligase) (Citrate lyase synthetase),citC ybeO b0618 JW0610,Escherichia coli (strain K12),352,40077
+P77463,reviewed,DDPC_ECOLI,"Probable D,D-dipeptide transport system permease protein DdpC",ddpC yddQ b1485 JW1480,Escherichia coli (strain K12),298,31971
+P77481,reviewed,YCJV_ECOLI,Putative uncharacterized ABC transporter ATP-binding protein YcjV,ycjV ymjB b4524 JW1311/JW5203 b1318,Escherichia coli (strain K12),360,40147
+P77485,reviewed,CUSS_ECOLI,Sensor histidine kinase CusS (EC 2.7.13.3),cusS ybcZ b0570 JW5082,Escherichia coli (strain K12),480,53738
+P77495,reviewed,PRPE_ECOLI,Propionate--CoA ligase (EC 6.2.1.17) (Propionyl-CoA synthetase),prpE yahU b0335 JW0326,Escherichia coli (strain K12),628,69351
+P77499,reviewed,SUFC_ECOLI,Probable ATP-dependent transporter SufC,sufC ynhD b1682 JW1672,Escherichia coli (strain K12),248,27582
+P77504,reviewed,YBBP_ECOLI,Uncharacterized ABC transporter permease YbbP,ybbP b0496 JW0485,Escherichia coli (strain K12),804,89332
+P77509,reviewed,YPHE_ECOLI,Uncharacterized ABC transporter ATP-binding protein YphE,yphE b2547 JW2531,Escherichia coli (strain K12),503,55016
+P77510,reviewed,DPIB_ECOLI,Sensor histidine kinase DpiB (EC 2.7.13.3) (Sensor histidine kinase CitA),dpiB citA mpdB ybeP b0619 JW0611,Escherichia coli (strain K12),552,61684
+P77546,reviewed,YDAV_ECOLI,Uncharacterized protein YdaV,ydaV b1360 JW1355,Escherichia coli (strain K12),248,28128
+P77570,reviewed,ANMK_ECOLI,Anhydro-N-acetylmuramic acid kinase (EC 2.7.1.170) (AnhMurNAc kinase),anmK ydhH b1640 JW1632,Escherichia coli (strain K12),369,39496
+P77622,reviewed,DDPF_ECOLI,"Probable D,D-dipeptide transport ATP-binding protein DdpF",ddpF yddO b1483 JW1478,Escherichia coli (strain K12),308,34621
+P77649,reviewed,SELO_ECOLI,Protein adenylyltransferase SelO (EC 2.7.7.108) (Selenoprotein O homolog) (SelO),selO ydiU b1706 JW1696,Escherichia coli (strain K12),478,54382
+P77672,reviewed,LSRC_ECOLI,Autoinducer 2 import system permease protein LsrC (AI-2 import system permease protein LsrC),lsrC ydeY b1514 JW1507,Escherichia coli (strain K12),342,36395
+P77716,reviewed,YCJP_ECOLI,Inner membrane ABC transporter permease protein YcjP,ycjP b1312 JW1305,Escherichia coli (strain K12),280,31250
+P77718,reviewed,THII_ECOLI,tRNA sulfurtransferase (EC 2.8.1.4) (Sulfur carrier protein ThiS sulfurtransferase) (Thiamine biosynthesis protein ThiI) (tRNA 4-thiouridine synthase),thiI yajK b0423 JW0413,Escherichia coli (strain K12),482,54973
+P77737,reviewed,OPPF_ECOLI,Oligopeptide transport ATP-binding protein OppF (EC 7.4.2.6),oppF b1247 JW1239,Escherichia coli (strain K12),334,37198
+P77739,reviewed,KT3K_ECOLI,Probable ketoamine kinase YniA (EC 2.7.1.-),yniA b1725 JW1714,Escherichia coli (strain K12),286,32459
+P77743,reviewed,PRPR_ECOLI,Propionate catabolism operon regulatory protein,prpR yahP b0330 JW0322,Escherichia coli (strain K12),528,58649
+P77756,reviewed,QUEC_ECOLI,7-cyano-7-deazaguanine synthase (EC 6.3.4.20) (7-cyano-7-carbaguanine synthase) (PreQ(0) synthase) (Queuosine biosynthesis protein QueC),queC ybaX b0444 JW0434,Escherichia coli (strain K12),231,25514
+P77795,reviewed,YDCT_ECOLI,Uncharacterized ABC transporter ATP-binding protein YdcT,ydcT b1441 JW1436,Escherichia coli (strain K12),337,37041
+P78061,reviewed,PUUA_ECOLI,Gamma-glutamylputrescine synthetase PuuA (Gamma-Glu-Put synthetase) (EC 6.3.1.11) (Glutamate--putrescine ligase),puuA ycjK b1297 JW5201,Escherichia coli (strain K12),472,53177
+Q06065,reviewed,ATOC_ECOLI,Regulatory protein AtoC (Acetoacetate metabolism regulatory protein) (DNA-binding transcriptional regulator AtoC) (Ornithine decarboxylase antizyme),atoC az b2220 JW2214,Escherichia coli (strain K12),461,52176
+Q06067,reviewed,ATOS_ECOLI,Signal transduction histidine-protein kinase AtoS (EC 2.7.13.3),atoS b2219 JW2213,Escherichia coli (strain K12),608,67790
+Q2EES3,reviewed,YOEF_ECOLI,Protein YoeF,yoeF b4538 JW5328,Escherichia coli (strain K12),118,12969
+Q46802,reviewed,UACR_ECOLI,Putative uric acid sigma-54-dependent transcriptional regulator UacR (Uric acid regulator),uacR ygeV b2869 JW2837,Escherichia coli (strain K12),592,66096
+Q46809,reviewed,YQEC_ECOLI,Uncharacterized protein YqeC,yqeC b2876 JW5464,Escherichia coli (strain K12),256,28103
+Q46843,reviewed,YGHS_ECOLI,Uncharacterized ATP-binding protein YghS,yghS b2985 JW5491,Escherichia coli (strain K12),237,26347
+Q46844,reviewed,YGHT_ECOLI,Uncharacterized ATP-binding protein YghT,yghT b2986 JW2954,Escherichia coli (strain K12),230,25356
+Q46863,reviewed,YGIS_ECOLI,Probable deoxycholate-binding periplasmic protein YgiS,ygiS b3020 JW2988,Escherichia coli (strain K12),535,60694
+Q46889,reviewed,OTNK_ECOLI,3-oxo-tetronate kinase (EC 2.7.1.217) (3-dehydrotetronate 4-kinase),otnK ygbK b2737 JW2707,Escherichia coli (strain K12),388,41339
+Q46927,reviewed,TCDA_ECOLI,tRNA threonylcarbamoyladenosine dehydratase (EC 6.1.-.-) (t(6)A37 dehydratase),tcdA csdL ygdL b2812 JW2783,Escherichia coli (strain K12),268,28562
+Q47537,reviewed,TAUA_ECOLI,Taurine-binding periplasmic protein (Sulfate starvation-induced protein 1) (SSI1),tauA ssiA yaiR b0365 JW0357,Escherichia coli (strain K12),320,34266
+Q47538,reviewed,TAUB_ECOLI,Taurine import ATP-binding protein TauB (EC 7.6.2.7),tauB ssiB yaiQ b0366 JW0358,Escherichia coli (strain K12),255,28297
+Q47539,reviewed,TAUC_ECOLI,Taurine transport system permease protein TauC,tauC ssiC yaiJ b0367 JW0359,Escherichia coli (strain K12),275,29812
+Q47622,reviewed,SAPA_ECOLI,Probable ABC transporter periplasmic-binding protein SapA,sapA b1294 JW1287,Escherichia coli (strain K12),547,61565
+Q59385,reviewed,COPA_ECOLI,Copper-exporting P-type ATPase (EC 7.2.2.8) (Copper-exporting P-type ATPase A) (Cu(+)-exporting ATPase) (Soluble copper chaperone CopA(Z)),copA atcU f834 ybaR b0484 JW0473,Escherichia coli (strain K12),834,87873
+Q6BEX0,reviewed,YTFR_ECOLI,Galactofuranose transporter ATP-binding protein YtfR (EC 7.5.2.9),ytfR ytfS b4485 JW5752,Escherichia coli (strain K12),500,55260

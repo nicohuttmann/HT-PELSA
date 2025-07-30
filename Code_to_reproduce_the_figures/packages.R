@@ -19,6 +19,7 @@ packages <-
     "drc", 
     "progress", 
     "data.table", 
+    "ComplexUpset", 
     # Bioconductor = BiocManager::install()
     "Biostrings",
     "limma")

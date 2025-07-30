@@ -90,7 +90,6 @@ mytheme <- theme(
 ```
 
 
-
 # 2. Import and annotate data
 
 ```{r, include=FALSE,eval=FALSE}
@@ -167,7 +166,6 @@ datasets <- purrr::map(datasets,
 ```
 
 
-
 # 3. Divide into two groups
 
 ```{r}
@@ -185,7 +183,6 @@ process_data <- function(data) {
 datasets <- purrr::map(datasets, process_data)
 
 ```
-
 
 
 # 4. Statistic test analysis
@@ -281,7 +278,6 @@ purrr::iwalk(datasets, analyse_dataset)
 ```
 
 
-
 # 5.Figure S1A: True positive curve comparing RT-4min, RT-3min, and 37C-1min
 
 ## 5.1 Data preparation
@@ -289,7 +285,7 @@ purrr::iwalk(datasets, analyse_dataset)
 ```{r, echo=TRUE}
 
 extract_data <- function(file_path, type_name) {
-  read_csv(file_path) %>%  # 比 read.csv 更快
+  read_csv(file_path) %>%  
     distinct(UID, .keep_all = TRUE) %>%
     filter(Log2FC < 0) %>%
     mutate(
@@ -302,14 +298,14 @@ extract_data <- function(file_path, type_name) {
     select(rank, kinase_count, TRP, type)
 }
 
-# 定义文件路径和对应的 type 标签
+
 file_info <- list(
   list(path = "bayes_test_RT3min_Astral.csv", type = "RT_3min"),
   list(path = "bayes_test_RT4min_Astral.csv", type = "RT_4min"),
   list(path = "bayes_test_T37_1min_Astral.csv", type = "T37_1min")
 )
 
-# 批量处理并合并结果
+
 list_results <- map_dfr(file_info, ~ extract_data(.x$path, .x$type))
 
 colnames(list_results)
@@ -346,7 +342,6 @@ ggsave(paste0("Figure_S1A", ".pdf"), width = 4, height = 4, useDingbats = FALSE)
 ```
 
 
-
 # 6. Figure 1B: Barplot comparing HT-PELSA and orginal PELSA (Nature Methods)
 
 ## 6.1 Data preparation
@@ -354,7 +349,7 @@ ggsave(paste0("Figure_S1A", ".pdf"), width = 4, height = 4, useDingbats = FALSE)
 ```{r, echo=TRUE}
 
 extract_data <- function(file_path, type_name) {
-  read_csv(file_path) %>%  # 比 read.csv 更快
+  read_csv(file_path) %>%  
     distinct(UID, .keep_all = TRUE) %>%
     filter(Log2FC < 0) %>%
     mutate(
@@ -367,7 +362,7 @@ extract_data <- function(file_path, type_name) {
     select(rank, kinase_count, TRP, type)
 }
 
-# 定义文件路径和对应的 type 标签
+
 file_info <- list(
   list(path = "bayes_test_RT4min_Exploris.csv", type = "HT-PELSA_Exploris"),
   list(path = "bayes_test_RT4min_Astral.csv", type = "HT-PELSA_Astral"),
@@ -444,7 +439,6 @@ p
 ggsave("Figure_1B.pdf", p, width = 4, height = 6, units = "cm")
 
 ```
-
 
 
 # 7. Figure S1B: p value distribution of peptides that are from and outside of the kinase domain
@@ -561,7 +555,6 @@ ggsave(paste0("Figure_S1B",".pdf"),p,width = 8,height=8,dpi=300)
 ```
 
 
-
 # 8. Figure S1C: Pie charts showing the location of the significantly stabilized peptides
 
 ## 8.1 Data preparation
@@ -578,7 +571,6 @@ table(significantly_stabilized_peptides$in.domain)
 ```
 
 
-
 ## 8.2 Plotting
 
 ```{r, echo=TRUE}
@@ -593,7 +585,7 @@ df$count_label <- paste0(df$group, "\n(n=", df$value, ")")
 
 ggdonutchart(df, 
              "value", 
-             label = "count_label",  # 使用带计数的标签
+             label = "count_label", 
              fill = "type", 
              color = "white",
              palette = c("#00AFBB", "#9edae5", "#FC4E07")) +
@@ -603,5 +595,3 @@ ggdonutchart(df,
 ggsave(paste0("Figure_S1C",".pdf"), width = 2.5, height = 2.5) 
 
 ```
-
-

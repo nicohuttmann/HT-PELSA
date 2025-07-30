@@ -1,0 +1,5 @@
+category_pair,n_total,n_connected,proportion_connected,connected,not_connected,baseline_connected,baseline_not_connected,odds_ratio,p_value,p_adj
+destabilized ↔ destabilized,703,55,0.078236131,55,648,78152,2767153,3.005251064,1.02E-11,1.02E-11
+destabilized ↔ stabilized,7144,454,0.063549832,454,6690,78152,2767153,2.402828703,1.46E-57,4.37E-57
+stabilized ↔ stabilized,17578,797,0.045340767,797,16781,78152,2767153,1.681642056,3.39E-40,5.09E-40
+unresponsive ↔ unresponsive,2845305,78152,0.027467003,,,,,,,
