@@ -2,7 +2,9 @@
 
 export(.fit_LL.4)
 export(.hello_I_want_to_analyse_my_PELSA_data)
+export(.translate_concentrations)
 export(analyze_data_dose_response)
+export(analyze_data_dose_response_concentrations)
 export(analyze_data_grouped)
 export(import_data_long)
 export(import_data_wide)

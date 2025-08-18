@@ -125,3 +125,34 @@
   return(paste(prefix, collapse = ""))
 }
 
+
+#' Translate numeric concentrations to strings with unit 
+#'
+#' @param x numeric vector 
+#'
+#' @returns character vector 
+#' @export
+#'
+#' @examples
+#'   .translate_concentrations(c(0, 1, 2e-3, 5e-6))
+.translate_concentrations <- function(x) {
+  
+  x_output <- c()
+  
+  for (i in x) {
+    if (i == 0) x_output <- c(x_output, "0M")
+    else if (log10(i) >= 0) x_output <- c(x_output, paste0(i, "M"))
+    else if (log10(i) >= -3) x_output <- c(x_output, paste0(i / 1e-3, "mM"))
+    else if (log10(i) >= -6) x_output <- c(x_output, paste0(i / 1e-6, "uM"))
+    else if (log10(i) >= -9) x_output <- c(x_output, paste0(i / 1e-9, "nM"))
+    else if (log10(i) >= -12) x_output <- c(x_output, paste0(i / 1e-12, "pM"))
+    else if (log10(i) >= -15) x_output <- c(x_output, paste0(i / 1e-15, "fM"))
+    else if (log10(i) >= -18) x_output <- c(x_output, paste0(i / 1e-18, "aM"))
+    else if (log10(i) >= -21) x_output <- c(x_output, paste0(i / 1e-21, "zM"))
+    else if (log10(i) >= -24) x_output <- c(x_output, paste0(i / 1e-24, "yM"))
+    else  x_output <- c(x_output, paste0(i, "wtfM"))
+  }
+  
+  return(x_output)
+  
+}

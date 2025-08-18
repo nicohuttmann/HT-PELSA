@@ -11,7 +11,7 @@ analyze_data_grouped(
   p.threshold = 0.01,
   fc.threshold = log2(1.2),
   eBayes.trend = TRUE,
-  keep.cols,
+  keep.cols = c(),
   rename.output = c(estimate = "log2.fc"),
   full.output = F,
   silent = F

@@ -93,6 +93,7 @@ process_data_grouped <- function(data_raw,
   data_filtered_r <- data_filtered %>% 
     dplyr::mutate(Samples = sample_names[!!rlang::sym(sample.column)], 
                   .before = 1) %>% 
+    dplyr::filter(!is.na(Samples)) %>% 
     dplyr::arrange(Samples) %>% 
     dplyr::mutate(Peptides = !!rlang::sym(peptide.column), 
                   .after = 1) %>% 
@@ -241,7 +242,7 @@ analyze_data_grouped <- function(data_processed,
                                  p.threshold = 0.01, 
                                  fc.threshold = log2(1.2), 
                                  eBayes.trend = TRUE, 
-                                 keep.cols, 
+                                 keep.cols = c(), 
                                  rename.output = c(estimate = "log2.fc"), 
                                  full.output = F, 
                                  silent = F) {
@@ -410,7 +411,7 @@ analyze_data_grouped <- function(data_processed,
   
   
   # Transfer annotation columns 
-  if (hasArg(keep.cols) && 
+  if (length(keep.cols) > 0 && 
       "data_raw" %in% names(data_processed) && 
       any(keep.cols %in% names(data_processed$data_raw))) {
     
@@ -435,7 +436,29 @@ analyze_data_grouped <- function(data_processed,
   
   # Remove intermediate data 
   if (!full.output) {
-    results_list <- results_list$results
+    results_list <- results_list[c("results", "data", "p")]
+    names(results_list) <- c("data_peptides", "data_replicates", "p")
+  } else {
+    results_list <- results_list[c("results", 
+                                   "data", 
+                                   "p", 
+                                   "eset",
+                                   "design",
+                                   "fit",
+                                   "contrast.matrix",
+                                   "fit2",
+                                   "fit2_eBayes",
+                                   "par")]
+    names(results_list) <- c("data_peptides", 
+                             "data_replicates", 
+                             "p", 
+                             "eset",
+                             "design",
+                             "fit",
+                             "contrast.matrix",
+                             "fit2",
+                             "fit2_eBayes",
+                             "par")
   }
   
   return(results_list)

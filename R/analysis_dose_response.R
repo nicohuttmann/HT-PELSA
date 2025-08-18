@@ -419,8 +419,9 @@ process_data_dose_response_m <- function(data_raw,
   # Rename sample names 
   data_quant <- data_quant %>% 
     dplyr::mutate(Samples = 
-                    stringr::str_extract(Samples,
-                                         pattern = sample_names$pattern))
+                    setNames(stringr::str_extract(Samples,
+                                         pattern = sample_names$pattern), 
+                             Samples))
   
   
   # Replace matched names by sample_names$replace
@@ -967,3 +968,133 @@ analyze_data_dose_response <- function(data_processed,
   
 }
 
+
+#' Analyze individual concentrations of dose-response experiment as groups 
+#'
+#' @param data_processed output list or tibble from process_data_dose_response()
+#'  or prefilter_data_dose_response()
+#' @param filter_rows tidy expression to filter the data e.g. filter_rows = 
+#' Lib.Q.Value < 0.01
+#' @param min_fraction_per_group minimum fraction of values per replicate to use 
+#' (e.g. 0.75 = min. 3 of 4 replicates with valid value)
+#' @param norm.method which method to use for normalization 
+#' @param silent Turn off feedback from the function?
+#' @param p.adjust.method method for p.adjust() (see p.adjust.methods)
+#' @param p.threshold p-value threshold after adjustment 
+#' @param fc.threshold log2. fold-change threshold 
+#' @param eBayes.trend abundance-dependent variance estimation in the 
+#' limma::eBayes function (default = TRUE)
+#' @param keep.cols Which columns should be copied from data_raw to 
+#' data_peptides
+#' @param rename.output named vector of columns to rename in the output (e.g. 
+#' #' c(name = "new_name"))
+#' @param full.output Include full limma data in output?
+#' @param translate.concentrations replace numeric concentrations with strings 
+#' with unit 
+#'
+#' @returns list of concentration-grouped list results at peptide ($data_peptides) and replicates 
+#' ($data_replicates) level 
+#' @export
+#'
+#' @examples 
+#' \dontrun{
+#' data_limma <- analyze_data_dose_response_concentrations(data_processed,
+#'   min_fraction_per_group = 1, 
+#'   norm.method = "none", 
+#'   p.adjust.method = "BH",
+#'   p.threshold = 0.01,
+#'   fc.threshold = log2(1.2), 
+#'   keep.cols = c("Protein.Group", 
+#'    "Genes", 
+#'    "First.Protein.Description"), 
+#'   rename.output = c(estimate = "log2.fc"))
+#' }
+analyze_data_dose_response_concentrations <- function(data_processed, 
+                                                      filter_rows, 
+                                                      min_fraction_per_group = 1, 
+                                                      norm.method = "none", 
+                                                      p.adjust.method = "BH", 
+                                                      p.threshold = 0.01, 
+                                                      fc.threshold = log2(1.2), 
+                                                      eBayes.trend = TRUE, 
+                                                      keep.cols = c(), 
+                                                      rename.output = c(estimate = "log2.fc"), 
+                                                      full.output = F, 
+                                                      silent = T, 
+                                                      translate.concentrations = T) {
+  
+  if (all(data_processed$data_processed$Concentration != 0)) 
+    stop("There is no 0-concentration group in the data. Make sure the concentration is set to 0.")
+  
+  data_raw_new <- data_processed$data_processed %>% 
+    dplyr::select(-c(do.fit, found_in, Quant, Replicate)) %>% 
+    dplyr::left_join(data_processed$data_raw %>% 
+                       dplyr::select(Peptides, 
+                                     Samples, 
+                                     Quant, 
+                                     dplyr::any_of(keep.cols)) %>% 
+                       mutate(Samples = (data_processed$data_processed %>% 
+                                           dplyr::distinct(Samples) %>% 
+                                           dplyr::pull(Samples))[Samples]), 
+                     by = c("Peptides", "Samples"))
+  
+  data_observations <- data_processed$data_processed %>% 
+    distinct(Samples, Concentration) %>% 
+    dplyr::arrange(desc(Concentration), Samples)
+  
+  if (translate.concentrations) {
+    data_observations <- data_observations %>% 
+      dplyr::mutate(Concentration = .translate_concentrations(Concentration))
+    control_group <- "0M"
+  } else {
+    data_observations <- data_observations %>% 
+      dplyr::mutate(Concentration = as.character(Concentration))
+    control_group <- 0
+  }
+  
+  
+  
+  data_results <- map(
+    data_observations %>% 
+      dplyr::filter(Concentration != 0, Concentration != "0M") %>% 
+      pull(Concentration) %>% 
+      unique() %>% 
+      subset(. > 0) %>% 
+      setNames(., .), 
+    
+    \(x) {
+      
+      data_observations_filtered <- data_observations %>% 
+        filter(Concentration %in% c(control_group, x)) %>% 
+        arrange(Concentration)
+      
+      data_processed_grouped <- process_data_grouped(data_raw = data_raw_new, 
+                                                     sample_names = data_observations_filtered %>% 
+                                                       pull(Samples, Samples), 
+                                                     sample_groups = data_observations_filtered %>% 
+                                                       pull(Concentration, Samples), 
+                                                     peptide.column = "Peptides", 
+                                                     sample.column = "Samples", 
+                                                     quant.column = "Quant", 
+                                                     filter_rows = {{filter_rows}}, 
+                                                     min_fraction_per_group = min_fraction_per_group, 
+                                                     norm.method = norm.method, 
+                                                     silent = silent)
+      
+      data_results <- analyze_data_grouped(data_processed = data_processed_grouped, 
+                                           conditions = c(control_group, x), 
+                                           p.adjust.method = p.adjust.method, 
+                                           p.threshold = p.threshold, 
+                                           fc.threshold = fc.threshold, 
+                                           eBayes.trend = eBayes.trend, 
+                                           keep.cols = keep.cols, 
+                                           rename.output = rename.output, 
+                                           full.output = full.output, 
+                                           silent = silent) 
+      
+      return(data_results)
+    })
+  
+  return(data_results)
+  
+}
