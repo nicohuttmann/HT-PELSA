@@ -14,6 +14,7 @@ analyze_data_grouped(
   keep.cols = c(),
   rename.output = c(estimate = "log2.fc"),
   full.output = F,
+  add.plot.title = T,
   silent = F
 )
 }
@@ -38,6 +39,8 @@ data_peptides}
 #' c(name = "new_name"))}
 
 \item{full.output}{Include full limma data in output?}
+
+\item{add.plot.title}{add conditions as title to the plot}
 
 \item{silent}{Turn off feedback from the function?}
 }

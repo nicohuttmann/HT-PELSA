@@ -218,6 +218,7 @@ process_data_grouped <- function(data_raw,
 #' @param rename.output named vector of columns to rename in the output (e.g. 
 #' #' c(name = "new_name"))
 #' @param full.output Include full limma data in output?
+#' @param add.plot.title add conditions as title to the plot 
 #' @param silent Turn off feedback from the function?
 #'
 #' @importFrom magrittr %>%
@@ -245,6 +246,7 @@ analyze_data_grouped <- function(data_processed,
                                  keep.cols = c(), 
                                  rename.output = c(estimate = "log2.fc"), 
                                  full.output = F, 
+                                 add.plot.title = T, 
                                  silent = F) {
   
   # Check if dataset is given 
@@ -391,6 +393,11 @@ analyze_data_grouped <- function(data_processed,
                                            stabilized = "blue")) +
     ggplot2::theme_classic() +
     ggplot2::coord_cartesian(expand = F)
+  
+  if (add.plot.title) {
+    results_list[["p"]] <- results_list[["p"]] + 
+      ggplot2::ggtitle(paste0(conditions[2], " - ", conditions[1]))
+  }
   
   
   if (!silent) {
