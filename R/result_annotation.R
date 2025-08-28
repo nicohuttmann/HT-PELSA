@@ -1,4 +1,3 @@
-
 #' classify protein and peptide hits in group-wise PELSA experiment 
 #'
 #' @param data_peptides 
@@ -89,21 +88,154 @@ mutate_peptide_position <- function(x,
                                     keep.peptide_length = T, 
                                     .after = sequence.col) {
   
+  # Start with removing possible modifications 
   data_pos <- x %>% 
+    dplyr::mutate(plain_sequence = 
+                    stringr::str_remove_all(!!rlang::sym(sequence.col), 
+                                            "\\(.*?\\)")) %>% 
     dplyr::rowwise() %>% 
     dplyr::mutate(from = NA_integer_, 
                   to = NA_integer_, 
-                  peptide_length = nchar(!!rlang::sym(sequence.col)), 
-                  from = regexpr(!!rlang::sym(sequence.col), as.character(sequences[unlist(strsplit(!!rlang::sym(protein.col), ";"))[1]]))[1], 
+                  peptide_length = nchar(plain_sequence), 
+                  from = regexpr(plain_sequence, as.character(sequences[unlist(strsplit(!!rlang::sym(protein.col), ";"))[1]]))[1], 
                   to = from + peptide_length - 1, 
                   .after = dplyr::all_of(.after)) %>% 
-    dplyr::ungroup() 
+    dplyr::ungroup() %>% 
+    dplyr::select(-plain_sequence)
   
   if (!keep.peptide_length) 
     data_pos <- data_pos %>% 
       dplyr::select(-peptide_length)
   
+  
   return(data_pos)
+  
+}
+
+
+#' Download UniProt data for given protein accessions and data fields 
+#' (see available fields with UniProt_fields())
+#'
+#' @param accession vector of UniProt accessions 
+#' @param fields UniProt data fields to query
+#' @param max.query maximum number of accessions to query at once; if the 
+#' the number exceeds max.query, the query is split up in multiple parts 
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+get_UniProt_data <- function(accession, 
+                             fields = c("accession", 
+                                        "gene_names", 
+                                        "organism_name"), 
+                             max.query = 1000) {
+  
+  # Add accession as field
+  if (!"accession" %in% fields) fields <- c("accession", fields)
+  
+  # Check accession for ;
+  if (any(stringr::str_detect(accession, ";"))) 
+    stop("There are accessions contanining a semicolon (;);, please remove or correct protein groups with multiple Ids.")
+  
+  # Only query unique accessions 
+  accession_query <- unique(accession)
+  
+  
+  # Formulate query/ies and download data 
+  if (length(accession_query) > max.query) {
+    
+    l <- length(accession_query)
+    from <- seq(1, l, max.query)
+    to <- c(seq(1, l, max.query)[-1] - 1, l)
+    
+    data_download <- purrr::map2(from, to, 
+                                 \(from, to) get_UniProt_data(accession_query[from:to], 
+                                                              fields = fields, 
+                                                              max.query = max.query)) %>% 
+      bind_rows()
+    
+  } else {
+    
+    query_url <- paste0("https://rest.uniprot.org/uniprotkb/stream?", 
+                        "format=tsv", 
+                        "&fields=", 
+                        paste(fields, collapse = "%2C"), 
+                        "&query=", 
+                        paste(
+                          paste0("accession%3A", accession_query), 
+                          collapse = "+OR+"))
+    
+    data_download <- vroom::vroom(query_url, 
+                                  delim = "\t", 
+                                  col_types = readr::cols())
+    
+  }
+  
+  # Merge given accessions and downloaded data 
+  data_output <- dplyr::left_join(tibble::tibble(Entry = accession), 
+                                  data_download, 
+                                  by = "Entry")
+  
+  # Return tibble with accessions as Entry and data columns 
+  return(data_output)
+  
+}
+
+
+#' Download UniProt data for given protein accessions, taxonomy identifiers and 
+#' data fields (faster for 1000s of proteins; see available fields with 
+#' UniProt_fields())
+#'
+#' @param accession 
+#' @param fields 
+#' @param taxon_id 
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+get_UniProt_data_1o <- function(accession, 
+                                fields = c("accession", 
+                                           "gene_names", 
+                                           "organism_name"), 
+                                taxon_id = c(human = 9606, 
+                                             mouse = 10900, 
+                                             E.coliK12 = 83333)) {
+  
+  # Check organism identifier
+  if (length(taxon_id) > 1) 
+    warning("More than one taxon_id provided, only using the first one.")
+  
+  # Add accession as field
+  if (!"accession" %in% fields) fields <- c("accession", fields)
+  
+  
+  # Formulate query and download data 
+  query_url <- paste0("https://rest.uniprot.org/uniprotkb/stream?", 
+                      "format=tsv", 
+                      "&fields=", 
+                      paste(fields, collapse = "%2C"), 
+                      "&query=%28model_organism%3A", 
+                      taxon_id[1], "%29")
+  
+  data_download <- vroom::vroom(query_url, 
+                                delim = "\t", 
+                                col_types = readr::cols())
+  
+  
+  # Merge given accessions and downloaded data 
+  if (hasArg(accession)) {
+    data_output <- dplyr::left_join(tibble::tibble(Entry = accession), 
+                                    data_download, 
+                                    by = "Entry")
+  } else {
+    data_output <- data_download
+  }
+  
+  
+  # Return tibble with accessions as Entry and data columns 
+  return(data_output)
   
 }
 
@@ -242,9 +374,8 @@ annotate_results_dr <- function(data,
 #'
 #' @examples
 annotate_results_gw <- function(data, 
-                                col_names = c(Peptide.Id = "sequence", 
-                                              Protein.Group = "UID", 
-                                              Protein.Description = "name", 
+                                col_names = c(Peptide.Id = "Peptides", 
+                                              Protein.Description = "First.Protein.Description", 
                                               log2.fc = "Log2FC", 
                                               p.value = "P.Value"), 
                                 fields = c("length", 
