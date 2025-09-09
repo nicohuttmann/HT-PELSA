@@ -6,8 +6,8 @@
 \usage{
 annotate_results_gw(
   data,
-  col_names = c(Peptide.Id = "sequence", Protein.Group = "UID", Protein.Description =
-    "name", log2.fc = "Log2FC", p.value = "P.Value"),
+  col_names = c(Peptide.Id = "Peptides", Protein.Description =
+    "First.Protein.Description", log2.fc = "Log2FC", p.value = "P.Value"),
   fields = c("length", "ft_binding", "xref_pdb_full", "sequence"),
   max.query = 100,
   taxon_id = NULL,

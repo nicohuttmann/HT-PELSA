@@ -298,13 +298,13 @@ annotate_results_dr <- function(data,
     
     list_output$data_peptides <- data %>% 
       dplyr::rename(dplyr::any_of(col_names)) %>%
-      dplyr::mutate(pEC50_signed = ifelse(regulation == "stabilized", 1, -1) * pEC50) 
+      dplyr::mutate(pEC50_signed = ifelse(regulation == "stabilized", -1, 1) * pEC50) 
     
   } else {
     
     list_output$data_peptides <- data$data_peptides %>% 
       dplyr::rename(dplyr::any_of(col_names)) %>% 
-      dplyr::mutate(pEC50_signed = ifelse(regulation == "stabilized", 1, -1) * pEC50) 
+      dplyr::mutate(pEC50_signed = ifelse(regulation == "stabilized", -1, 1) * pEC50) 
     
     list_output$data_raw <- data$data_replicates
     
