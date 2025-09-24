@@ -2,6 +2,8 @@
 
 This repository contains the code used for the data analysis of the manuscript "High-throughput peptide-centric local stability assay extends protein-ligand identification to membrane proteins, tissues, and bacteria". Required packages are listed in "packages.R".
 
+**Please kindly note that the Fig.S here correspond to the Extended Data Figs in the manuscript.** 
+
 
 
 ## 1\_Benchmarking\_Fig.1B and S1
