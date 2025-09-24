@@ -9,6 +9,7 @@ annotate_results_gw(
   col_names = c(Peptide.Id = "Peptides", Protein.Description =
     "First.Protein.Description", log2.fc = "Log2FC", p.value = "P.Value"),
   fields = c("length", "ft_binding", "xref_pdb_full", "sequence"),
+  add_InterPro = F,
   max.query = 100,
   taxon_id = NULL,
   data_UniProt = NULL,

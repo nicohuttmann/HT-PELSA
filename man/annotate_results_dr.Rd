@@ -9,6 +9,7 @@ annotate_results_dr(
   col_names = c(Peptide.Id = "Peptides", Protein.Description =
     "First.Protein.Description", pEC50 = "pEC50_mean", CV_pEC50 = "pEC50_CV"),
   fields = c("length", "ft_binding", "xref_pdb_full", "sequence"),
+  add_InterPro = F,
   max.query = 100,
   taxon_id = NULL,
   data_UniProt = NULL,
