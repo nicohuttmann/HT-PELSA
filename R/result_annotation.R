@@ -201,7 +201,7 @@ get_UniProt_data_1o <- function(accession,
                                            "gene_names", 
                                            "organism_name"), 
                                 taxon_id = c(human = 9606, 
-                                             mouse = 10900, 
+                                             mouse = 10090, 
                                              E.coliK12 = 83333)) {
   
   # Check organism identifier
