@@ -25,12 +25,11 @@ for int_prot in tqdm(all_unique_proteins):
         with open(dest_json, 'w') as f:
             f.write(r.text)
 
-    dest_pdb = f'data/protein_data/{int_prot}.pdb'
+    # in the paper, we used AlphaFold V4 structures (current is v6), can be downloaded from: https://ftp.ebi.ac.uk/pub/databases/alphafold/v4/
+    dest_pdb = f'data/protein_data/alphafold/UP000000625_83333_ECOLI_v4/AF-{int_prot}-F1-model_v4.pdb'
     if not os.path.exists(dest_pdb):
-        url = f'https://alphafold.ebi.ac.uk/files/AF-{int_prot}-F1-model_v4.pdb'
-        r = requests.get(url)
-        with open(dest_pdb, 'w') as f:
-            f.write(r.text)
+        print('Missing AlphaFold structure for protein {}'.format(int_prot))
+        continue
 
     # get binding sites
     uniprot_info = json.load(open(dest_json))
