@@ -295,7 +295,9 @@ analyze_data_grouped <- function(data_processed,
     stop('The data needs a sample "Group" column.')
   }
   
-  
+  # Filter samples by groups 
+  data_quant <- data_quant %>% 
+    dplyr::filter(Group %in% conditions) 
   
   # Add limma input 
   results_list <- list()

@@ -145,8 +145,7 @@ import_data_long <- function(file,
                         "\t# You can change the name for each sample below\n", 
                         '\tsample_names = ', samples_v, ',\n', 
                         "\t# You need to change the groups for each sample below\n", 
-                        '\tsample_groups = ', groups_v, ',\n', 
-                        '\tmin_fraction_per_group = 1,\n')
+                        '\tsample_groups = ', groups_v, ',\n')
       
       
     } else if (experiment.type == "dose_response") {
