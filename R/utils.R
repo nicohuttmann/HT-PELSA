@@ -33,7 +33,7 @@
   
   Sys.sleep(0.5)
   
-  file <- choose.files(multi = F)
+  file <- file.choose()
   
   if (length(file) == 1) {
     

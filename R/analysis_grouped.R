@@ -137,6 +137,26 @@ process_data_grouped <- function(data_raw,
                        names_from = "Peptides", 
                        values_from = "Quant")
   
+  # Normalize data 
+  if (norm.method != "none") {
+    
+    data_quant_c <- data_quant_c %>% 
+      {
+        dplyr::full_join(dplyr::select(., Samples, Group), 
+                  dplyr::select(., -Group) %>% 
+                    tibble::column_to_rownames("Samples") %>% 
+                    t() %>% 
+                    limma::normalizeBetweenArrays(method = norm.method) %>% 
+                    t() %>% 
+                    as.data.frame() %>% 
+                    tibble::rownames_to_column("Samples") %>% 
+                    tibble::as_tibble(), 
+                  suffix = c("", ""), 
+                  by = "Samples")
+      }
+    
+  }
+  
   
   # Check sample groups 
   # sample_groups_m <- tibble::tibble(Samples = unname(sample_names), 
